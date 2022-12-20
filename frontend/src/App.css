@@ -1,0 +1,43 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+.header {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.background {
+  position: relative;
+  height: 600px;
+  background: transparent url("./utils/images/slide_bg.png") center center /
+    cover no-repeat;
+  color: #fff;
+}
+.header-voiture {
+  display: block;
+  margin: auto;
+  width: 600px;
+}
+.navbar-brand {
+  padding: 10px 15px;
+  background-color: #ce322a;
+  position: absolute;
+  top: 30px;
+  z-index: 99;
+  font-size: 24px;
+}
+.link{
+  margin-right: 24px;
+  display: block;
+  width: max-content;
+  border: 1px solid #fff;
+  font-size: 24px;
+  margin-top: 28px;
+  color: #fff;
+  padding: 6px 32px;
+}
+.link:hover{
+  background-color: #fff;
+  color: #000;
+  border: unset;
+}
