@@ -3,7 +3,7 @@
   
         public enum UserType
         {
-            Admin,
+            Administrator,
             Proprietaire,
             Locataire
         }
