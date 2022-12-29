@@ -9,6 +9,7 @@ using backend.Models;
 using System.Security.Cryptography;
 using NuGet.Protocol.Core.Types;
 using System.Drawing;
+using backend.Models.inputs;
 
 namespace backend.Controllers
 {
@@ -59,7 +60,7 @@ namespace backend.Controllers
         [HttpPost]
         
 
-        public async Task<ActionResult<Voiture>> AddVoiture(VoitureAjout voiture)
+        public async Task<ActionResult<Voiture>> AddVoiture(VoitureInput voiture)
         {
             if (!ModelState.IsValid || !ModelValid.IsModelValid(voiture))
             {
@@ -73,11 +74,13 @@ namespace backend.Controllers
                 Couleur = voiture.Couleur,
                 Annee = voiture.Annee,
                 Km = voiture.Km,
+                DateAdded = DateTime.UtcNow,
                 UserId = voiture.UserId,
                 MarqueId = voiture.MarqueId,
                 OffreSpecialeId = voiture.OffreSpecialeId,
                 Prix = voiture.Prix,
                 Photo = voiture.Photo,
+                isAprouved=false
 
 
             };
@@ -90,7 +93,7 @@ namespace backend.Controllers
 
         [HttpPut("{id}")]
        
-        public async Task<IActionResult> UpdateVoiture(int id, VoitureAjout voiture)
+        public async Task<IActionResult> UpdateVoiture(int id, VoitureInput voiture)
         {
             if (id != voiture.Id)
             {
@@ -123,7 +126,7 @@ namespace backend.Controllers
         // DELETE: api/TodoItems/5
         [HttpDelete("{id}")]
  
-        public async Task<IActionResult> DeleteTodoItem(int id)
+        public async Task<IActionResult> DeleteVoiture(int id)
         {
             var voiture = await _db.Voitures.FindAsync(id);
             if (voiture == null)
@@ -136,7 +139,24 @@ namespace backend.Controllers
 
             return Ok();
         }
-    
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+          Roles = "administrator")]
+        public async Task<IActionResult> AprovedVoiture(int id)
+        {
+            var voiture = await _db.Voitures.FindAsync(id);
+            if (voiture == null)
+            {
+                return NotFound();
+            }
+            voiture.isAprouved = true;
+            _db.Voitures.Update(voiture);
+            await _db.SaveChangesAsync();
+            return Ok(voiture);
+        }
+
+
+
 
         private bool VoitureExists(int id)
         {
