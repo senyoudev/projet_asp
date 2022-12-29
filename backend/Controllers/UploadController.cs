@@ -6,12 +6,12 @@ namespace backend.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class UploadImageController : ControllerBase
+    public class UploadController : ControllerBase
     {
         private readonly Cloudinary _cloudinary;
 
 
-        public UploadImageController(IConfiguration configuration)
+        public UploadController(IConfiguration configuration)
         {
             var account = new Account(
                configuration["cloudinary:cloud_name"],
@@ -23,7 +23,7 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-public ActionResult UploadImage(IFormFile imageFile)
+public ActionResult UploadSingle(IFormFile imageFile)
 {
     // Validate the incoming request data
     if (imageFile == null)
