@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using backend.Models.inputs;
+using System.ComponentModel.DataAnnotations;
 
 namespace backend.Models
 {
@@ -10,5 +11,7 @@ namespace backend.Models
         public DateTime DateAdded { get; set; }
 
         public virtual ICollection<Voiture> Voitures { get; set; }
+
+       
     }
 }
