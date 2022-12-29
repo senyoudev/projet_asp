@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\youne\\source\\repos\\project_asp_final\\backend\\backend.csproj": {}
+    "C:\\Users\\HP\\Desktop\\Projet_Asp\\projet_asp\\backend\\backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\youne\\source\\repos\\project_asp_final\\backend\\backend.csproj": {
+    "C:\\Users\\HP\\Desktop\\Projet_Asp\\projet_asp\\backend\\backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\youne\\source\\repos\\project_asp_final\\backend\\backend.csproj",
+        "projectUniqueName": "C:\\Users\\HP\\Desktop\\Projet_Asp\\projet_asp\\backend\\backend.csproj",
         "projectName": "backend",
-        "projectPath": "C:\\Users\\youne\\source\\repos\\project_asp_final\\backend\\backend.csproj",
-        "packagesPath": "C:\\Users\\youne\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\youne\\source\\repos\\project_asp_final\\backend\\obj\\",
+        "projectPath": "C:\\Users\\HP\\Desktop\\Projet_Asp\\projet_asp\\backend\\backend.csproj",
+        "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\HP\\Desktop\\Projet_Asp\\projet_asp\\backend\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\youne\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -51,7 +55,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -63,7 +68,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100-rc.2.21505.57\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
