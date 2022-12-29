@@ -3,10 +3,15 @@ using System.Security.Cryptography;
 
 namespace backend.Models
 {
-    public class UserLogin
+    public class UserRegister
     {
+        public int Id { get; set; }
+        public string Email { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        public string Photo { get; set; }
+        public string Role { get; set; }
+        public UserType UserType { get; set; }
 
         public string HashPassword(byte[] salt)
         {
