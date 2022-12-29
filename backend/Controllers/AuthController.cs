@@ -135,12 +135,7 @@ namespace backend.Controllers
             return BadRequest("Invalid user credentials");
         }
 
-        [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
-        public IActionResult test()
-        {
-            return Ok("authorized");
-        }
+        
 
 
 
