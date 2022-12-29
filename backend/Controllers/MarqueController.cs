@@ -1,5 +1,8 @@
 ﻿using backend.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace backend.Controllers
 {
@@ -14,6 +17,8 @@ namespace backend.Controllers
             _db = db;
         }
         [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "locataire")]
+
         public JsonResult GetMarques()
         {
             var marques = _db.Marques.ToList();
