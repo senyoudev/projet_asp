@@ -279,3 +279,4 @@ C:\Users\youne\source\repos\project_asp_final\backend\bin\Debug\net6.0\Microsoft
 C:\Users\youne\source\repos\project_asp_final\backend\bin\Debug\net6.0\System.Net.Http.Formatting.dll
 C:\Users\youne\source\repos\project_asp_final\backend\bin\Debug\net6.0\System.Web.Http.dll
 C:\Users\youne\source\repos\project_asp_final\backend\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
+C:\Users\youne\source\repos\project_asp_final\backend\bin\Debug\net6.0\CloudinaryDotNet.dll
