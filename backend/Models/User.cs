@@ -11,6 +11,7 @@ namespace backend.Models
         public string Password { get; set; }
         public string Photo { get; set; }
         public string Role { get; set; }
+        public byte[] Salt { get; set; }
         public UserType UserType { get; set; }
         public DateTime DateAdded { get; set; }
 

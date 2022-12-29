@@ -13,14 +13,9 @@ namespace backend.Models
         public string Role { get; set; }
         public UserType UserType { get; set; }
 
-        public string HashPassword()
+        public string HashPassword(byte[] salt)
         {
-            // Use a secure random salt
-            byte[] salt = new byte[128 / 8];
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(salt);
-            }
+           
 
             // Hash the password using PBKDF2 with 1000 iterations
             string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(

@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace backend.Controllers
@@ -37,15 +38,22 @@ namespace backend.Controllers
                 {
                     return Conflict("User already exists");
                 }
+                // Use a secure random salt
+                byte[] salt = new byte[128 / 8];
+                using (var rng = RandomNumberGenerator.Create())
+                {
+                    rng.GetBytes(salt);
+                }
                 var registredUser = new User
                 {
                     Username = user.Username,
                     Email = user.Email,
                     Photo = user.Photo,
                     DateAdded = DateTime.UtcNow,
-                    Password = user.HashPassword(),
+                    Password = user.HashPassword(salt),
                     UserType = 0,
-                    Role = user.Role
+                    Role = user.Role,
+                    Salt = salt
                 };
 
                 _db.Users.Add(registredUser);
@@ -94,7 +102,7 @@ namespace backend.Controllers
                     return Ok("Username not found");
                 }
                 // Check if the provided password matches the stored hashed password
-                bool isPasswordValid = loggedInUser.Password.Equals(user.HashPassword());
+                bool isPasswordValid = loggedInUser.Password.Equals(user.HashPassword(loggedInUser.Salt));
                 if(!isPasswordValid)
                 {
                     return Unauthorized("Password is wrong");
