@@ -184,7 +184,7 @@ function Dashboard() {
               </Card.Body>
               <Card.Footer>
                 <div className="stats">
-                  <FontAwesomeIcon icon={faClock} className="mr-1"/>
+                  <FontAwesomeIcon icon={faClock} className="ms-1"/>
                   Updated 3 minutes ago
                 </div>
               </Card.Footer>
@@ -201,7 +201,7 @@ function Dashboard() {
               </Card.Body>
               <Card.Footer>
                 <div className="stats">
-                  <FontAwesomeIcon icon={faClock} className="mr-1"/>
+                  <FontAwesomeIcon icon={faClock} className="ms-1"/>
                   Updated 3 minutes ago
                 </div>
               </Card.Footer>
