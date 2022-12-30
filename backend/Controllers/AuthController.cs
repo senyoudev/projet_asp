@@ -1,5 +1,7 @@
+using backend.utils;
 using backend.Data;
 using backend.Models;
+using backend.Models.inputs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +32,7 @@ namespace backend.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register(UserRegister user)
         {
-            if(IsModelValid(user))
+            if (ModelState.IsValid && ModelValid.IsModelValid(user))
             {
                 var newUser = _db.Users.Where(u => u.Username == user.Username)
         .FirstOrDefault();
@@ -39,18 +41,14 @@ namespace backend.Controllers
                     return Conflict("User already exists");
                 }
                 // Use a secure random salt
-                byte[] salt = new byte[128 / 8];
-                using (var rng = RandomNumberGenerator.Create())
-                {
-                    rng.GetBytes(salt);
-                }
+                var salt = password.GenerateSalt();
                 var registredUser = new User
                 {
                     Username = user.Username,
                     Email = user.Email,
                     Photo = user.Photo,
                     DateAdded = DateTime.UtcNow,
-                    Password = user.HashPassword(salt),
+                    Password = password.HashPassword(salt,user.Password),
                     UserType = 0,
                     Role = user.Role,
                     Salt = salt
@@ -61,9 +59,10 @@ namespace backend.Controllers
 
                 var claims = new[]
        {
-                    new Claim(ClaimTypes.NameIdentifier, registredUser.Username),
+                    new Claim(ClaimTypes.Name, registredUser.Username),
+                    new Claim(ClaimTypes.NameIdentifier, registredUser.Id.ToString()),
                     new Claim(ClaimTypes.Email, registredUser.Email),
-                    new Claim(ClaimTypes.Role, registredUser.Role),
+                    new Claim(ClaimTypes.Role, registredUser.Role.ToString()),
         };
 
                 var tokenString = generateToken(claims);
@@ -93,7 +92,7 @@ namespace backend.Controllers
         [AllowAnonymous]
         public IActionResult Login(UserLogin user)
         {
-            if (IsModelValid(user))
+            if (ModelState.IsValid && ModelValid.IsModelValid(user))
             {
                 var loggedInUser = _db.Users.Where(u => u.Username == user.Username)
         .FirstOrDefault();
@@ -102,7 +101,7 @@ namespace backend.Controllers
                     return Ok("Username not found");
                 }
                 // Check if the provided password matches the stored hashed password
-                bool isPasswordValid = loggedInUser.Password.Equals(user.HashPassword(loggedInUser.Salt));
+                bool isPasswordValid = loggedInUser.Password.Equals(password.HashPassword(loggedInUser.Salt,user.Password));
                 if(!isPasswordValid)
                 {
                     return Unauthorized("Password is wrong");
@@ -110,7 +109,8 @@ namespace backend.Controllers
 
                 var claims = new[]
         {
-                    new Claim(ClaimTypes.NameIdentifier, loggedInUser.Username),
+                    new Claim(ClaimTypes.Name, loggedInUser.Username),
+                    new Claim(ClaimTypes.NameIdentifier, loggedInUser.Id.ToString()),
                     new Claim(ClaimTypes.Email, loggedInUser.Email),
                     new Claim(ClaimTypes.Role, loggedInUser.Role),
         };
@@ -135,7 +135,36 @@ namespace backend.Controllers
             return BadRequest("Invalid user credentials");
         }
 
-        
+        //change password
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult> ChangePassword(ChangePasswordInput changePasswordInput)
+        {
+            var user = await _db.Users.FindAsync(changePasswordInput.Id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            var hashedCurrentPassword = password.HashPassword(user.Salt,changePasswordInput.CurrentPassword);
+
+            
+            if (!hashedCurrentPassword.SequenceEqual(user.Password))
+            {
+                return BadRequest();
+            }
+
+            // Generate a new salt value and hash the new password
+            var newSalt = password.GenerateSalt();
+            var hashedNewPassword = password.HashPassword(newSalt,changePasswordInput.NewPassword);
+
+            // Update the password and salt values in the database
+            user.Password = hashedNewPassword;
+            user.Salt = newSalt;
+
+            _db.SaveChangesAsync();
+            return Ok();
+        }
+
 
 
 
@@ -158,24 +187,7 @@ namespace backend.Controllers
             return tokenString;
         }
 
-        //function that checks if the class is all set and there is no empty property
-        [NonAction]
-        public static bool IsModelValid<T>(T model)
-        {
-            foreach (PropertyInfo property in model.GetType().GetProperties())
-            {
-                if (property.PropertyType == typeof(string))
-                {
-                    string value = (string)property.GetValue(model);
-                    if (string.IsNullOrEmpty(value))
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        }
+       
 
     }
 }
