@@ -283,6 +283,9 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("int");
 
+                    b.Property<bool>("isAprouved")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("MarqueId");
