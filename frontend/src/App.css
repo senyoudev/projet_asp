@@ -95,3 +95,6 @@ a{
 
 
 /**** Dashboard ****/
+#admin table td .btn{
+  margin-top: 4px;
+}

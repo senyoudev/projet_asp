@@ -4,7 +4,6 @@ import { useLocation, NavLink } from "react-router-dom";
 import { Nav } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-
 function Sidebar({ color, image, routes }) {
   const location = useLocation();
   const activeRoute = (routeName) => {
@@ -15,7 +14,7 @@ function Sidebar({ color, image, routes }) {
       <div
         className="sidebar-background"
         style={{
-          backgroundImage: "url(" + image + ")"
+          backgroundImage: "url(" + image + ")",
         }}
       />
       <div className="sidebar-wrapper">
@@ -36,21 +35,17 @@ function Sidebar({ color, image, routes }) {
           {routes.map((prop, key) => {
             if (!prop.redirect)
               return (
-                <li
-                  className={
-                    prop.upgrade
-                      ? "active active-pro"
-                      : activeRoute(prop.layout + prop.path)
-                  }
-                  key={key}
-                >
+                <li className={activeRoute(prop.layout + prop.path)} key={key}>
                   <NavLink
                     to={prop.layout + prop.path}
                     className="nav-link"
-                    activeClassName="active"
+                    activeClassName={"active"}
                   >
-                    <FontAwesomeIcon icon={prop.icon} style={{marginRight: 8,fontSize: 20}}/>
-                    <p style={{fontSize: 14}}>{prop.name}</p>
+                    <FontAwesomeIcon
+                      icon={prop.icon}
+                      style={{ marginRight: 8, fontSize: 20 }}
+                    />
+                    <p style={{ fontSize: 14 }}>{prop.name}</p>
                   </NavLink>
                 </li>
               );

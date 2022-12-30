@@ -58,7 +58,7 @@ function Header() {
           <span className="navbar-toggler-bar burger-lines"></span>
         </Navbar.Toggle>
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ml-auto" navbar>
+          <Nav className="ms-auto" navbar>
             <Nav.Item>
               <Nav.Link
                 className="m-0"

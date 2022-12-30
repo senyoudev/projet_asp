@@ -10,6 +10,11 @@ import routes from "../routes.js";
 import sidebarImage from "../assets/img/sidebar-2.jpg";
 import Dashboard from "../pages/admin/Dashboard";
 import Clients from "./admin/Users";
+import Cars from "./admin/Cars";
+import Profile from "./admin/Profile";
+import Offers from "./admin/Offers";
+import CarDetails from "./admin/CarDetails";
+import OfferDetails from "./admin/OfferDetails";
 
 function Admin({ props }) {
   const [image, setImage] = React.useState(sidebarImage);
@@ -19,14 +24,26 @@ function Admin({ props }) {
   const mainPanel = React.useRef(null);
   const getRoutes = (routes) => {
     switch (location.pathname) {
-      case "/admin":
-        return <Dashboard />;
-        break;
-      case "/admin/":
+      case "/admin/dashboard":
         return <Dashboard />;
         break;
       case "/admin/users":
         return <Clients />;
+        break;
+      case "/admin/cars":
+        return <Cars />;
+        break;
+      case "/admin/offers":
+        return <Offers />;
+        break;
+      case "/admin/profile":
+        return <Profile />;
+        break;
+      case "/admin/carDetails":
+        return <CarDetails />;
+        break;
+      case "/admin/offerDetails":
+        return <OfferDetails />;
         break;
       default:
         return null;
@@ -47,7 +64,7 @@ function Admin({ props }) {
     }
   }, [location]);
   return (
-    <>
+    <div id="admin">
       <div className="wrapper">
         <Sidebar color={color} image={hasImage ? image : ""} routes={routes} />
         <div className="main-panel" ref={mainPanel}>
@@ -56,7 +73,7 @@ function Admin({ props }) {
           <Footer />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

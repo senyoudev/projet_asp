@@ -4,33 +4,32 @@ import React from "react";
 import { Card, Table, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-function UsersTable() {
+function OffersTable() {
   const navigate = useNavigate();
-  function editProfile() {
-    navigate("/admin/profile", {
+  function editOffer() {
+    navigate("/admin/offerDetails", {
       state: {
         userId: 1,
       },
     });
   }
-  function deleteUser() {}
   return (
     <>
       <Row>
         <Col md="12">
           <Card className="strpied-tabled-with-hover">
             <Card.Header>
-              <Card.Title as="h4">Users</Card.Title>
+              <Card.Title as="h4">Promotions</Card.Title>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive px-0">
               <Table className="table-hover table-striped">
                 <thead>
                   <tr>
                     <th className="border-0">ID</th>
-                    <th className="border-0">Name</th>
-                    <th className="border-0">Email</th>
-                    <th className="border-0">Type</th>
-                    <th className="border-0">Create Date</th>
+                    <th className="border-0">Owner</th>
+                    <th className="border-0">Discount Rate</th>
+                    <th className="border-0">Added Date</th>
+                    <th className="border-0">Expiration date</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -42,23 +41,14 @@ function UsersTable() {
                     <td>Niger</td>
                     <td>Oud-Turnhout</td>
                     <td>
-                      <button className="btn btn-fill btn-info me-2">
-                        Favorite
-                      </button>
-                      <button className="btn btn-fill btn-success me-2">
-                        Ban
-                      </button>
-
+                      <button className="btn btn-fill btn-primary me-2">Approve</button>
                       <button
                         className="btn btn-fill btn-secondary me-2"
-                        onClick={editProfile}
+                        onClick={editOffer}
                       >
                         Edit
                       </button>
-                      <button
-                        className="btn btn-fill btn-danger"
-                        onClick={deleteUser}
-                      >
+                      <button className="btn btn-fill btn-danger">
                         Delete
                       </button>
                     </td>
@@ -70,22 +60,14 @@ function UsersTable() {
                     <td>Curaçao</td>
                     <td>Sinaai-Waas</td>
                     <td>
-                      <button className="btn btn-fill btn-info me-2">
-                        Favorite
-                      </button>
-                      <button className="btn btn-fill btn-success me-2">
-                        Ban
-                      </button>
+                      <button className="btn btn-fill btn-primary me-2">Approve</button>
                       <button
                         className="btn btn-fill btn-secondary me-2"
-                        onClick={editProfile}
+                        onClick={editOffer}
                       >
                         Edit
                       </button>
-                      <button
-                        className="btn btn-fill btn-danger"
-                        onClick={deleteUser}
-                      >
+                      <button className="btn btn-fill btn-danger">
                         Delete
                       </button>
                     </td>
@@ -100,4 +82,4 @@ function UsersTable() {
   );
 }
 
-export default UsersTable;
+export default OffersTable;

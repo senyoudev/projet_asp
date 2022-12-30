@@ -15,12 +15,12 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import { faDashboard, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faCar, faDashboard, faShop, faUsers } from "@fortawesome/free-solid-svg-icons";
 import Dashboard from "./pages/admin/Dashboard";
 
 const dashboardRoutes = [
   {
-    path: "/",
+    path: "/dashboard",
     name: "Dashboard",
     icon: faDashboard,
     component: Dashboard,
@@ -30,6 +30,20 @@ const dashboardRoutes = [
     path: "/users",
     name: "Users",
     icon: faUsers,
+    component: Dashboard,
+    layout: "/admin"
+  },
+  {
+    path: "/cars",
+    name: "Cars",
+    icon: faCar,
+    component: Dashboard,
+    layout: "/admin"
+  },
+  {
+    path: "/offers",
+    name: "Promotions",
+    icon: faShop,
     component: Dashboard,
     layout: "/admin"
   },

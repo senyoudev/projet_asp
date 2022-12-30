@@ -1,27 +1,27 @@
 import { Col, Form, Row } from "react-bootstrap";
-import UsersTable from "../../components/tables/UsersTable";
+import OffersTable from "../../components/tables/OffersTable";
 
-function Users() {
+function Offers() {
   return (
     <>
       <Row className="mb-4">
         <Col md="6">
           <Form.Select aria-label="User Type">
             <option value="1" defaultChecked>All</option>
-            <option value="2">Favorite Users</option>
-            <option value="3">Baned Users</option>
+            <option value="2">Accepted Offers</option>
+            <option value="3">Rejected Offers</option>
           </Form.Select>
         </Col>
         <Col md="6">
           <Form.Control
-            placeholder="Search User"
+            placeholder="Search Offer"
             aria-label="Search User"
             aria-describedby="basic-addon2"
           />
         </Col>
       </Row>
-      <UsersTable />
+      <OffersTable />
     </>
   );
 }
-export default Users;
+export default Offers;

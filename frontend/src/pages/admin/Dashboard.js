@@ -1,6 +1,7 @@
 import { faChartBar } from "@fortawesome/free-regular-svg-icons";
 import {
   faCalendarAlt,
+  faCar,
   faChartArea,
   faClock,
   faRedo,
@@ -84,7 +85,7 @@ function Dashboard() {
               <Card.Footer>
                 <hr></hr>
                 <div className="stats">
-                  <FontAwesomeIcon icon={faRedo} className="mr-1" />
+                  <FontAwesomeIcon icon={faRedo} className="me-1" />
                   Update Now
                 </div>
               </Card.Footer>
@@ -110,7 +111,7 @@ function Dashboard() {
               <Card.Footer>
                 <hr></hr>
                 <div className="stats">
-                  <FontAwesomeIcon icon={faCalendarAlt} className="mr-1" />
+                  <FontAwesomeIcon icon={faCalendarAlt} className="me-1" />
                   Last day
                 </div>
               </Card.Footer>
@@ -122,7 +123,7 @@ function Dashboard() {
                 <Row>
                   <Col xs="5">
                     <div className="icon-big text-center icon-warning">
-                      <FontAwesomeIcon icon={faUsers} className="text-danger" />
+                      <FontAwesomeIcon icon={faCar} className="text-danger" />
                     </div>
                   </Col>
                   <Col xs="7">
@@ -136,7 +137,7 @@ function Dashboard() {
               <Card.Footer>
                 <hr></hr>
                 <div className="stats">
-                  <FontAwesomeIcon icon={faClock} className="mr-1" />
+                  <FontAwesomeIcon icon={faClock} className="me-1" />
                   In the last hour
                 </div>
               </Card.Footer>
@@ -165,7 +166,7 @@ function Dashboard() {
               <Card.Footer>
                 <hr></hr>
                 <div className="stats">
-                  <FontAwesomeIcon icon={faRedo} className="mr-1" />
+                  <FontAwesomeIcon icon={faRedo} className="me-1" />
                   Update now
                 </div>
               </Card.Footer>
@@ -184,7 +185,7 @@ function Dashboard() {
               </Card.Body>
               <Card.Footer>
                 <div className="stats">
-                  <FontAwesomeIcon icon={faClock} className="ms-1"/>
+                  <FontAwesomeIcon icon={faClock} className="me-1"/>
                   Updated 3 minutes ago
                 </div>
               </Card.Footer>
@@ -201,7 +202,7 @@ function Dashboard() {
               </Card.Body>
               <Card.Footer>
                 <div className="stats">
-                  <FontAwesomeIcon icon={faClock} className="ms-1"/>
+                  <FontAwesomeIcon icon={faClock} className="me-1"/>
                   Updated 3 minutes ago
                 </div>
               </Card.Footer>
