@@ -63,8 +63,8 @@ namespace backend.Controllers
 
             var offreToAdd = new OffreSpeciale
             {
-                UserId=offre.UserId,
                 Name=offre.Name,
+                UserId=offre.UserId,
                 TauxRemise=offre.TauxRemise,    
                 DateExpiration=offre.DateExperation,
                 DateAdded=DateTime.Now,
