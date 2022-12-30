@@ -1,4 +1,4 @@
-﻿using backend.Data;
+using backend.Data;
 using backend.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
