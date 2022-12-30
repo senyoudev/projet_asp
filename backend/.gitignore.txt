@@ -1,0 +1,24 @@
+# Binaries
+*.dll
+*.exe
+*.pdb
+
+# Build and publish directories
+bin/
+backend/obj/
+
+# User-specific files
+*.user
+*.suo
+
+# Configuration files
+
+
+# SSL certificates
+*.pfx
+
+# Azure publish profiles
+*.publishsettings
+
+# Configuration files
+*.config
