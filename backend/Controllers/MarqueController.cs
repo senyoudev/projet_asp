@@ -111,7 +111,8 @@ namespace backend.Controllers
             _db.Marques.Update(existingMarque);
             await _db.SaveChangesAsync();
 
-            return NoContent();
+            return new JsonResult("updated successfully");
+
         }
     }
 }
