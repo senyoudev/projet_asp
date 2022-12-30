@@ -20,13 +20,13 @@ namespace backend.Controllers
          * 
          */
 
-        [HttpGet]
+        //[HttpGet]
       
-        public IActionResult GetUserById()
-        {
-            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+        //public IActionResult GetUserById()
+        //{
+        //    var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
            
             
-        }
+        //}
     }
 }
