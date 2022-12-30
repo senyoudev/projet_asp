@@ -6,7 +6,7 @@
         public string Name { get; set; }
         public int UserId { get; set; }
         public double TauxRemise { get; set; }
-        public DateTime DateExperation { get; set; }
+        public DateTime DateExpiration { get; set; }
     
     }
 }
