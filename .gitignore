@@ -1,1 +1,26 @@
 /frontend/node_modules
+# Binaries
+backend/*.dll
+backend/*.exe
+backend/*.pdb
+
+# Build and publish directories
+backend/bin/
+backend/obj/
+
+# User-specific files
+backend/*.user
+backend/*.suo
+
+# Configuration files
+
+
+# SSL certificates
+backend/*.pfx
+
+# Azure publish profiles
+backend/*.publishsettings
+
+# Configuration files
+backend/*.config
+
