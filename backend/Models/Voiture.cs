@@ -13,14 +13,15 @@ namespace backend.Models
         public int Annee { get; set; }
         public int Km { get; set; }
         public DateTime DateAdded { get; set; }
-        
-        public Nullable<int> UserId  { get; set; }
+
+        public Nullable<int> UserId { get; set; }
         public int MarqueId { get; set; }
         public int OffreSpecialeId { get; set; }
         public double Prix { get; set; }
+        public bool isAprouved { get; set; }
 
         [ForeignKey("UserId")]
-        
+
         public virtual User User { get; set; }
         [ForeignKey("MarqueId")]
         public virtual Marque Marque { get; set; }
@@ -28,7 +29,7 @@ namespace backend.Models
         public virtual OffreSpeciale OffreSpeciale { get; set; }
 
 
-     
+
 
 
     }
