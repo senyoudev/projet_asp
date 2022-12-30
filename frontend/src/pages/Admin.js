@@ -8,7 +8,7 @@ import Sidebar from "../components/Sidebar/Sidebar";
 import routes from "../routes.js";
 
 import sidebarImage from "../assets/img/sidebar-2.jpg";
-import Dashboard from "../views/Dashboard";
+import Dashboard from "../pages/admin/Dashboard";
 import Clients from "./admin/Users";
 
 function Admin({ props }) {
