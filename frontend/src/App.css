@@ -98,5 +98,8 @@ a{
 #admin table td .btn{
   margin-top: 4px;
 }
+#admin {
+  overflow-x: hidden;
+}
 
 /**** Owner Dashboard ****/

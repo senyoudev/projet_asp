@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 
 import AdminNavbar from "../components/Navbars/AdminNavbar";
 import Sidebar from "../components/Sidebar/Sidebar";
-
 import routes from "../routes.js";
 
 import sidebarImage from "../assets/img/sidebar-2.jpg";
@@ -45,7 +44,7 @@ function Admin() {
         return <OfferDetails/>;
         break;
       default:
-        return null;
+        return <Dashboard/>;
         break;
     }
   };
