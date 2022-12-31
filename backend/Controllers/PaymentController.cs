@@ -20,13 +20,13 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        /*[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]*/
         public async Task<ActionResult<Paiement>> Create(PaymentInput payment)
         {
             if (payment == null)
                 return BadRequest("no data provided");
-            var paymentToAdd=new Paiement { Libelle=payment.Libelle};
-            _db.Paiements.AddAsync(paymentToAdd);
+            var paymentToAdd=new Paiement { Libelle=payment.Libelle,ReservationId=payment.ReservationId};
+            await _db.Paiements.AddAsync(paymentToAdd);
             _db.SaveChanges();
             return Ok(payment);    
         }
