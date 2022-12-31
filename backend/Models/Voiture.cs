@@ -20,6 +20,7 @@ namespace backend.Models
         public int OffreSpecialeId { get; set; }
         public double Prix { get; set; }
         public bool isAprouved { get; set; }
+        public bool isDisponible { get; set; }
 
         [ForeignKey("UserId")]
 
