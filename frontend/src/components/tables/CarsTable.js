@@ -37,6 +37,7 @@ function CarsTable(props) {
                     <th className="border-0">brand</th>
                     <th className="border-0">prix</th>
                     <th className="border-0">Added Date</th>
+                    <th className="border-0">Status</th>
                     <th className="border-0">Actions</th>
                   </tr>
                 </thead>
@@ -47,6 +48,7 @@ function CarsTable(props) {
                     <td>$36,738</td>
                     <td>Niger</td>
                     <td>Oud-Turnhout</td>
+                    <td>Reserved</td>
                     <td>
                       {props.type === "admin" ? (
                         <button className="btn btn-fill btn-primary me-2">
@@ -72,6 +74,7 @@ function CarsTable(props) {
                     <td>$23,789</td>
                     <td>Curaçao</td>
                     <td>Sinaai-Waas</td>
+                    <td>Available</td>
                     <td>
                       {props.type === "admin" ? (
                         <button className="btn btn-fill btn-primary me-2">
