@@ -161,30 +161,66 @@ namespace backend.Controllers
         }
 
 
-        //api pou get the voiture cree par une proprietaire
-        [HttpGet]
-        [Route("api/Voiture/{id}/proprietaire")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-            Roles = "administrator, Proprietaire")]
+        
+       
 
-        public IActionResult getVoituresProprietaire(int id)
+        [HttpGet("count")]
+        public async Task<ActionResult<int>> GetVoituresCount()
         {
+            var count = await _db.Voitures
+                .CountAsync();
 
-            List<Voiture> result = new List<Voiture> { };
-            var containsIQuery =
-                  from res in _db.Voitures
-                  where res.UserId == id
-                  select res;
+            return count;
+        }
 
-            foreach (var res in containsIQuery)
+        [HttpGet("countByUser")] 
+        public async Task<ActionResult<int>> GetVoituresByUserCount(int userId)
+        {
+            var count = await _db.Voitures
+                .Where(u => u.UserId == userId)
+                .CountAsync();
+
+            return count;
+        }
+
+        [HttpGet("ByUser")]
+        public async Task<ActionResult<IEnumerable<User>>> GetVoituresByUser(int userId)
+        {
+            var users = await _db.Voitures
+                .Where(u => u.UserId == userId)
+                .ToListAsync();
+
+            return Ok(users);
+        }
+
+        [HttpGet("searchColor")]
+        public async Task<ActionResult<IEnumerable<Voiture>>> searchVoitureByColor(string search)
+        {
+            var voitures = await _db.Voitures
+                .Where(u => u.Couleur.Contains(search))
+                .ToListAsync();
+
+            if (voitures == null)
             {
-                result.Add(res);
+                return NotFound();
             }
-            if (result.IsNullOrEmpty())
+
+            return voitures;
+        }
+
+        [HttpGet("searchYear")]
+        public async Task<ActionResult<IEnumerable<Voiture>>> searchVoitureByYear(int search)
+        {
+            var voitures = await _db.Voitures
+                .Where(u => u.Annee == search)
+                .ToListAsync();
+
+            if (voitures == null)
             {
-                return NoContent();
+                return NotFound();
             }
-            return Ok(result.ToList());
+
+            return voitures;
         }
 
 

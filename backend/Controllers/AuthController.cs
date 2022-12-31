@@ -111,6 +111,11 @@ namespace backend.Controllers
                     return Unauthorized("Password is wrong");
                 }
 
+                if(loggedInUser.Blacklist != null)
+                {
+                    return Unauthorized("You are on the Black list");
+                }
+
                 var claims = new[]
         {
                     new Claim(ClaimTypes.Name, loggedInUser.Username),
