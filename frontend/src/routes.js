@@ -15,7 +15,14 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import { faCar, faDashboard, faShop, faUsers } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCar,
+  faDashboard,
+  faSackDollar,
+  faShop,
+  faUsers,
+} from "@fortawesome/free-solid-svg-icons";
+import { Routes } from "react-router-dom";
 import Dashboard from "./pages/admin/Dashboard";
 
 const dashboardRoutes = [
@@ -23,29 +30,51 @@ const dashboardRoutes = [
     path: "/dashboard",
     name: "Dashboard",
     icon: faDashboard,
-    component: Dashboard,
-    layout: "/admin"
+    layout: "/admin",
   },
   {
     path: "/users",
     name: "Users",
     icon: faUsers,
-    component: Dashboard,
-    layout: "/admin"
+    layout: "/admin",
   },
   {
     path: "/cars",
     name: "Cars",
     icon: faCar,
-    component: Dashboard,
-    layout: "/admin"
+    layout: "/admin",
   },
   {
     path: "/offers",
-    name: "Promotions",
+    name: "Offers",
     icon: faShop,
-    component: Dashboard,
-    layout: "/admin"
+    layout: "/admin",
+  },
+];
+export const dashboardOwnerRoutes = [
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    icon: faDashboard,
+    layout: "/owner",
+  },
+  {
+    path: "/cars",
+    name: "Cars",
+    icon: faCar,
+    layout: "/owner",
+  },
+  {
+    path: "/offers",
+    name: "Offers",
+    icon: faShop,
+    layout: "/owner",
+  },
+  {
+    path: "/reservations",
+    name: "Reservations",
+    icon: faSackDollar,
+    layout: "/owner",
   },
 ];
 

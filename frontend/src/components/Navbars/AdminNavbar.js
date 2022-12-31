@@ -3,10 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Navbar, Container, Nav, Dropdown, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBell,
-  faDashboard,
   faEllipsis,
-  faEllipsisV,
 } from "@fortawesome/free-solid-svg-icons";
 import routes from "../../routes.js";
 
