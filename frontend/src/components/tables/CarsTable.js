@@ -74,7 +74,7 @@ function CarsTable(props) {
                     <td>$23,789</td>
                     <td>Curaçao</td>
                     <td>Sinaai-Waas</td>
-                    <td>Available</td>
+                    <td style={{color: 'orange'}}>Available</td>
                     <td>
                       {props.type === "admin" ? (
                         <button className="btn btn-fill btn-primary me-2">
