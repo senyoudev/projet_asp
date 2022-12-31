@@ -139,6 +139,9 @@ namespace backend.Migrations
                     b.Property<DateTime>("DatePriseEnCharge")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("DateRemise")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("PaiementId")
                         .HasColumnType("int");
 
@@ -217,6 +220,14 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("nom")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("prenom")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");
@@ -269,6 +280,10 @@ namespace backend.Migrations
                     b.Property<int>("MarqueId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("OffreSpecialeId")
                         .HasColumnType("int");
 
@@ -283,6 +298,12 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("int");
 
+                    b.Property<bool>("isAprouved")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("isDisponible")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("MarqueId");
@@ -296,24 +317,20 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.BlackList", b =>
                 {
-                    b.HasOne("backend.Models.User", "User")
+                    b.HasOne("backend.Models.User", null)
                         .WithOne("Blacklist")
                         .HasForeignKey("backend.Models.BlackList", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("backend.Models.FavoriteList", b =>
                 {
-                    b.HasOne("backend.Models.User", "User")
+                    b.HasOne("backend.Models.User", null)
                         .WithOne("FavoriteList")
                         .HasForeignKey("backend.Models.FavoriteList", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("backend.Models.OffreSpeciale", b =>
@@ -373,7 +390,7 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Voiture", b =>
                 {
-                    b.HasOne("backend.Models.Marque", "Marque")
+                    b.HasOne("backend.Models.Marque", null)
                         .WithMany("Voitures")
                         .HasForeignKey("MarqueId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -390,8 +407,6 @@ namespace backend.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Marque");
 
                     b.Navigation("OffreSpeciale");
 

@@ -1,4 +1,4 @@
-﻿using backend.utils;
+using backend.utils;
 using backend.Data;
 using backend.Models;
 using backend.Models.inputs;
@@ -46,7 +46,9 @@ namespace backend.Controllers
                 {
                     Username = user.Username,
                     Email = user.Email,
-                    Photo = user.Photo,
+                    nom = user.nom,
+                    prenom = user.prenom,
+                    Photo = "https://res.cloudinary.com/deziuonx1/image/upload/v1672518025/lgact3ngsxxm0xt4v65z_qnfuss.jpg",
                     DateAdded = DateTime.UtcNow,
                     Password = password.HashPassword(salt,user.Password),
                     UserType = 0,
@@ -77,6 +79,8 @@ namespace backend.Controllers
                     Photo = registredUser.Photo,
                     UserType = registredUser.UserType,
                     Role = registredUser.Role,
+                    nom = registredUser.nom,
+                    prenom = registredUser.prenom,
                 };
 
                 return Ok(UserProfile);
@@ -107,6 +111,11 @@ namespace backend.Controllers
                     return Unauthorized("Password is wrong");
                 }
 
+                if(loggedInUser.Blacklist != null)
+                {
+                    return Unauthorized("You are on the Black list");
+                }
+
                 var claims = new[]
         {
                     new Claim(ClaimTypes.Name, loggedInUser.Username),
@@ -127,6 +136,8 @@ namespace backend.Controllers
                     Photo = loggedInUser.Photo,
                     UserType = loggedInUser.UserType,
                     Role = loggedInUser.Role,
+                    nom = loggedInUser.nom,
+                    prenom = loggedInUser.prenom,
                 };
 
                 return Ok(UserProfile);

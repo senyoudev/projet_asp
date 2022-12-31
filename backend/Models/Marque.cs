@@ -1,4 +1,4 @@
-﻿using backend.Models.inputs;
+using backend.Models.inputs;
 using System.ComponentModel.DataAnnotations;
 
 namespace backend.Models

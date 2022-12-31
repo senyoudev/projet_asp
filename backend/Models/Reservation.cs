@@ -11,6 +11,7 @@ namespace backend.Models
         public int VoitureId { get; set; }
         public int PaiementId { get; set; }
         public DateTime DatePriseEnCharge { get; set; }
+        public DateTime DateRemise { get; set; }
         public double Prix { get; set; }
 
         [ForeignKey("UserId")]

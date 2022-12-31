@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Xml.Linq;
+
 namespace backend.Controllers
 {
     [Route("api/[controller]/[action]")]
@@ -66,22 +68,22 @@ namespace backend.Controllers
                 Name=offre.Name,
                 UserId=offre.UserId,
                 TauxRemise=offre.TauxRemise,    
-                DateExpiration=offre.DateExperation,
+                DateExpiration=offre.DateExpiration,
                 DateAdded=DateTime.Now,
-                User=user,
+               
             };
 
             // Add the new marque object to the database
             _db.OffreSpeciales.Add(offreToAdd);
             await _db.SaveChangesAsync();
 
-            return new JsonResult(Ok(offreToAdd));
+            return new JsonResult(Ok(offre));
         }
 
         [HttpPut]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
 
-        public async Task<IActionResult> Update(int id, OffreSpeciale offre)
+        public async Task<IActionResult> Update(int id, OffreInput offre)
         {
             // Validate the incoming request data
             if (offre == null || offre.Id != id)
@@ -104,8 +106,11 @@ namespace backend.Controllers
                 return NotFound("User Not found");
             }
 
-            offre_from_db = offre;
-            // Update the existing marque object with the new data
+            offre_from_db.Name = offre.Name;
+            offre_from_db.UserId = offre.UserId;
+            offre_from_db.TauxRemise = offre.TauxRemise;
+               offre_from_db.DateExpiration = offre.DateExpiration;
+       
             _db.OffreSpeciales.Update(offre_from_db);
             await _db.SaveChangesAsync();
 
