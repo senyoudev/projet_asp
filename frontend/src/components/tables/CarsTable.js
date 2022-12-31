@@ -1,18 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 
 // react-bootstrap components
-import { Button, Card, Table, Row, Col } from "react-bootstrap";
+import { Card, Table, Row, Col, Modal, Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-function CarsTable() {
+function CarsTable(props) {
   const navigate = useNavigate();
   function editCar() {
-    navigate("/admin/carDetails", {
+    navigate(`/${props.type}/carDetails`, {
       state: {
         carId: 1,
       },
     });
   }
+  function deleteCar() {}
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   return (
     <>
       <Row>
@@ -26,56 +31,173 @@ function CarsTable() {
                 <thead>
                   <tr>
                     <th className="border-0">ID</th>
-                    <th className="border-0">Owner</th>
+                    {props.type === "admin" ? (
+                      <th className="border-0">Owner</th>
+                    ) : null}
                     <th className="border-0">brand</th>
                     <th className="border-0">prix</th>
                     <th className="border-0">Added Date</th>
+                    <th className="border-0">Status</th>
                     <th className="border-0">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td>1</td>
-                    <td>Dakota Rice</td>
+                    {props.type === "admin" ? <td>Dakota Rice</td> : null}
                     <td>$36,738</td>
                     <td>Niger</td>
                     <td>Oud-Turnhout</td>
+                    <td>Reserved</td>
                     <td>
-                      <button className="btn btn-fill btn-primary me-2">
-                        Approve
-                      </button>
+                      {props.type === "admin" ? (
+                        <button className="btn btn-fill btn-primary me-2">
+                          Approve
+                        </button>
+                      ) : null}
                       <button
-                        className="btn btn-fill btn-secondary"
+                        className="btn btn-fill btn-secondary me-2"
                         onClick={editCar}
                       >
                         Edit
                       </button>
+                      {props.type === "owner" ? (
+                        <button className="btn btn-fill btn-danger">
+                          Delete
+                        </button>
+                      ) : null}
                     </td>
                   </tr>
                   <tr>
                     <td>2</td>
-                    <td>Minerva Hooper</td>
+                    {props.type === "admin" ? <td>Dakota Rice</td> : null}
                     <td>$23,789</td>
                     <td>Curaçao</td>
                     <td>Sinaai-Waas</td>
+                    <td>Available</td>
                     <td>
-                      <button className="btn btn-fill btn-primary me-2">
-                        Approve
-                      </button>
+                      {props.type === "admin" ? (
+                        <button className="btn btn-fill btn-primary me-2">
+                          Approve
+                        </button>
+                      ) : null}
                       <button
-                        className="btn btn-fill btn-secondary"
+                        className="btn btn-fill btn-secondary me-2"
                         onClick={editCar}
                       >
                         Edit
                       </button>
+                      {props.type === "owner" ? (
+                        <button className="btn btn-fill btn-danger">
+                          Delete
+                        </button>
+                      ) : null}
                     </td>
                   </tr>
                 </tbody>
               </Table>
             </Card.Body>
+            {props.type === "owner" ? (
+              <Card.Footer style={{ textAlign: "center" }}>
+                <button
+                  className="btn btn-fill btn-primary"
+                  onClick={handleShow}
+                >
+                  Add Car
+                </button>
+              </Card.Footer>
+            ) : null}
           </Card>
         </Col>
       </Row>
+      {props.type === "owner" ? (
+        <Modal
+          show={show}
+          onHide={handleClose}
+          backdrop="static"
+          keyboard={false}
+        >
+          <Form>
+            <Modal.Header>
+              <Modal.Title style={{ margin: "unset" }}>Add Car</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Row className="pb-3">
+                <Col className="pl-1" md="6">
+                  <Form.Group>
+                    <Form.Control placeholder="Name" type="text"></Form.Control>
+                  </Form.Group>
+                </Col>
+                <Col className="pr-1">
+                  <Form.Group>
+                    <Form.Control
+                      placeholder="Price (DH)"
+                      type="text"
+                    ></Form.Control>
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row className="pb-3">
+                <Col className="pr-1" md="6">
+                  <Form.Group>
+                    <Form.Select>
+                      <option>Select Couleur</option>
+                      <option>Red</option>
+                      <option>Blue</option>
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+                <Col className="pr-1" md="6">
+                  <Form.Group>
+                    <Form.Select>
+                      <option>Select Brand</option>
+                      <option>Dacia</option>
+                      <option>Toyota</option>
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row className="pb-3">
+                <Col md="6">
+                  <Form.Group>
+                    <Form.Control
+                      placeholder="Distance(KM)"
+                      type="text"
+                    ></Form.Control>
+                  </Form.Group>
+                </Col>
+                <Col className="pl-1" md="6">
+                  <Form.Group>
+                    <Form.Control
+                      placeholder="Year (ex: 2018)"
+                      type="text"
+                    ></Form.Control>
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row className="pb-2">
+                <Col md="12">
+                  <Form.Group>
+                    <Form.Control type="file"></Form.Control>
+                  </Form.Group>
+                </Col>
+              </Row>
+            </Modal.Body>
+            <Modal.Footer>
+              <button
+                className="btn btn-fill btn-secondary"
+                onClick={handleClose}
+                type="reset"
+              >
+                Close
+              </button>
+              <button className="btn btn-fill btn-primary" type="button">
+                Add Car
+              </button>
+            </Modal.Footer>
+          </Form>
+        </Modal>
+      ) : null}
     </>
   );
 }
