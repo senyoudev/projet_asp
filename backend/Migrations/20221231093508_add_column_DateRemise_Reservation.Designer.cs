@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -11,9 +12,10 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    partial class ApiContextModelSnapshot : ModelSnapshot
+    [Migration("20221231093508_add_column_DateRemise_Reservation")]
+    partial class add_column_DateRemise_Reservation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -220,14 +222,6 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("nom")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("prenom")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Users");
@@ -280,10 +274,6 @@ namespace backend.Migrations
                     b.Property<int>("MarqueId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("OffreSpecialeId")
                         .HasColumnType("int");
 
@@ -301,9 +291,6 @@ namespace backend.Migrations
                     b.Property<bool>("isAprouved")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("isDisponible")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.HasIndex("MarqueId");
@@ -317,20 +304,24 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.BlackList", b =>
                 {
-                    b.HasOne("backend.Models.User", null)
+                    b.HasOne("backend.Models.User", "User")
                         .WithOne("Blacklist")
                         .HasForeignKey("backend.Models.BlackList", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("backend.Models.FavoriteList", b =>
                 {
-                    b.HasOne("backend.Models.User", null)
+                    b.HasOne("backend.Models.User", "User")
                         .WithOne("FavoriteList")
                         .HasForeignKey("backend.Models.FavoriteList", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("backend.Models.OffreSpeciale", b =>
@@ -390,7 +381,7 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Voiture", b =>
                 {
-                    b.HasOne("backend.Models.Marque", null)
+                    b.HasOne("backend.Models.Marque", "Marque")
                         .WithMany("Voitures")
                         .HasForeignKey("MarqueId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -407,6 +398,8 @@ namespace backend.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Marque");
 
                     b.Navigation("OffreSpeciale");
 
