@@ -16,7 +16,7 @@ function ReservationsTable() {
               <Table className="table-hover table-striped">
                 <thead>
                   <tr>
-                    {" "}
+                    <th className="border-0">ID</th>
                     <th className="border-0">Voiture</th>
                     <th className="border-0">Prix Total</th>
                     <th className="border-0">Tenant</th>
