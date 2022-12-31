@@ -22,7 +22,7 @@ namespace backend.Controllers
         }
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-             Roles = "administrator")]
+             Roles = "Administrator")]
 
         public JsonResult GetReservations()
         {

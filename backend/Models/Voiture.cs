@@ -8,6 +8,7 @@ namespace backend.Models
     {
         [Key]
         public int Id { get; set; }
+        public string Name { get; set; }
         public string Couleur { get; set; }
         public string Photo { get; set; }
         public int Annee { get; set; }
@@ -26,7 +27,7 @@ namespace backend.Models
         [ForeignKey("MarqueId")]
         public virtual Marque Marque { get; set; }
         [ForeignKey("OffreSpecialeId")]
-        public virtual OffreSpeciale OffreSpeciale { get; set; }
+        public  virtual OffreSpeciale OffreSpeciale { get; set; }
 
 
 
