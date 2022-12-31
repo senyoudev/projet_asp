@@ -23,7 +23,6 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -58,6 +57,7 @@ export const data = {
 };
 
 function Dashboard() {
+
   return (
     <>
       <Container fluid>
@@ -86,7 +86,7 @@ function Dashboard() {
                 <hr></hr>
                 <div className="stats">
                   <FontAwesomeIcon icon={faRedo} className="me-1" />
-                  Update Now
+                  Update Now 
                 </div>
               </Card.Footer>
             </Card>
