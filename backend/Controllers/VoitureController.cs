@@ -26,8 +26,6 @@ namespace backend.Controllers
         [Route("api/Voiture/")]
 
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-            Roles = "administrator")]
 
         public JsonResult GetVoitures()
         {
@@ -42,8 +40,7 @@ namespace backend.Controllers
         [HttpGet]
         [Route("api/Voiture/{id}")]
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-            Roles = "administrator")]
+       
 
         public JsonResult GetVoiture(long id)
         {
@@ -76,6 +73,7 @@ namespace backend.Controllers
 
             var newVoiture = new Voiture
             {
+                Name = voiture.Name,
                 Couleur = voiture.Couleur,
                 Annee = voiture.Annee,
                 Km = voiture.Km,
@@ -98,7 +96,7 @@ namespace backend.Controllers
 
         [HttpPut("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-            Roles = "administrator, Proprietaire")]
+            Roles = "Administrator, Proprietaire")]
         public async Task<IActionResult> UpdateVoiture(int id, VoitureInput voiture)
         {
             if (id != voiture.Id)
@@ -129,7 +127,7 @@ namespace backend.Controllers
 
         [HttpDelete("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-            Roles = "administrator, Proprietaire")]
+            Roles = "Administrator, Proprietaire")]
         // DELETE: api/TodoItems/5
         public async Task<IActionResult> DeleteVoiture(int id)
         {
@@ -146,7 +144,7 @@ namespace backend.Controllers
         }
         [HttpPut]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-          Roles = "administrator")]
+          Roles = "Administrator")]
         public async Task<IActionResult> AprovedVoiture(int id)
         {
             var voiture = await _db.Voitures.FindAsync(id);
@@ -197,7 +195,7 @@ namespace backend.Controllers
         public async Task<ActionResult<IEnumerable<Voiture>>> searchVoitureByColor(string search)
         {
             var voitures = await _db.Voitures
-                .Where(u => u.Couleur.Contains(search))
+                .Where(u => u.Couleur.ToLower().Contains(search.ToLower()))
                 .ToListAsync();
 
             if (voitures == null)
@@ -223,6 +221,46 @@ namespace backend.Controllers
             return voitures;
         }
 
+        [HttpGet("searchkm")]
+        public async Task<ActionResult<IEnumerable<Voiture>>> searchVoitureBykm(int search)
+        {
+            var voitures = await _db.Voitures
+                .Where(u => u.Km == search)
+                .ToListAsync();
+
+            if (voitures == null)
+            {
+                return NotFound();
+            }
+
+            return voitures;
+        }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Voiture>>> searchVoitureByName(string search)
+        {
+            var voitures = await _db.Voitures
+                .Where(u => u.Name.ToLower().Contains(search.ToLower()))
+                .ToListAsync();
+
+            if (voitures == null)
+            {
+                return NotFound();
+            }
+
+            return voitures;
+        }
+        [HttpGet("marque")]
+        public async Task<ActionResult<IEnumerable<Voiture>>> GetVoituresByMarque(int marqueId)
+        {
+            var voitures = await _db.Voitures
+                .Where(u => u.MarqueId == marqueId)
+                .ToListAsync();
+           
+
+            // Return the voitures belonging to the marque
+            return Ok(voitures);
+        }
 
         [NonAction]
         private bool VoitureExists(int id)
