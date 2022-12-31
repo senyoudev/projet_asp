@@ -21,8 +21,8 @@ namespace backend.Controllers
             _db = db;
         }
         [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-             Roles = "administrator")]
+      /*  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+             Roles = "administrator")]*/
 
         public JsonResult GetReservations()
         {
@@ -33,9 +33,9 @@ namespace backend.Controllers
             }
             return new JsonResult(Ok(Reservations));
         }
-        [HttpGet("{idVoiture}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-             Roles = "administrator,Proprietaire")]
+       [HttpGet("{idVoiture}")]
+        /*    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+                Roles = "administrator,Proprietaire")]*/
 
         //Api pour get the reservation effectuer sur une voiture
         public ActionResult GetHisReservationVoiture(int idVoiture)
@@ -57,8 +57,8 @@ namespace backend.Controllers
             return Ok(result.ToList());
         }
         [HttpGet("{idUser}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-             Roles = "administrator,Proprietaire")]
+       /* [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+             Roles = "administrator,Proprietaire")]*/
         //get the historique reservation effectuer par un user 
         public IActionResult getUserReservation(int idUser)
         {
@@ -80,8 +80,8 @@ namespace backend.Controllers
         }
         [HttpGet("{id}")]
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-             Roles = "administrator")]
+       /* [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+             Roles = "administrator")]*/
         public JsonResult GetReservation(int id)
         {
             var reservation = _db.Reservations.FindAsync(id);
@@ -99,8 +99,8 @@ namespace backend.Controllers
 
         [HttpPost]
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-             Roles = "administrator,Proprietaire,Locataire")]
+        /*[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+             Roles = "administrator,Proprietaire,Locataire")]*/
         public async Task<ActionResult<Reservation>> AddReservation(ReservationInput reservation)
         {
             if (!ModelState.IsValid || !ModelValid.IsModelValid(reservation))
@@ -116,6 +116,7 @@ namespace backend.Controllers
                 VoitureId = reservation.VoitureId,
                 PaiementId = reservation.PaiementId,
                 DatePriseEnCharge = DateTime.UtcNow,
+                DateRemise = reservation.DateRemise,
                 Prix = reservation.Prix
 
 
@@ -128,9 +129,9 @@ namespace backend.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+       /* [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
              Roles = "administrator,Proprietaire,Locataire")]
-
+*/
 
         public async Task<IActionResult> UpdateReservation(int id, ReservationInput reservation)
         {
@@ -164,8 +165,8 @@ namespace backend.Controllers
 
         // DELETE: api/TodoItems/5
         [HttpDelete("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-             Roles = "administrator,Proprietaire,Locataire")]
+/*        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+             Roles = "administrator,Proprietaire,Locataire")]*/
         public async Task<IActionResult> DeleteReservation(int id)
         {
             var reservation = await _db.Reservations.FindAsync(id);
