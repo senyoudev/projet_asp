@@ -4,6 +4,7 @@ using backend.Models.inputs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
 
 namespace backend.Controllers
@@ -127,6 +128,27 @@ namespace backend.Controllers
             return new JsonResult("Deleted successfully");
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<User>>> GetUsersInBlackList()
+        {
+            var users = await _db.Users
+                  .Include(u => u.Blacklist)
+                  .Where(u => u.FavoriteList != null)
+                  .ToListAsync();
+
+            return Ok(users);
+        }
+
+        [HttpGet("count")]
+        public async Task<ActionResult<IEnumerable<User>>> GetUsersInBlackListCount()
+        {
+            var users = await _db.Users
+                  .Include(u => u.Blacklist)
+                  .Where(u => u.FavoriteList != null)
+                  .CountAsync();
+
+            return Ok(users);
+        }
     }
 }
 
