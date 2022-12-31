@@ -4,6 +4,7 @@ using backend.Models.inputs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Controllers
 {
@@ -123,6 +124,28 @@ namespace backend.Controllers
             await _db.SaveChangesAsync();
 
             return new JsonResult("Deleted successfully");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<User>>> GetUsersInFavoriteList()
+        {
+            var users = await _db.Users
+                  .Include(u => u.FavoriteList)
+                  .Where(u => u.FavoriteList != null)
+                  .ToListAsync();
+
+            return Ok(users);
+        }
+
+        [HttpGet("count")]
+        public async Task<ActionResult<IEnumerable<User>>> GetUsersInFavoriteListCount()
+        {
+            var users = await _db.Users
+                  .Include(u => u.FavoriteList)
+                  .Where(u => u.FavoriteList != null)
+                  .CountAsync();
+
+            return Ok(users);
         }
 
     }
