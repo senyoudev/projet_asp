@@ -60,7 +60,7 @@ namespace backend.Controllers
         [HttpPost]
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-            Roles = "administrator, Proprietaire")]
+            Roles = "Administrator, Proprietaire")]
 
         public async Task<ActionResult<Voiture>> AddVoiture(VoitureInput voiture)
         {
@@ -83,7 +83,8 @@ namespace backend.Controllers
                 OffreSpecialeId = voiture.OffreSpecialeId,
                 Prix = voiture.Prix,
                 Photo = voiture.Photo,
-                isAprouved = false
+                isAprouved = false,
+                isDisponible=true
 
 
             };

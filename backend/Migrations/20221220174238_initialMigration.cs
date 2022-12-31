@@ -169,7 +169,7 @@ namespace backend.Migrations
                     DateAdded = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: true),
                     MarqueId = table.Column<int>(type: "int", nullable: false),
-                    OffreSpecialeId = table.Column<int>(type: "int", nullable: false),
+                    OffreSpecialeId = table.Column<int>(type: "int", nullable: true),
                     Prix = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
