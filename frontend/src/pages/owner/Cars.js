@@ -20,7 +20,7 @@ function Cars() {
           />
         </Col>
       </Row>
-      <CarsTable type="admin"/>
+      <CarsTable type="owner" />
     </>
   );
 }

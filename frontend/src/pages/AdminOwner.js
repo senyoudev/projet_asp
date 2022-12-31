@@ -4,18 +4,17 @@ import { useLocation } from "react-router-dom";
 import AdminNavbar from "../components/Navbars/AdminNavbar";
 import Sidebar from "../components/Sidebar/Sidebar";
 
-import routes from "../routes.js";
+import routes, { dashboardOwnerRoutes } from "../routes.js";
 
 import sidebarImage from "../assets/img/sidebar-2.jpg";
-import Dashboard from "../pages/admin/Dashboard";
-import Clients from "./admin/Users";
-import Cars from "./admin/Cars";
-import Profile from "./admin/Profile";
-import Offers from "./admin/Offers";
+import Dashboard from "./owner/Dashboard";
+import Cars from "./owner/Cars";
+import Offers from "./owner/Offers";
+import Reservations from "./owner/Reservations";
 import CarDetails from "./admin/CarDetails";
 import OfferDetails from "./admin/OfferDetails";
 
-function Admin() {
+function AdminOwner() {
   const [image, setImage] = React.useState(sidebarImage);
   const [color, setColor] = React.useState("black");
   const [hasImage, setHasImage] = React.useState(true);
@@ -23,26 +22,23 @@ function Admin() {
   const mainPanel = React.useRef(null);
   const getRoutes = (routes) => {
     switch (location.pathname) {
-      case "/admin/dashboard":
+      case "/owner/dashboard":
         return <Dashboard />;
         break;
-      case "/admin/users":
-        return <Clients />;
+      case "/owner/cars":
+        return <Cars />;
         break;
-      case "/admin/cars":
-        return <Cars/>;
-        break;
-      case "/admin/offers":
+      case "/owner/offers":
         return <Offers />;
         break;
-      case "/admin/profile":
-        return <Profile />;
+      case "/owner/reservations":
+        return <Reservations />;
         break;
-      case "/admin/carDetails":
-        return <CarDetails  type="admin" />;
+      case "/owner/carDetails":
+        return <CarDetails />;
         break;
-      case "/admin/offerDetails":
-        return <OfferDetails/>;
+      case "/owner/offerDetails":
+        return <OfferDetails type="owner" />;
         break;
       default:
         return null;
@@ -63,9 +59,13 @@ function Admin() {
     }
   }, [location]);
   return (
-    <div id="admin">
+    <div id="owner">
       <div className="wrapper">
-        <Sidebar color={color} image={hasImage ? image : ""} routes={routes} />
+        <Sidebar
+          color={color}
+          image={hasImage ? image : ""}
+          routes={dashboardOwnerRoutes}
+        />
         <div className="main-panel" ref={mainPanel}>
           <AdminNavbar />
           <div className="content">{getRoutes(routes)}</div>
@@ -75,4 +75,4 @@ function Admin() {
   );
 }
 
-export default Admin;
+export default AdminOwner;

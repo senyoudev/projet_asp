@@ -43,11 +43,10 @@ function CarDetails() {
                     <Col className="pr-1" md="6">
                       <Form.Group>
                         <label>Couleur</label>
-                        <Form.Control
-                          defaultValue="Red"
-                          placeholder="Couleur"
-                          type="text"
-                        ></Form.Control>
+                        <Form.Select>
+                            <option>Red</option>
+                            <option>Gray</option>
+                        </Form.Select>
                       </Form.Group>
                     </Col>
                     <Col className="px-1" md="6">
@@ -83,7 +82,7 @@ function CarDetails() {
                     </Col>
                   </Row>
                   <Button
-                    className="btn-fill pull-right"
+                    className="btn-fill pull-right mt-2"
                     type="submit"
                     variant="info"
                   >
