@@ -24,8 +24,8 @@ namespace backend.Models
         [ForeignKey("UserId")]
 
         public virtual User User { get; set; }
-        [ForeignKey("MarqueId")]
-        public virtual Marque Marque { get; set; }
+        //[ForeignKey("MarqueId")]
+        //public virtual Marque Marque { get; set; }
         [ForeignKey("OffreSpecialeId")]
         public  virtual OffreSpeciale OffreSpeciale { get; set; }
 
