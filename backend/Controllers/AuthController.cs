@@ -48,7 +48,7 @@ namespace backend.Controllers
                     Email = user.Email,
                     nom = user.nom,
                     prenom = user.prenom,
-                    Photo = user.Photo,
+                    Photo = "https://res.cloudinary.com/deziuonx1/image/upload/v1672518025/lgact3ngsxxm0xt4v65z_qnfuss.jpg",
                     DateAdded = DateTime.UtcNow,
                     Password = password.HashPassword(salt,user.Password),
                     UserType = 0,
