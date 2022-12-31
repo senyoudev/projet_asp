@@ -20,7 +20,7 @@ function Offers() {
           />
         </Col>
       </Row>
-      <OffersTable type="admin"/>
+      <OffersTable type="owner" />
     </>
   );
 }

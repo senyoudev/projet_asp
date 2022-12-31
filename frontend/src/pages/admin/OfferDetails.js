@@ -4,7 +4,7 @@ import React from "react";
 import { Button, Card, Form, Container, Row, Col } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 
-function OfferDetails() {
+function OfferDetails(props) {
   const location = useLocation();
   const carId = location.state.carId;
   return (
@@ -53,7 +53,7 @@ function OfferDetails() {
                     </Col>
                   </Row>
 
-                  <Row>
+                  {props.type === "owner"?(<Row>
                     <Col md="12">
                       <Form.Group>
                         <label>Owner</label>
@@ -64,9 +64,9 @@ function OfferDetails() {
                         ></Form.Control>
                       </Form.Group>
                     </Col>
-                  </Row>
+                  </Row>): null}
                   <Button
-                    className="btn-fill pull-right"
+                    className="btn-fill pull-right mt-2"
                     type="submit"
                     variant="info"
                   >
