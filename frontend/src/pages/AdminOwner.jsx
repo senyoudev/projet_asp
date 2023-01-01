@@ -22,7 +22,7 @@ function AdminOwner() {
   const mainPanel = React.useRef(null);
 
    const navigate = useNavigate()
-  const [userInfo,setUserInfo] = useState(localStorage.getItem('userInfo'))
+  const [userInfo,setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')))
 
   const getRoutes = () => {
     switch (location.pathname) {
@@ -50,7 +50,7 @@ function AdminOwner() {
     }
   };
   React.useEffect(() => {
-    if(userInfo != null) {
+    if(userInfo != null && userInfo.role == 'proprietaire') {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainPanel.current.scrollTop = 0;
@@ -63,10 +63,10 @@ function AdminOwner() {
       element.parentNode.removeChild(element);
     }
   } else {
-    return navigate('/login')
+    return navigate('/')
   }
   }, [location,localStorage.getItem('userInfo'),mainPanel]);
-   if(userInfo != null) {
+   if(userInfo != null && userInfo.role == 'proprietaire') {
   return (
     <div id="owner">
       <div className="wrapper">

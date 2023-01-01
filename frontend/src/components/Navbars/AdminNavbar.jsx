@@ -6,8 +6,13 @@ import {
   faEllipsis,
 } from "@fortawesome/free-solid-svg-icons";
 import dashboardRoutes from '../../dashboardRoutes';
+import { useAuth } from "../../Context/AuthContext";
 
 function Header() {
+  const {logout} = useAuth('')
+    const logoutHandler = () => {
+     logout()
+  }
   const location = useLocation();
   const mobileSidebarToggle = (e) => {
     e.preventDefault();
@@ -58,8 +63,7 @@ function Header() {
             <Nav.Item>
               <Nav.Link
                 className="m-0"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
+                onClick={logoutHandler}
               >
                 <span className="no-icon">Log out</span>
               </Nav.Link>

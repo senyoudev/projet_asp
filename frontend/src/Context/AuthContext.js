@@ -47,6 +47,7 @@ export const AuthContextProvider = ({ children }) => {
         } catch (error) {
             toast.error("An error Occured")
             console.log(error)
+            setLoading(false)
         }
     }
 
@@ -78,7 +79,7 @@ export const AuthContextProvider = ({ children }) => {
             localStorage.removeItem('userInfo')
             return navigate('/login')
 }
-    
+  
 
 
 

@@ -25,8 +25,9 @@ import {
 import { Line } from "react-chartjs-2";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useCar } from "../../Context/CarContext";
+
+import { useEffect,useState } from "react";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -36,6 +37,7 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+
 
 const options = {
   responsive: true,
@@ -61,6 +63,24 @@ const data = {
 };
 
 function Dashboard() {
+
+   const navigate = useNavigate('')
+  const { getOwnerCarsNumber} = useCar('')
+  const [carNumber,setCarNumber] = useState('')
+  const [userInfo,setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')))
+
+  useEffect(()=> {
+    if(userInfo != null) {
+      setCarNumber(getOwnerCarsNumber())
+      setUserInfo(localStorage.getItem('userInfo'))
+      console.log(carNumber)
+    } else {
+      return navigate('/login')
+    }
+  },[localStorage.getItem('userInfo')])
+
+
+    
 
   return (
     <>
