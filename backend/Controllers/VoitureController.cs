@@ -72,16 +72,43 @@ namespace backend.Controllers
 
        
 
-        public JsonResult GetVoiture(int id)
+        public async Task<ActionResult<VoitureDto>> GetVoiture(int id)
         {
-            var voiture = _db.Voitures.FindAsync(id);
+            var voiture = await _db.Voitures.Include(v => v.User).FirstOrDefaultAsync(v => v.Id == id);
+
 
             if (voiture == null)
             {
                 return new JsonResult(NotFound());
             }
 
-            return new JsonResult(Ok(voiture));
+            var voituredto = new VoitureDto
+            {
+                Id = voiture.Id,
+                Name = voiture.Name,
+                Couleur = voiture.Couleur,
+                Photo = voiture.Photo,
+                Annee = voiture.Annee,
+                Km = voiture.Km,
+                DateAdded = voiture.DateAdded,
+                UserId = voiture.UserId,
+                MarqueId = voiture.MarqueId,
+                OffreSpecialeId = voiture.OffreSpecialeId,
+                Prix = voiture.Prix,
+                Marque = new Marque
+                {
+                    Id = voiture.Marque.Id,
+                    Libelle = voiture.Marque.Libelle,
+                },
+                User = new User
+                {
+                    Id = voiture.User.Id,
+                    Email = voiture.User.Email,
+                    // include other properties of the User object as needed
+                },
+            };
+            return new JsonResult(voituredto);
+
         }
 
 

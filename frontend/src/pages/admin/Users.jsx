@@ -12,7 +12,6 @@ function Users() {
   const fetchData = async () => {
       const clients = await getUsers()
       setUsers(clients.value)
-      console.log(clients.value)
     }
 
   useEffect(()=> {
