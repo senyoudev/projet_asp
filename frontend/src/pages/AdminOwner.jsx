@@ -4,7 +4,6 @@ import { useLocation } from "react-router-dom";
 import AdminNavbar from "../components/Navbars/AdminNavbar";
 import Sidebar from "../components/Sidebar/Sidebar";
 
-import routes, { dashboardOwnerRoutes } from "../routes.js";
 
 import sidebarImage from "../assets/img/sidebar-2.jpg";
 import Dashboard from "./owner/Dashboard";
@@ -14,13 +13,14 @@ import Reservations from "./owner/Reservations";
 import CarDetails from "./admin/CarDetails";
 import OfferDetails from "./admin/OfferDetails";
 import "../assets/css/admin.css";
+import { dashboardOwnerRoutes } from "../dashboardRoutes";
 function AdminOwner() {
   const [image, setImage] = React.useState(sidebarImage);
   const [color, setColor] = React.useState("black");
   const [hasImage, setHasImage] = React.useState(true);
   const location = useLocation();
   const mainPanel = React.useRef(null);
-  const getRoutes = (routes) => {
+  const getRoutes = () => {
     switch (location.pathname) {
       case "/owner/dashboard":
         return <Dashboard />;
@@ -68,7 +68,7 @@ function AdminOwner() {
         />
         <div className="main-panel" ref={mainPanel}>
           <AdminNavbar />
-          <div className="content">{getRoutes(routes)}</div>
+          <div className="content">{getRoutes()}</div>
         </div>
       </div>
     </div>

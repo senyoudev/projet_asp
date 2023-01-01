@@ -4,7 +4,10 @@
   padding-bottom: 15px;
   height: unset!important;
 }
-
+.footer__logo h1 a{
+  color: #fff;
+  font-weight: 700;
+}
 .footer__logo i {
   color: #fff;
   font-weight: 400;
@@ -63,9 +66,6 @@
   outline: none;
 }
 
-.newsletter span i {
-  color: #fff;
-}
 
 .footer__bottom {
   border-top: 1px solid #7c8a972f;

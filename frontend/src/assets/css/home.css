@@ -19,6 +19,8 @@ h6 {
   color: #000d6b;
   font-weight: 600;
   margin-bottom: 0;
+  line-height: 1.2!important;
+  margin: unset!important;
 }
 
 h3,

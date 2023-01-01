@@ -1,7 +1,16 @@
+import {
+  faCar,
+  faClock,
+  faEarth,
+  faPhone,
+  faSign,
+  faSignIn,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useRef } from "react";
-
 import { Container, Row, Col } from "react-bootstrap";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../../assets/css/header.css";
 
 const navLinks = [
@@ -38,7 +47,7 @@ const Header = () => {
               <div className="header__top__left">
                 <span>Need Help?</span>
                 <span className="header__top__help">
-                  <i class="ri-phone-fill"></i> +1-202-555-0149
+                  <FontAwesomeIcon icon={faPhone} /> +1-202-555-0149
                 </span>
               </div>
             </Col>
@@ -46,11 +55,15 @@ const Header = () => {
             <Col lg="6" md="6" sm="6">
               <div className="header__top__right d-flex align-items-center justify-content-end gap-3">
                 <Link to="/login" className=" d-flex align-items-center gap-1">
-                  <i class="ri-login-circle-line"></i> Login
+                  <FontAwesomeIcon icon={faSignIn} />
+                  Login
                 </Link>
 
-                <Link to="/register" className=" d-flex align-items-center gap-1">
-                  <i class="ri-user-line"></i> Register
+                <Link
+                  to="/register"
+                  className=" d-flex align-items-center gap-1"
+                >
+                  <FontAwesomeIcon icon={faUser} /> Register
                 </Link>
               </div>
             </Col>
@@ -66,7 +79,7 @@ const Header = () => {
               <div className="logo">
                 <h1>
                   <Link to="/" className=" d-flex align-items-center gap-2">
-                    <i class="ri-car-line"></i>
+                    <FontAwesomeIcon icon={faCar} />
                     <span>
                       Rent Car <br /> Service
                     </span>
@@ -78,7 +91,7 @@ const Header = () => {
             <Col lg="3" md="3" sm="4">
               <div className="header__location d-flex align-items-center gap-2">
                 <span>
-                  <i class="ri-earth-line"></i>
+                  <FontAwesomeIcon icon={faEarth} />
                 </span>
                 <div className="header__location-content">
                   <h4>Bangladesh</h4>
@@ -90,7 +103,7 @@ const Header = () => {
             <Col lg="3" md="3" sm="4">
               <div className="header__location d-flex align-items-center gap-2">
                 <span>
-                  <i class="ri-time-line"></i>
+                  <FontAwesomeIcon icon={faClock} />
                 </span>
                 <div className="header__location-content">
                   <h4>Sunday to Friday</h4>
@@ -106,9 +119,10 @@ const Header = () => {
               className=" d-flex align-items-center justify-content-end "
             >
               <button className="header__btn btn ">
-                <Link to="/contact">
+                <a to="#contact" style={{color: "#fff"}}>
+                <FontAwesomeIcon icon={faPhone} />
                   <i class="ri-phone-line"></i> Request a call
-                </Link>
+                </a>
               </button>
             </Col>
           </Row>

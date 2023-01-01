@@ -1,3 +1,10 @@
+import {
+  faCar,
+  faCopyright,
+  faMailBulk,
+  faMessage,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 import { Container, Row, Col, ListGroup, ListGroupItem } from "react-bootstrap";
@@ -30,7 +37,7 @@ const Footer = () => {
             <div className="logo footer__logo">
               <h1>
                 <Link to="/" className=" d-flex align-items-center gap-2">
-                  <i class="ri-car-line"></i>
+                  <FontAwesomeIcon icon={faCar} />
                   <span>
                     Rent Car <br /> Service
                   </span>
@@ -76,9 +83,6 @@ const Footer = () => {
               <p className="section__description">Subscribe our newsletter</p>
               <div className="newsletter">
                 <input type="email" placeholder="Email" />
-                <span>
-                  <i class="ri-send-plane-line"></i>
-                </span>
               </div>
             </div>
           </Col>
@@ -86,8 +90,9 @@ const Footer = () => {
           <Col lg="12">
             <div className="footer__bottom">
               <p className="section__description d-flex align-items-center justify-content-center gap-1 pt-4">
-                <i class="ri-copyright-line"></i>Copyright {year}, Developed by
-                Muhibur Rahman. All rights reserved.
+                <FontAwesomeIcon icon={faCopyright} />
+                Copyright {year}, Developed by Muhibur Rahman. All rights
+                reserved.
               </p>
             </div>
           </Col>
