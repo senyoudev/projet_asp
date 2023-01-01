@@ -4,8 +4,10 @@ import "../../assets/css/about-section.css";
 import aboutImg from "../../assets/all-images/cars-img/bmw-offer.png";
 
 const AboutSection = ({ aboutClass }) => {
+
   return (
     <section
+      
       className="about__section"
       style={
         aboutClass === "aboutPage"
@@ -14,7 +16,7 @@ const AboutSection = ({ aboutClass }) => {
       }
       id="about"
     >
-      <Container>
+      <Container id="about">
         <Row>
           <Col lg="6" md="6">
             <div className="about__section-content">

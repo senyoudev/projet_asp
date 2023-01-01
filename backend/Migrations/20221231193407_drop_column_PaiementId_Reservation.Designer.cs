@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -11,9 +12,10 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    partial class ApiContextModelSnapshot : ModelSnapshot
+    [Migration("20221231193407_drop_column_PaiementId_Reservation")]
+    partial class drop_column_PaiementId_Reservation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,6 +149,9 @@ namespace backend.Migrations
                     b.Property<DateTime>("DateRemise")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("PaiementId")
+                        .HasColumnType("int");
+
                     b.Property<double>("Prix")
                         .HasColumnType("float");
 
@@ -157,6 +162,8 @@ namespace backend.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PaiementId");
 
                     b.HasIndex("UserId");
 
@@ -358,6 +365,12 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Reservation", b =>
                 {
+                    b.HasOne("backend.Models.Paiement", "Paiement")
+                        .WithMany()
+                        .HasForeignKey("PaiementId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("backend.Models.User", "User")
                         .WithMany("Reservations")
                         .HasForeignKey("UserId")
@@ -369,6 +382,8 @@ namespace backend.Migrations
                         .HasForeignKey("VoitureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Paiement");
 
                     b.Navigation("User");
 
