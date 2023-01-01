@@ -1,5 +1,5 @@
 import "./App.css";
-import HomePage from "./pages/Home";
+import Home from "./pages/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Admin from "./pages/Admin";
 import AdminOwenr from "./pages/AdminOwner";
@@ -13,7 +13,7 @@ function App() {
     <Router>
       <AuthContextProvider>
       <Routes>
-        <Route exact path="/" element={<HomePage />} />
+        <Route exact path="/" element={<Home />} />
         <Route path="/admin/*" element={<Admin/>}/>
         <Route path="/owner/*" element={<AdminOwenr/>}/>
         <Route path="/login" element={<Login/>}/>
