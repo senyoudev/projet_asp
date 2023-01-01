@@ -23,6 +23,8 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../Context/AuthContext";
 import { useEffect } from "react";
 import { useState } from "react";
 ChartJS.register(
@@ -59,6 +61,7 @@ const data = {
 };
 
 function Dashboard() {
+
   return (
     <>
       <Container fluid>
@@ -213,6 +216,7 @@ function Dashboard() {
       </Container>
     </>
   );
+  
 }
 
 export default Dashboard;
