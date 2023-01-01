@@ -1,7 +1,7 @@
 .header__top {
   padding: 10px 0px;
-  background: #000d6b;
-  color: #fff;
+  background: #fff;
+  color: #1A120B;
 }
 
 .header__top__left {
@@ -20,22 +20,14 @@
   column-gap: 0.4rem;
 }
 
-.header__top__help i {
-  background: #fff;
-  color: #000d6b;
-  padding: 2px 4px;
-  border-radius: 50px;
-  font-size: 0.7rem;
-}
-
 .header__top__right a {
   text-decoration: none;
-  color: #fff;
+  color: #1A120B;
   font-size: 0.9rem;
 }
 
 .header__top__right a:hover {
-  color: #fff;
+  color: #1A120B;
 }
 
 /* ============ header middle style =========== */
@@ -44,17 +36,21 @@
   padding: 20px 0px;
 }
 
+.header .logo h1 a span {
+  color: #000d6b;
+}
 .logo h1 a span {
   font-size: 1.3rem;
 }
 
-.logo h1 a svg {
+.header .logo h1 a svg {
   font-size: 2rem;
+  color: #000d6b;
 }
 
 .logo h1 a {
   text-decoration: none;
-  color: #000d6b;
+  color: #1dcbef;
   font-weight: 700;
 }
 
@@ -71,15 +67,16 @@
   font-size: 1.2rem;
   font-weight: 700;
   color: #000d6b;
-  margin-bottom: 6px!important;
+  margin-bottom: 6px !important;
 }
 
 .header__location-content h6 {
   font-weight: 600;
+  color: #000d6b;
 }
 
 .header__btn {
-  background: #000d6b !important;
+  background-color: #000d6b !important;
   padding: 10px 20px;
   border: none;
   outline: none;
@@ -104,7 +101,10 @@
 
 .main__navbar {
   padding: 15px 0px;
-  background: #000d6b;
+  background: #1A120B;
+}
+.main__navbar a:hover {
+  color: #000;
 }
 
 .mobile__menu i {
@@ -122,15 +122,21 @@
   align-items: center;
   column-gap: 2.7rem;
 }
+.menu a {
+  color: #fff;
+}
+.menu a:active {
+  color: #fff;
+}
 
 .nav__item {
   color: #fff;
   text-decoration: none;
   transition: 0.3s;
 }
-
+s
 .nav__item:hover {
-  color: #f9a826;
+  color: #fff;
 }
 
 .search__box {
@@ -139,7 +145,7 @@
   display: flex;
   align-items: center;
   border-radius: 50px;
-  background: #020a4de9;
+  background: #1a120b0e;
 }
 
 .search__box input {
@@ -159,7 +165,7 @@
 }
 
 .nav__active {
-  color: #f9a826;
+  color: #fff;
 }
 
 @media only screen and (max-width: 768px) {
@@ -196,7 +202,7 @@
   }
 
   .menu a {
-    color: #000d6b;
+    color: #1dcbef;
     font-weight: 600;
     font-size: 0.9rem;
   }

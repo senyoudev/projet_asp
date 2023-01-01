@@ -13,6 +13,7 @@ namespace backend.Models
         public DateTime DatePriseEnCharge { get; set; }
         public DateTime DateRemise { get; set; }
         public double Prix { get; set; }
+        public Boolean isPaid;
 
         [ForeignKey("UserId")]
         public virtual User User { get; set; }

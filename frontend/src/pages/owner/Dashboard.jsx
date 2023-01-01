@@ -8,7 +8,7 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useEffect, useState } from "react";
 // react-bootstrap components
 import { Card, Container, Row, Col, Table } from "react-bootstrap";
 
@@ -23,6 +23,8 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { useCar } from "../../Context/CarContext";
+import { Navigate, useNavigate } from "react-router-dom";
 
 ChartJS.register(
   CategoryScale,
@@ -58,6 +60,8 @@ export const data = {
 };
 
 function Dashboard() {
+
+
   return (
     <>
       <Container fluid>

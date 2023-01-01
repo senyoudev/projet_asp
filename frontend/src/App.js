@@ -7,22 +7,27 @@ import { AuthContextProvider } from "./Context/AuthContext";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import CarsListing from "./pages/CarsListing"
+import CarsListing from "./pages/CarsListing";
 import CarDetails from "./pages/CarDetails";
+import Contact from "./pages/Contact";
+import { CarContextProvider } from "./Context/CarContext";
 function App() {
   return (
     <Router>
       <AuthContextProvider>
-      <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/admin/*" element={<Admin/>}/>
-        <Route path="/owner/*" element={<AdminOwenr/>}/>
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/register" element={<Register/>}/>
-        <Route path="/cars" element={<CarsListing/>}/>
-        <Route path="/carsDetails" element={<CarDetails/>}/>
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+        <CarContextProvider>
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="/admin/*" element={<Admin />} />
+          <Route path="/owner/*" element={<AdminOwenr />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/cars" element={<CarsListing />} />
+          <Route path="/carsDetails" element={<CarDetails />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        </CarContextProvider>
       </AuthContextProvider>
     </Router>
   );

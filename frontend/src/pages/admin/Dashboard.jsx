@@ -23,6 +23,11 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../Context/AuthContext";
+import { useCar } from "../../Context/CarContext";
+
+import { useEffect,useState } from "react";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -33,7 +38,8 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
+
+const options = {
   responsive: true,
   plugins: {
     legend: {
@@ -44,7 +50,7 @@ export const options = {
 
 const labels = ["January", "February", "March", "April", "May", "June", "July"];
 
-export const data = {
+const data = {
   labels,
   datasets: [
     {
@@ -57,6 +63,24 @@ export const data = {
 };
 
 function Dashboard() {
+
+   const navigate = useNavigate('')
+  const { getOwnerCarsNumber} = useCar('')
+  const [carNumber,setCarNumber] = useState('')
+  const [userInfo,setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')))
+
+  useEffect(()=> {
+    if(userInfo != null) {
+      setCarNumber(getOwnerCarsNumber())
+      setUserInfo(localStorage.getItem('userInfo'))
+      console.log(carNumber)
+    } else {
+      return navigate('/login')
+    }
+  },[localStorage.getItem('userInfo')])
+
+
+    
 
   return (
     <>
@@ -86,7 +110,7 @@ function Dashboard() {
                 <hr></hr>
                 <div className="stats">
                   <FontAwesomeIcon icon={faRedo} className="me-1" />
-                  Update Now 
+                  Update Now
                 </div>
               </Card.Footer>
             </Card>
@@ -185,7 +209,7 @@ function Dashboard() {
               </Card.Body>
               <Card.Footer>
                 <div className="stats">
-                  <FontAwesomeIcon icon={faClock} className="me-1"/>
+                  <FontAwesomeIcon icon={faClock} className="me-1" />
                   Updated 3 minutes ago
                 </div>
               </Card.Footer>
@@ -202,7 +226,7 @@ function Dashboard() {
               </Card.Body>
               <Card.Footer>
                 <div className="stats">
-                  <FontAwesomeIcon icon={faClock} className="me-1"/>
+                  <FontAwesomeIcon icon={faClock} className="me-1" />
                   Updated 3 minutes ago
                 </div>
               </Card.Footer>
@@ -212,6 +236,7 @@ function Dashboard() {
       </Container>
     </>
   );
+  
 }
 
 export default Dashboard;
