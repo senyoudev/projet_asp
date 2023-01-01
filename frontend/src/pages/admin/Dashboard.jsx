@@ -8,7 +8,7 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
+import React from "react";
 // react-bootstrap components
 import { Card, Container, Row, Col } from "react-bootstrap";
 
@@ -25,6 +25,8 @@ import {
 import { Line } from "react-chartjs-2";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
+import { useEffect } from "react";
+import { useState } from "react";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -35,7 +37,7 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
+const options = {
   responsive: true,
   plugins: {
     legend: {
@@ -46,7 +48,7 @@ export const options = {
 
 const labels = ["January", "February", "March", "April", "May", "June", "July"];
 
-export const data = {
+const data = {
   labels,
   datasets: [
     {
@@ -60,8 +62,6 @@ export const data = {
 
 function Dashboard() {
 
-
-    
   return (
     <>
       <Container fluid>
@@ -90,7 +90,7 @@ function Dashboard() {
                 <hr></hr>
                 <div className="stats">
                   <FontAwesomeIcon icon={faRedo} className="me-1" />
-                  Update Now 
+                  Update Now
                 </div>
               </Card.Footer>
             </Card>
@@ -189,7 +189,7 @@ function Dashboard() {
               </Card.Body>
               <Card.Footer>
                 <div className="stats">
-                  <FontAwesomeIcon icon={faClock} className="me-1"/>
+                  <FontAwesomeIcon icon={faClock} className="me-1" />
                   Updated 3 minutes ago
                 </div>
               </Card.Footer>
@@ -206,7 +206,7 @@ function Dashboard() {
               </Card.Body>
               <Card.Footer>
                 <div className="stats">
-                  <FontAwesomeIcon icon={faClock} className="me-1"/>
+                  <FontAwesomeIcon icon={faClock} className="me-1" />
                   Updated 3 minutes ago
                 </div>
               </Card.Footer>
