@@ -1,5 +1,5 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import AdminNavbar from "../components/Navbars/AdminNavbar";
 import Sidebar from "../components/Sidebar/Sidebar";
@@ -20,6 +20,10 @@ function AdminOwner() {
   const [hasImage, setHasImage] = React.useState(true);
   const location = useLocation();
   const mainPanel = React.useRef(null);
+
+   const navigate = useNavigate()
+  const [userInfo,setUserInfo] = useState(localStorage.getItem('userInfo'))
+
   const getRoutes = () => {
     switch (location.pathname) {
       case "/owner/dashboard":
@@ -46,6 +50,7 @@ function AdminOwner() {
     }
   };
   React.useEffect(() => {
+    if(userInfo != null) {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainPanel.current.scrollTop = 0;
@@ -57,7 +62,11 @@ function AdminOwner() {
       var element = document.getElementById("bodyClick");
       element.parentNode.removeChild(element);
     }
-  }, [location]);
+  } else {
+    return navigate('/login')
+  }
+  }, [location,localStorage.getItem('userInfo'),mainPanel]);
+   if(userInfo != null) {
   return (
     <div id="owner">
       <div className="wrapper">
@@ -73,6 +82,7 @@ function AdminOwner() {
       </div>
     </div>
   );
+   }
 }
 
 export default AdminOwner;
