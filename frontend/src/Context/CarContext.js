@@ -17,6 +17,7 @@ const carUrl = getUrl("Cars");
 
 
 export const CarContextProvider = ({ children }) => {
+<<<<<<< HEAD
     
     const navigate = useNavigate()
     const [loading,setLoading] = useState(false)
@@ -45,6 +46,31 @@ export const CarContextProvider = ({ children }) => {
                 console.log(error.response)
                 setLoading(false)
             }
+=======
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const getOwnerCars = async () => {
+    try {
+      const { data } = await axios.get(`${carUrl}/GetVoituresByUser/ByUser?userId=1`);
+      setLoading(false);
+      return data
+    } catch (error) {
+      toast.error("Something went wrong");
+      console.log(error);
+      setLoading(false);
+    }
+  };
+  const getOwnerCarsNumber = async (id) => {
+    setLoading(true);
+    try {
+      const { data } = await axios.get(`${carUrl}/countByUser`, { id });
+      setLoading(false);
+      return data;
+    } catch (error) {
+      toast.error("Something went wrong");
+      console.log(error.response);
+      setLoading(false);
+>>>>>>> origin/main
     }
     
    
