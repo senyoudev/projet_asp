@@ -28,8 +28,9 @@ const Header = () => {
   }
 
   useEffect(() => {
-    const userInfo = localStorage.getItem('userInfo')
-  ? setUserInfo(JSON.parse(localStorage.getItem('userInfo'))) : null
+    if( localStorage.getItem('userInfo')) {
+      setUserInfo(JSON.parse(localStorage.getItem('userInfo')))
+    }
   
   },[localStorage.getItem('userInfo')])
 
@@ -69,14 +70,25 @@ const Header = () => {
                   userInfo ? (
                   
                     <NavDropdown title={UserMenu} id='username'>
+                            {userInfo.role == 'locataire' && (
                                 <LinkContainer to='/profile'>
                                   <NavDropdown.Item>Profile</NavDropdown.Item>
                                 </LinkContainer>
-                                <LinkContainer to='/orders'>
-                                  <NavDropdown.Item>
-                                    Orders
-                                  </NavDropdown.Item>
+                            )}
+
+                             {userInfo.role == 'proprietaire' && (
+                                <LinkContainer to='/owner'>
+                                  <NavDropdown.Item>Dashboard</NavDropdown.Item>
                                 </LinkContainer>
+                            )}
+
+                             {userInfo.role == 'Administrator' && (
+                                <LinkContainer to='/admin'>
+                                  <NavDropdown.Item>Dashboard</NavDropdown.Item>
+                                </LinkContainer>
+                            )}
+                               
+                             
                                 <LinkContainer to='/settings'>
                                   <NavDropdown.Item>Settings</NavDropdown.Item>
                                 </LinkContainer>
