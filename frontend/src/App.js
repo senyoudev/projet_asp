@@ -10,10 +10,12 @@ import Register from "./pages/Register";
 import CarsListing from "./pages/CarsListing";
 import CarDetails from "./pages/CarDetails";
 import Contact from "./pages/Contact";
+import { CarContextProvider } from "./Context/CarContext";
 function App() {
   return (
     <Router>
       <AuthContextProvider>
+        <CarContextProvider>
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/admin/*" element={<Admin />} />
@@ -25,6 +27,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </CarContextProvider>
       </AuthContextProvider>
     </Router>
   );

@@ -16,6 +16,10 @@ html {
   overflow-x: hidden;
 }
 
+#owner {
+  overflow-x: hidden;
+}
+
 /**** Owner Dashboard ****/
 
 
