@@ -21,16 +21,10 @@ namespace backend.Controllers
             _db = db;
         }
         [HttpGet]
-<<<<<<< HEAD
-        /* [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-              Roles = "Administrator")]*/
 
-=======
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
              Roles = "Administrator")]
->>>>>>> 647ac8865360bf651a3f1099efab2f7b298f06e9
-
         public JsonResult GetReservations()
         {
             var Reservations = _db.Reservations.ToList();

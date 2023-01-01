@@ -4,6 +4,9 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
 
 /**** Dashboard ****/
 #admin table td .btn{

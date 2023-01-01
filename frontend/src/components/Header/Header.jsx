@@ -6,11 +6,11 @@ import "../../assets/css/header.css";
 
 const navLinks = [
   {
-    path: "/home",
+    path: "/",
     display: "Home",
   },
   {
-    path: "/about",
+    path: "#about",
     display: "About",
   },
   {
@@ -18,10 +18,6 @@ const navLinks = [
     display: "Cars",
   },
 
-  {
-    path: "/blogs",
-    display: "Blog",
-  },
   {
     path: "/contact",
     display: "Contact",
