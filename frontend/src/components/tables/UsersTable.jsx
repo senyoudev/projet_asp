@@ -4,7 +4,7 @@ import React from "react";
 import { Card, Table, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-function UsersTable() {
+function UsersTable({users}) {
   const navigate = useNavigate();
   function editProfile() {
     navigate("/admin/profile", {
@@ -35,37 +35,12 @@ function UsersTable() {
                   </tr>
                 </thead>
                 <tbody>
+                 
                   <tr>
-                    <td>1</td>
-                    <td>Dakota Rice</td>
-                    <td>$36,738</td>
-                    <td>Niger</td>
-                    <td>Oud-Turnhout</td>
-                    <td>
-                      <button className="btn btn-fill btn-info me-2">
-                        Favorite
-                      </button>
-                      <button className="btn btn-fill btn-success me-2">
-                        Ban
-                      </button>
-
-                      <button
-                        className="btn btn-fill btn-secondary me-2"
-                        onClick={editProfile}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="btn btn-fill btn-danger"
-                        onClick={deleteUser}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Minerva Hooper</td>
+                     {users.map(user => (
+                        <>
+                         <td>{user.id}</td>
+                          <td>Minerva Hooper</td>
                     <td>$23,789</td>
                     <td>Curaçao</td>
                     <td>Sinaai-Waas</td>
@@ -89,6 +64,9 @@ function UsersTable() {
                         Delete
                       </button>
                     </td>
+                        </>
+                      ))}
+                    
                   </tr>
                 </tbody>
               </Table>

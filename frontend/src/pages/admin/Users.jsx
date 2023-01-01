@@ -1,7 +1,29 @@
+import { useEffect, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import UsersTable from "../../components/tables/UsersTable";
+import { useAuth } from "../../Context/AuthContext";
 
 function Users() {
+     const navigate = useNavigate('')
+  const {getUsers } = useAuth('')
+  const [users,setUsers] = useState([])
+  const [userInfo,setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')))
+  const fetchData = async () => {
+      const clients = await getUsers()
+      setUsers(clients.value)
+      console.log(clients.value)
+    }
+
+  useEffect(()=> {
+     
+    if(userInfo != null) {
+      fetchData()
+      setUserInfo(JSON.parse(localStorage.getItem('userInfo')))
+    } else {
+      return navigate('/login')
+    }
+  },[localStorage.getItem('userInfo')])
   return (
     <>
       <Row className="mb-4">
@@ -20,7 +42,9 @@ function Users() {
           />
         </Col>
       </Row>
-      <UsersTable />
+      <UsersTable users={users}/>
+
+      
     </>
   );
 }
