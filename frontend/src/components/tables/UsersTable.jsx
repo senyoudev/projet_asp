@@ -1,3 +1,4 @@
+import moment from "moment/moment";
 import React from "react";
 
 // react-bootstrap components
@@ -27,7 +28,7 @@ function UsersTable({users}) {
                 <thead>
                   <tr>
                     <th className="border-0">ID</th>
-                    <th className="border-0">Name</th>
+                    <th className="border-0">Username</th>
                     <th className="border-0">Email</th>
                     <th className="border-0">Type</th>
                     <th className="border-0">Create Date</th>
@@ -36,14 +37,13 @@ function UsersTable({users}) {
                 </thead>
                 <tbody>
                  
-                  <tr>
                      {users.map(user => (
-                        <>
+                  <tr>
                          <td>{user.id}</td>
-                          <td>Minerva Hooper</td>
-                    <td>$23,789</td>
-                    <td>Curaçao</td>
-                    <td>Sinaai-Waas</td>
+                          <td>{user.username}</td>
+                          <td>{user.email}</td>
+                          <td>{user.role}</td>
+                          <td>{moment(user.dateAdded).format("DD-MM-YYYY")}</td>
                     <td>
                       <button className="btn btn-fill btn-info me-2">
                         Favorite
@@ -64,10 +64,9 @@ function UsersTable({users}) {
                         Delete
                       </button>
                     </td>
-                        </>
+                  </tr>
                       ))}
                     
-                  </tr>
                 </tbody>
               </Table>
             </Card.Body>

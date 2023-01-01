@@ -44,7 +44,7 @@ function CarsTable(props) {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((item) => {
+                  {data?.map((item) => {
                     return (
                       <tr>
                         <td>{item.id}</td>

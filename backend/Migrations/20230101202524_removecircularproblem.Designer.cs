@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -11,9 +12,10 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    partial class ApiContextModelSnapshot : ModelSnapshot
+    [Migration("20230101202524_removecircularproblem")]
+    partial class removecircularproblem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -295,6 +297,7 @@ namespace backend.Migrations
                         .HasColumnType("float");
 
                     b.Property<int?>("UserId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<bool>("isAprouved")
@@ -392,7 +395,7 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Voiture", b =>
                 {
-                    b.HasOne("backend.Models.Marque", null)
+                    b.HasOne("backend.Models.Marque", "Marque")
                         .WithMany("Voitures")
                         .HasForeignKey("MarqueId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -402,11 +405,17 @@ namespace backend.Migrations
                         .WithMany()
                         .HasForeignKey("OffreSpecialeId");
 
-                    b.HasOne("backend.Models.User", null)
+                    b.HasOne("backend.Models.User", "User")
                         .WithMany("Voitures")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Marque");
 
                     b.Navigation("OffreSpeciale");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("backend.Models.Marque", b =>
