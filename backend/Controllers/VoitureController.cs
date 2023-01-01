@@ -61,6 +61,8 @@ namespace backend.Controllers
                 {
                     Id = v.User.Id,
                     Email = v.User.Email,
+                    Username = v.User.Username,
+                    Photo = v.User.Photo
                     // include other properties of the User object as needed
                 },
                 
@@ -82,7 +84,7 @@ namespace backend.Controllers
                 return new JsonResult(NotFound());
             }
 
-            var voituredto = new VoitureDto
+            var car = new VoitureDto
             {
                 Id = voiture.Id,
                 Name = voiture.Name,
@@ -95,21 +97,25 @@ namespace backend.Controllers
                 MarqueId = voiture.MarqueId,
                 OffreSpecialeId = voiture.OffreSpecialeId,
                 Prix = voiture.Prix,
-                Marque = new Marque
-                {
-                    Id = voiture.Marque.Id,
-                    Libelle = voiture.Marque.Libelle,
-                },
                 User = new User
                 {
-                    Id = voiture.User.Id,
+                     Id = voiture.User.Id,
                     Email = voiture.User.Email,
-                    // include other properties of the User object as needed
+                    Username = voiture.User.Username,
+                    Photo = voiture.User.Photo
                 },
+                Marque = new Marque {
+                    Id = voiture.Marque.Id,
+                    Libelle = voiture.Marque.Libelle
+                }
             };
-            return new JsonResult(voituredto);
+
+            return car;
+            
 
         }
+
+      
 
 
 
@@ -175,23 +181,7 @@ namespace backend.Controllers
 
             _db.Voitures.Update(voiture_from_db);
             await _db.SaveChangesAsync();
-            /*_db.Entry(voiture).State = EntityState.Modified;
-
-            try
-            {
-                await _db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (VoitureExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }*/
+        
 
             return Ok("voiture updated");
         }
@@ -255,11 +245,40 @@ namespace backend.Controllers
         [HttpGet("ByUser")]
         public async Task<ActionResult<IEnumerable<User>>> GetVoituresByUser(int userId)
         {
-            var users = await _db.Voitures
+            var voitures = await _db.Voitures
                 .Where(u => u.UserId == userId)
+                .Include(u => u.User)
+                .Include(u => u.Marque)
                 .ToListAsync();
 
-            return Ok(users);
+            return new JsonResult(Ok(voitures.Select(v => new VoitureDto
+            {
+                Id = v.Id,
+                Name = v.Name,
+                Couleur = v.Couleur,
+                Photo = v.Photo,
+                Annee = v.Annee,
+                Km = v.Km,
+                DateAdded = v.DateAdded,
+                UserId = v.UserId,
+                MarqueId = v.MarqueId,
+                OffreSpecialeId = v.OffreSpecialeId,
+                Prix = v.Prix,
+                Marque = new Marque
+                {
+                    Id = v.Marque.Id,
+                    Libelle = v.Marque.Libelle,
+                },
+                User = new User
+                {
+                    Id = v.User.Id,
+                    Email = v.User.Email,
+                    Username = v.User.Username,
+                    Photo = v.User.Photo
+                    // include other properties of the User object as needed
+                },
+
+            }).ToList()));
         }
 
         [HttpGet("searchColor")]
@@ -267,6 +286,8 @@ namespace backend.Controllers
         {
             var voitures = await _db.Voitures
                 .Where(u => u.Couleur.ToLower().Contains(search.ToLower()))
+                 .Include(u => u.User)
+                .Include(u => u.Marque)
                 .ToListAsync();
 
             if (voitures == null)
@@ -274,7 +295,34 @@ namespace backend.Controllers
                 return NotFound();
             }
 
-            return voitures;
+            return new JsonResult(Ok(voitures.Select(v => new VoitureDto
+            {
+                Id = v.Id,
+                Name = v.Name,
+                Couleur = v.Couleur,
+                Photo = v.Photo,
+                Annee = v.Annee,
+                Km = v.Km,
+                DateAdded = v.DateAdded,
+                UserId = v.UserId,
+                MarqueId = v.MarqueId,
+                OffreSpecialeId = v.OffreSpecialeId,
+                Prix = v.Prix,
+                Marque = new Marque
+                {
+                    Id = v.Marque.Id,
+                    Libelle = v.Marque.Libelle,
+                },
+                User = new User
+                {
+                    Id = v.User.Id,
+                    Email = v.User.Email,
+                    Username = v.User.Username,
+                    Photo = v.User.Photo
+                    // include other properties of the User object as needed
+                },
+
+            }).ToList()));
         }
 
         [HttpGet("searchYear")]
@@ -282,6 +330,8 @@ namespace backend.Controllers
         {
             var voitures = await _db.Voitures
                 .Where(u => u.Annee == search)
+                .Include(u => u.User)
+                .Include(u => u.Marque)
                 .ToListAsync();
 
             if (voitures == null)
@@ -289,7 +339,34 @@ namespace backend.Controllers
                 return NotFound();
             }
 
-            return voitures;
+            return new JsonResult(Ok(voitures.Select(v => new VoitureDto
+            {
+                Id = v.Id,
+                Name = v.Name,
+                Couleur = v.Couleur,
+                Photo = v.Photo,
+                Annee = v.Annee,
+                Km = v.Km,
+                DateAdded = v.DateAdded,
+                UserId = v.UserId,
+                MarqueId = v.MarqueId,
+                OffreSpecialeId = v.OffreSpecialeId,
+                Prix = v.Prix,
+                Marque = new Marque
+                {
+                    Id = v.Marque.Id,
+                    Libelle = v.Marque.Libelle,
+                },
+                User = new User
+                {
+                    Id = v.User.Id,
+                    Email = v.User.Email,
+                    Username = v.User.Username,
+                    Photo = v.User.Photo
+                    // include other properties of the User object as needed
+                },
+
+            }).ToList()));
         }
 
         [HttpGet("searchkm")]
@@ -297,6 +374,8 @@ namespace backend.Controllers
         {
             var voitures = await _db.Voitures
                 .Where(u => u.Km == search)
+                .Include(u => u.User)
+                .Include(u => u.Marque)
                 .ToListAsync();
 
             if (voitures == null)
@@ -304,7 +383,34 @@ namespace backend.Controllers
                 return NotFound();
             }
 
-            return voitures;
+            return new JsonResult(Ok(voitures.Select(v => new VoitureDto
+            {
+                Id = v.Id,
+                Name = v.Name,
+                Couleur = v.Couleur,
+                Photo = v.Photo,
+                Annee = v.Annee,
+                Km = v.Km,
+                DateAdded = v.DateAdded,
+                UserId = v.UserId,
+                MarqueId = v.MarqueId,
+                OffreSpecialeId = v.OffreSpecialeId,
+                Prix = v.Prix,
+                Marque = new Marque
+                {
+                    Id = v.Marque.Id,
+                    Libelle = v.Marque.Libelle,
+                },
+                User = new User
+                {
+                    Id = v.User.Id,
+                    Email = v.User.Email,
+                    Username = v.User.Username,
+                    Photo = v.User.Photo
+                    // include other properties of the User object as needed
+                },
+
+            }).ToList()));
         }
 
         [HttpGet("search")]
@@ -312,6 +418,8 @@ namespace backend.Controllers
         {
             var voitures = await _db.Voitures
                 .Where(u => u.Name.ToLower().Contains(search.ToLower()))
+                .Include(u => u.User)
+                .Include(u => u.Marque)
                 .ToListAsync();
 
             if (voitures == null)
@@ -319,7 +427,34 @@ namespace backend.Controllers
                 return NotFound();
             }
 
-            return voitures;
+            return new JsonResult(Ok(voitures.Select(v => new VoitureDto
+            {
+                Id = v.Id,
+                Name = v.Name,
+                Couleur = v.Couleur,
+                Photo = v.Photo,
+                Annee = v.Annee,
+                Km = v.Km,
+                DateAdded = v.DateAdded,
+                UserId = v.UserId,
+                MarqueId = v.MarqueId,
+                OffreSpecialeId = v.OffreSpecialeId,
+                Prix = v.Prix,
+                Marque = new Marque
+                {
+                    Id = v.Marque.Id,
+                    Libelle = v.Marque.Libelle,
+                },
+                User = new User
+                {
+                    Id = v.User.Id,
+                    Email = v.User.Email,
+                    Username = v.User.Username,
+                    Photo = v.User.Photo
+                    // include other properties of the User object as needed
+                },
+
+            }).ToList()));
         }
 
         // search avialable cars between two dates means not reserved 
@@ -348,11 +483,39 @@ namespace backend.Controllers
         {
             var voitures = await _db.Voitures
                 .Where(u => u.MarqueId == marqueId)
+                .Include(u => u.User)
                 .ToListAsync();
-           
+
 
             // Return the voitures belonging to the marque
-            return Ok(voitures);
+            return new JsonResult(Ok(voitures.Select(v => new VoitureDto
+            {
+                Id = v.Id,
+                Name = v.Name,
+                Couleur = v.Couleur,
+                Photo = v.Photo,
+                Annee = v.Annee,
+                Km = v.Km,
+                DateAdded = v.DateAdded,
+                UserId = v.UserId,
+                MarqueId = v.MarqueId,
+                OffreSpecialeId = v.OffreSpecialeId,
+                Prix = v.Prix,
+                Marque = new Marque
+                {
+                    Id = v.Marque.Id,
+                    Libelle = v.Marque.Libelle,
+                },
+                User = new User
+                {
+                    Id = v.User.Id,
+                    Email = v.User.Email,
+                    Username = v.User.Username,
+                    Photo = v.User.Photo
+                    // include other properties of the User object as needed
+                },
+
+            }).ToList()));
         }
 
         [NonAction]
