@@ -5,8 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEllipsis,
 } from "@fortawesome/free-solid-svg-icons";
-import routes from "../../routes.js";
-
+import dashboardRoutes from '../../dashboardRoutes';
 
 function Header() {
   const location = useLocation();
@@ -23,9 +22,9 @@ function Header() {
   };
 
   const getBrandText = () => {
-    for (let i = 0; i < routes.length; i++) {
-      if (location.pathname.indexOf(routes[i].layout + routes[i].path) !== -1) {
-        return routes[i].name;
+    for (let i = 0; i < dashboardRoutes.length; i++) {
+      if (location.pathname.indexOf(dashboardRoutes[i].layout + dashboardRoutes[i].path) !== -1) {
+        return dashboardRoutes[i].name;
       }
     }
     return "Mesro";

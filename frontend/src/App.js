@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import CarsListing from "./pages/CarsListing"
+import CarDetails from "./pages/CarDetails";
 function App() {
   return (
     <Router>
@@ -19,6 +20,7 @@ function App() {
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="/cars" element={<CarsListing/>}/>
+        <Route path="/carsDetails" element={<CarDetails/>}/>
         <Route path="*" element={<NotFound />} />
       </Routes>
       </AuthContextProvider>
