@@ -5,7 +5,6 @@ import { Container } from "react-bootstrap";
 function Navbar({navLinks}) {
   const menuRef = useRef(null);
    const toggleMenu = () => menuRef.current.classList.toggle("menu__active");
-    
   return (
      <div className="main__navbar">
         <Container>
