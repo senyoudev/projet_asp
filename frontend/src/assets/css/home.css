@@ -16,7 +16,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: #000d6b;
+  color: #1A120B;
   font-weight: 600;
   margin-bottom: 0;
   line-height: 1.2!important;
@@ -48,13 +48,15 @@ ul {
 }
 
 .section__title {
-  color: #000d6b;
+  color: #1A120B;
   font-weight: 600;
   font-size: 2rem;
 }
-
+.rent__price {
+  color:#DC0000!important;
+}
 .section__subtitle {
-  color: #f9a826;
+  color: #DC0000;
   font-weight: 600;
   font-size: 1.2rem;
 }
@@ -71,7 +73,7 @@ section {
 
 .btn {
   padding: 7px 15px;
-  background: #000d6b;
+  background: #1A120B;
   color: #fff;
   border: none;
   outline: none;
@@ -81,7 +83,7 @@ section {
 
 .btn:hover {
   color: #fff !important;
-  background: #000c6bd0;
+  background: #1a120b11;
 }
 
 @media only screen and (max-width: 768px) {
