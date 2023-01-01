@@ -21,7 +21,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const CarDetails = () => {
-  const { slug } = useParams();
 
   const singleCarItem = carData.find((item) => item.carName === "Tesla Malibu");
 

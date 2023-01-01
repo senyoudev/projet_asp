@@ -12,8 +12,8 @@ function Cars() {
   const [carsList,setCarsList] = useState([]);
   const fetchData = async () => {
     const data = await getOwnerCars();
-    setCarsList(data.value);
-  };
+    setCarsList(data);
+  }
   useEffect(() => {
     if (userInfo != null && userInfo.role == "proprietaire") {
       fetchData();
@@ -40,7 +40,7 @@ function Cars() {
           />
         </Col>
       </Row>
-      {carsList !== [] ? <CarsTable type="owner" data={carsList} />: null}
+      {carsList !== [] ? <CarsTable type="owner" data={carsList} />: []}
     </>
   );
 }
