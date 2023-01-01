@@ -20,7 +20,7 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        /*[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]*/
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<Paiement>> Create(PaymentInput payment)
         {
             if (payment == null)
