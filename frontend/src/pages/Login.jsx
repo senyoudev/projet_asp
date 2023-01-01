@@ -28,8 +28,7 @@ function Login() {
       return;
     }
     const data = await login(username,password)
-    setLoading(false)
-    if(data != null) return navigate('/')
+   
   }
 
   

@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 const authContext = createContext();
 
+
+
 export const useAuth = () => {
     const context = useContext(authContext);
     if (!context) throw new Error("Auth Provider is missing");
@@ -15,13 +17,14 @@ export const useAuth = () => {
 
 const authUrl = getUrl('Auth')
 
-
+const userInfo = localStorage.getItem('userInfo')
+  ? JSON.parse(localStorage.getItem('userInfo'))
+  : null
 
 export const AuthContextProvider = ({ children }) => {
     
     const navigate = useNavigate()
     const [loading,setLoading] = useState(false)
-    const [userInfo,setUserInfo] = useState(null)
     
     
     const login = async(username,password) => {
@@ -38,9 +41,9 @@ export const AuthContextProvider = ({ children }) => {
                 { username, password },
                 config
             )
-            setUserInfo(data)
             localStorage.setItem('userInfo',JSON.stringify(data))
-            return data
+            setLoading(false)
+            if(data != null) return navigate('/')
         } catch (error) {
             toast.error("An error Occured")
             console.log(error)
@@ -62,14 +65,20 @@ export const AuthContextProvider = ({ children }) => {
                 config
             )
             console.log(data)
-            setUserInfo(data)
             localStorage.setItem('userInfo',JSON.stringify(data))
-            return data
+            setLoading(false)
+            if(data != null) return navigate('/')
         } catch (error) {
             toast.error("An error Occured")
             console.log(error)
         }
     }
+
+         const logout = () => {
+            localStorage.removeItem('userInfo')
+            return navigate('/login')
+}
+    
 
 
 
@@ -80,6 +89,7 @@ export const AuthContextProvider = ({ children }) => {
                loading,
                setLoading,
                login,
+               logout,
                register,
             }}
         >
