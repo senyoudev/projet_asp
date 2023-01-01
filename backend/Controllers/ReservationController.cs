@@ -25,6 +25,7 @@ namespace backend.Controllers
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
              Roles = "Administrator")]
+
         public JsonResult GetReservations()
         {
             var Reservations = _db.Reservations.ToList();

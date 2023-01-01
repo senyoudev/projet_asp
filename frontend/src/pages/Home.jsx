@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React, {Fragment,useEffect} from "react";
 
 import HeroSlider from "../components/UI/HeroSlider";
 import Helmet from "../components/Helmet/Helmet";
@@ -16,7 +16,16 @@ import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 
 import "../assets/css/home.css";
+import { useAuth } from "../Context/AuthContext";
 const Home = () => {
+  const {userInfo} = useAuth()
+
+  useEffect(() => {
+    if(userInfo != null) {
+
+    }
+  })
+
   return (
     <Fragment>
       <Header />
