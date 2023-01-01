@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom";
 function CarDetails() {
   const location = useLocation();
   const carId = location.state.carId;
+  
   return (
     <>
       <Container fluid>
