@@ -43,9 +43,9 @@ function Login() {
         <ToastContainer />
         <h1
           className=" text-center"
-          style={{ marginTop: "2.5rem", marginBottom: "1rem" }}
+          style={{ marginTop: "2.5rem", marginBottom: "1rem", fontWeight: "bold"}}
         >
-          Sign In
+          Sign <span style={{color: "#DC0000"}}>In</span>
         </h1>
         <Form
           onSubmit={submitHandler}
@@ -59,7 +59,6 @@ function Login() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               className="my-3"
-              style={{ borderColor: "#1DC7EA" }}
             ></Form.Control>
           </Form.Group>
 
@@ -71,7 +70,6 @@ function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="my-3"
-              style={{ borderColor: "#1DC7EA" }}
             ></Form.Control>
           </Form.Group>
 
@@ -83,7 +81,7 @@ function Login() {
                 style={{
                   width: "30%",
                   color: "#fff",
-                  backgroundColor: "#1DC7EA",
+                  backgroundColor: "#1A120B",
                 }}
                 disabled={loading}
               >
@@ -107,7 +105,7 @@ function Login() {
             Don't have an account?{" "}
             <Link
               to={"/register"}
-              style={{ color: "#1D7EA" }}
+              style={{ color: "#DC0000" }}
               className="text-decoration-none"
             >
               Sign Up
