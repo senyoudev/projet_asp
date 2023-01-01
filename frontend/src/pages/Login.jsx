@@ -5,6 +5,9 @@ import { ToastContainer,toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../Context/AuthContext';
+import Navbar from '../components/Navbars/Navbar';
+import navLinks from '../assets/Data/navLinks';
+import { isValidPassword, isValidUsername } from '../utils/validation';
 
 
 function Login() {
@@ -29,39 +32,19 @@ function Login() {
     if(data != null) return navigate('/')
   }
 
-  const isValidUsername = (username) => {
-  // Minimum length of 8 characters
-  if (username.length < 8) {
-    return false;
-  }
+  
 
-  // Must contain at least one letter and one number
-  if (!/[a-zA-Z]/.test(username) || !/[0-9]/.test(username)) {
-    return false;
-  }
 
-  return true;
-}
-
-const isValidPassword = (password) => {
-  // Minimum length of 8 characters
-  if (password.length < 8) {
-    return false;
-  }
-
-  // Must contain at least one uppercase letter, one lowercase letter, one number, and one special character
-  if (!/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/[0-9]/.test(password) || !/[^a-zA-Z0-9]/.test(password)) {
-    return false;
-  }
-
-  return true;
-}
 
   return (
-    <Container className='d-flex flex-column align-items-center justify-center'>
+    <>
+          <Navbar navLinks={navLinks} />
+
+    
+    <Container className='d-flex flex-column align-items-center justify-center' style={{marginTop:'50px'}}>
         <ToastContainer />
         <h1 className=' text-center' style={{ marginTop: '2.5rem', marginBottom: '1rem' }}>Sign In</h1>
-        <Form onSubmit={submitHandler} style={{width:'80%'}}>
+        <Form onSubmit={submitHandler} style={{width:'80%',marginTop:'50px'}}>
           <Form.Group controlId='username'>
             <Form.Label>Username</Form.Label>
             <Form.Control
@@ -89,7 +72,7 @@ const isValidPassword = (password) => {
 
              <Row className='py-3 text-center' >
           <Col>
-           <Button type='submit' className='mt-4 order-btn text-center' style={{ width: '30%',color:'#1DC7EA',borderColor:'#1DC7EA' }}>
+           <Button type='submit' className='mt-4 order-btn text-center' style={{ width: '30%',color:'#fff',backgroundColor:'#1DC7EA' }} disabled={loading}>
             Sign In 
             {loading && ((<Spinner    as="span" animation="grow" size="sm" role="status" aria-hidden="true"/>
                  ))}
@@ -108,6 +91,8 @@ const isValidPassword = (password) => {
           </Col>
         </Row>
       </Container>
+    </>
+
   );
 }
 

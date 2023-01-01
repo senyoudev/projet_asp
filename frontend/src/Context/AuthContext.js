@@ -47,14 +47,40 @@ export const AuthContextProvider = ({ children }) => {
         }
     }
 
+    const register = async(email,username,firstName,lastName,password,role) => {
+        setLoading(true)
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+
+            const { data } = await axios.post(
+                `${authUrl}/register`,
+                { email,username,nom:firstName,prenom:lastName, password,role },
+                config
+            )
+            console.log(data)
+            setUserInfo(data)
+            localStorage.setItem('userInfo',JSON.stringify(data))
+            return data
+        } catch (error) {
+            toast.error("An error Occured")
+            console.log(error)
+        }
+    }
+
 
 
     return (
         <authContext.Provider
             value={{
+               userInfo,
                loading,
                setLoading,
-               login
+               login,
+               register,
             }}
         >
             {children}
