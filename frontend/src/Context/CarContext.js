@@ -47,6 +47,7 @@ export const CarContextProvider = ({ children }) => {
             }
 
     }
+<<<<<<< HEAD
     
    
 
@@ -62,4 +63,31 @@ export const CarContextProvider = ({ children }) => {
             {children}
         </carContext.Provider>
     );
+=======
+  };
+  const getCar = async (id) => {
+    setLoading(true);
+    try {
+      const { data } = await axios.get(`${carUrl}/GetVoiture?id=${id}`);
+      setLoading(false);
+      return data;
+    } catch (error) {
+      toast.error("Something went wrong");
+      console.log(error.response);
+      setLoading(false);
+    }
+  };
+
+  return (
+    <carContext.Provider
+      value={{
+        getOwnerCarsNumber,
+        getOwnerCars,
+        getCar
+      }}
+    >
+      {children}
+    </carContext.Provider>
+  );
+>>>>>>> origin/main
 };

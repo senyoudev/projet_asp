@@ -1,13 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 // react-bootstrap components
 import { Button, Card, Form, Container, Row, Col } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
+import { useCar } from "../../Context/CarContext";
 
 function CarDetails() {
   const location = useLocation();
   const carId = location.state.carId;
-  
+  const [carInfo, setCarInfo] = useState([]);
+  const [userInfo, setUserInfo] = useState(
+    JSON.parse(localStorage.getItem("userInfo"))
+  );
+  const { getCar } = useCar();
+  const fetchData = async () => {
+    const data = await getCar(carId);
+    setCarInfo(data.value.result);
+  };
+  useEffect(() => {
+    if (userInfo != null && userInfo.role == "proprietaire") {
+      fetchData();
+    }
+  }, [localStorage.getItem("userInfo")]);
+  console.log(carInfo);
   return (
     <>
       <Container fluid>
@@ -24,8 +39,8 @@ function CarDetails() {
                       <Form.Group>
                         <label>Brand Name</label>
                         <Form.Select>
-                            <option>Dacia</option>
-                            <option>Toyota</option>
+                          <option>Dacia</option>
+                          <option>Toyota</option>
                         </Form.Select>
                       </Form.Group>
                     </Col>
@@ -33,7 +48,7 @@ function CarDetails() {
                       <Form.Group>
                         <label>Price</label>
                         <Form.Control
-                          defaultValue="500"
+                          defaultValue={carInfo.prix}
                           placeholder="Price"
                           type="text"
                         ></Form.Control>
@@ -45,8 +60,8 @@ function CarDetails() {
                       <Form.Group>
                         <label>Couleur</label>
                         <Form.Select>
-                            <option>Red</option>
-                            <option>Gray</option>
+                          <option>{carInfo.couleur}</option>
+                          <option>Gray</option>
                         </Form.Select>
                       </Form.Group>
                     </Col>
@@ -54,7 +69,7 @@ function CarDetails() {
                       <Form.Group>
                         <label>Year</label>
                         <Form.Control
-                          defaultValue="2018"
+                          defaultValue={carInfo.annee}
                           placeholder="Year"
                           type="text"
                         ></Form.Control>
@@ -67,7 +82,7 @@ function CarDetails() {
                       <Form.Group>
                         <label>Distance</label>
                         <Form.Control
-                          defaultValue=""
+                          defaultValue={carInfo.km}
                           placeholder="Distance(KM)"
                           type="text"
                         ></Form.Control>
@@ -97,10 +112,7 @@ function CarDetails() {
           <Col md="6">
             <Card className="card-user">
               <div className="card-image" style={{ height: "unset" }}>
-                <img
-                  alt="..."
-                  src={require("../../assets/img/cars/car1.webp")}
-                ></img>
+                <img alt="..." src={carInfo.photo}></img>
               </div>
             </Card>
           </Col>

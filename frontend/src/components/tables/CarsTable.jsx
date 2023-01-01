@@ -4,12 +4,12 @@ import React, { useState } from "react";
 import { Card, Table, Row, Col, Modal, Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-function CarsTable({data,type}) {
+function CarsTable({ data, type }) {
   const navigate = useNavigate();
-  function editCar() {
+  function editCar(id) {
     navigate(`/${type}/carDetails`, {
       state: {
-        carId: 1,
+        carId: id,
       },
     });
   }
@@ -42,15 +42,21 @@ function CarsTable({data,type}) {
                   </tr>
                 </thead>
                 <tbody>
+<<<<<<< HEAD
                   {data?.map((item) => {
+=======
+                  {data.map((item, ind) => {
+>>>>>>> origin/main
                     return (
-                      <tr>
+                      <tr key={ind}>
                         <td>{item.id}</td>
                         {type === "admin" ? <td>Dakota Rice</td> : null}
                         <td>{item.marque}</td>
-                        <td>{item.prix+ " DH"}</td>
-                        <td>{item.dateAdded.substr(0,10)}</td>
-                        <td>{item.isDisponible?"Available": "Reserved"}</td>
+                        <td>{item.prix + " DH"}</td>
+                        <td>{item.dateAdded.substr(0, 10)}</td>
+                        <td>
+                          {item.isAprouved ? "Approuved" : "Not Approuved"}
+                        </td>
                         <td>
                           {type === "admin" ? (
                             <button className="btn btn-fill btn-primary me-2">
@@ -59,7 +65,7 @@ function CarsTable({data,type}) {
                           ) : null}
                           <button
                             className="btn btn-fill btn-secondary me-2"
-                            onClick={editCar}
+                            onClick={() => editCar(item.id)}
                           >
                             Edit
                           </button>
