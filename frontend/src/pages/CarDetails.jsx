@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import carData from "../assets/Data/carData";
 import { Container, Row, Col } from "react-bootstrap";
 import Helmet from "../components/Helmet/Helmet";
-import { useParams } from "react-router-dom";
 import BookingForm from "../components/UI/BookingForm";
 import PaymentMethod from "../components/UI/PaymentMethod";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,10 +19,9 @@ import {
   faWheelchair,
 } from "@fortawesome/free-solid-svg-icons";
 
+
 const CarDetails = () => {
-
   const singleCarItem = carData.find((item) => item.carName === "Tesla Malibu");
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [singleCarItem]);

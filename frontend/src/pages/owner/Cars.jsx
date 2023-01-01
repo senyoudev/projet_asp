@@ -1,6 +1,5 @@
 import { Col, Form, Row } from "react-bootstrap";
 import CarsTable from "../../components/tables/CarsTable";
-import axios from "axios";
 import { useEffect } from "react";
 import { useCar } from "../../Context/CarContext";
 import { useState } from "react";
@@ -40,7 +39,7 @@ function Cars() {
           />
         </Col>
       </Row>
-      {carsList !== [] ? <CarsTable type="owner" data={carsList} />: []}
+      <CarsTable type="owner" data={carsList} />
     </>
   );
 }
