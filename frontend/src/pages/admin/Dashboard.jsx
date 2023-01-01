@@ -25,13 +25,9 @@ import {
 import { Line } from "react-chartjs-2";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
-<<<<<<< HEAD
 import { useCar } from "../../Context/CarContext";
 
-=======
-import { useEffect } from "react";
-import { useState } from "react";
->>>>>>> origin/main
+import { useEffect,useState } from "react";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -42,12 +38,8 @@ ChartJS.register(
   Legend
 );
 
-<<<<<<< HEAD
 
-export const options = {
-=======
 const options = {
->>>>>>> origin/main
   responsive: true,
   plugins: {
     legend: {
@@ -72,7 +64,6 @@ const data = {
 
 function Dashboard() {
 
-<<<<<<< HEAD
    const navigate = useNavigate('')
   const { getOwnerCarsNumber} = useCar('')
   const [carNumber,setCarNumber] = useState('')
@@ -90,8 +81,7 @@ function Dashboard() {
 
 
     
-=======
->>>>>>> origin/main
+
   return (
     <>
       <Container fluid>
