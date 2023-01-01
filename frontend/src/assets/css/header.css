@@ -45,11 +45,11 @@
 }
 
 .logo h1 a span {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 }
 
-.logo h1 a i {
-  font-size: 2.2rem;
+.logo h1 a svg {
+  font-size: 2rem;
 }
 
 .logo h1 a {
@@ -59,11 +59,11 @@
 }
 
 .logo h1 {
-  line-height: 1.5rem;
+  line-height: 1.3rem;
 }
 
-.header__location span i {
-  font-size: 2.2rem;
+.header__location span svg {
+  font-size: 2rem;
   color: #000d6b;
 }
 
@@ -71,6 +71,7 @@
   font-size: 1.2rem;
   font-weight: 700;
   color: #000d6b;
+  margin-bottom: 6px!important;
 }
 
 .header__location-content h6 {

@@ -1,3 +1,10 @@
+import {
+  faCar,
+  faCopyright,
+  faMailBulk,
+  faMessage,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 import { Container, Row, Col, ListGroup, ListGroupItem } from "react-bootstrap";
@@ -6,27 +13,16 @@ import "../../assets/css/footer.css";
 
 const quickLinks = [
   {
-    path: "/about",
+    path: "#",
+    display: "Home",
+  },
+  {
+    path: "#about",
     display: "About",
   },
-
   {
-    path: "#",
-    display: "Privacy Policy",
-  },
-
-  {
-    path: "/cars",
-    display: "Car Listing",
-  },
-  {
-    path: "/blogs",
-    display: "Blog",
-  },
-
-  {
-    path: "/contact",
-    display: "Contact",
+    path: "#cars",
+    display: "Cars",
   },
 ];
 
@@ -34,14 +30,14 @@ const Footer = () => {
   const date = new Date();
   const year = date.getFullYear();
   return (
-    <footer className="footer">
+    <footer className="footer" id="contact">
       <Container>
         <Row>
           <Col lg="4" md="4" sm="12">
             <div className="logo footer__logo">
               <h1>
-                <Link to="/home" className=" d-flex align-items-center gap-2">
-                  <i class="ri-car-line"></i>
+                <Link to="/" className=" d-flex align-items-center gap-2">
+                  <FontAwesomeIcon icon={faCar} />
                   <span>
                     Rent Car <br /> Service
                   </span>
@@ -62,7 +58,7 @@ const Footer = () => {
               <ListGroup>
                 {quickLinks.map((item, index) => (
                   <ListGroupItem key={index} className="p-0 mt-3 quick__link">
-                    <Link to={item.path}>{item.display}</Link>
+                    <a href={item.path}>{item.display}</a>
                   </ListGroupItem>
                 ))}
               </ListGroup>
@@ -87,9 +83,6 @@ const Footer = () => {
               <p className="section__description">Subscribe our newsletter</p>
               <div className="newsletter">
                 <input type="email" placeholder="Email" />
-                <span>
-                  <i class="ri-send-plane-line"></i>
-                </span>
               </div>
             </div>
           </Col>
@@ -97,8 +90,9 @@ const Footer = () => {
           <Col lg="12">
             <div className="footer__bottom">
               <p className="section__description d-flex align-items-center justify-content-center gap-1 pt-4">
-                <i class="ri-copyright-line"></i>Copyright {year}, Developed by
-                Muhibur Rahman. All rights reserved.
+                <FontAwesomeIcon icon={faCopyright} />
+                Copyright {year}, Developed by Muhibur Rahman. All rights
+                reserved.
               </p>
             </div>
           </Col>

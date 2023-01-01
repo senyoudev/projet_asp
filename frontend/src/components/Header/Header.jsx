@@ -1,12 +1,21 @@
+import {
+  faCar,
+  faClock,
+  faEarth,
+  faPhone,
+  faSign,
+  faSignIn,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useRef } from "react";
-
 import { Container, Row, Col } from "react-bootstrap";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../../assets/css/header.css";
 
 const navLinks = [
   {
-    path: "/",
+    path: "#",
     display: "Home",
   },
   {
@@ -14,12 +23,11 @@ const navLinks = [
     display: "About",
   },
   {
-    path: "/cars",
+    path: "#cars",
     display: "Cars",
   },
-
   {
-    path: "/contact",
+    path: "#contact",
     display: "Contact",
   },
 ];
@@ -42,7 +50,7 @@ const Header = () => {
               <div className="header__top__left">
                 <span>Need Help?</span>
                 <span className="header__top__help">
-                  <i class="ri-phone-fill"></i> +1-202-555-0149
+                  <FontAwesomeIcon icon={faPhone} /> +1-202-555-0149
                 </span>
               </div>
             </Col>
@@ -50,11 +58,23 @@ const Header = () => {
             <Col lg="6" md="6" sm="6">
               <div className="header__top__right d-flex align-items-center justify-content-end gap-3">
                 <Link to="/login" className=" d-flex align-items-center gap-1">
+<<<<<<< HEAD
                   <i class="ri-login-circle-line"></i> Login
                 </Link>
 
                 <Link to="/register" className=" d-flex align-items-center gap-1">
                   <i class="ri-user-line"></i> Register
+=======
+                  <FontAwesomeIcon icon={faSignIn} />
+                  Login
+                </Link>
+
+                <Link
+                  to="/register"
+                  className=" d-flex align-items-center gap-1"
+                >
+                  <FontAwesomeIcon icon={faUser} /> Register
+>>>>>>> origin/main
                 </Link>
               </div>
             </Col>
@@ -69,8 +89,8 @@ const Header = () => {
             <Col lg="4" md="3" sm="4">
               <div className="logo">
                 <h1>
-                  <Link to="/home" className=" d-flex align-items-center gap-2">
-                    <i class="ri-car-line"></i>
+                  <Link to="/" className=" d-flex align-items-center gap-2">
+                    <FontAwesomeIcon icon={faCar} />
                     <span>
                       Rent Car <br /> Service
                     </span>
@@ -82,7 +102,7 @@ const Header = () => {
             <Col lg="3" md="3" sm="4">
               <div className="header__location d-flex align-items-center gap-2">
                 <span>
-                  <i class="ri-earth-line"></i>
+                  <FontAwesomeIcon icon={faEarth} />
                 </span>
                 <div className="header__location-content">
                   <h4>Bangladesh</h4>
@@ -94,7 +114,7 @@ const Header = () => {
             <Col lg="3" md="3" sm="4">
               <div className="header__location d-flex align-items-center gap-2">
                 <span>
-                  <i class="ri-time-line"></i>
+                  <FontAwesomeIcon icon={faClock} />
                 </span>
                 <div className="header__location-content">
                   <h4>Sunday to Friday</h4>
@@ -110,9 +130,10 @@ const Header = () => {
               className=" d-flex align-items-center justify-content-end "
             >
               <button className="header__btn btn ">
-                <Link to="/contact">
+                <a to="#contact" style={{color: "#fff"}}>
+                <FontAwesomeIcon icon={faPhone} />
                   <i class="ri-phone-line"></i> Request a call
-                </Link>
+                </a>
               </button>
             </Col>
           </Row>
@@ -131,15 +152,15 @@ const Header = () => {
             <div className="navigation" ref={menuRef} onClick={toggleMenu}>
               <div className="menu">
                 {navLinks.map((item, index) => (
-                  <NavLink
-                    to={item.path}
+                  <a
+                    href={item.path}
                     className={(navClass) =>
                       navClass.isActive ? "nav__active nav__item" : "nav__item"
                     }
                     key={index}
                   >
                     {item.display}
-                  </NavLink>
+                  </a>
                 ))}
               </div>
             </div>

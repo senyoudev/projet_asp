@@ -3,45 +3,49 @@ import { useLocation } from "react-router-dom";
 
 import AdminNavbar from "../components/Navbars/AdminNavbar";
 import Sidebar from "../components/Sidebar/Sidebar";
-
-import routes, { dashboardOwnerRoutes } from "../routes.js";
+import dashboardRoutes from "../dashboardRoutes";
 
 import sidebarImage from "../assets/img/sidebar-2.jpg";
-import Dashboard from "./owner/Dashboard";
-import Cars from "./owner/Cars";
-import Offers from "./owner/Offers";
-import Reservations from "./owner/Reservations";
+import Dashboard from "./admin/Dashboard";
+import Clients from "./admin/Users";
+import Cars from "./admin/Cars";
+import Profile from "./admin/Profile";
+import Offers from "./admin/Offers";
 import CarDetails from "./admin/CarDetails";
 import OfferDetails from "./admin/OfferDetails";
 import "../assets/css/admin.css";
-function AdminOwner() {
+
+function Admin() {
   const [image, setImage] = React.useState(sidebarImage);
   const [color, setColor] = React.useState("black");
   const [hasImage, setHasImage] = React.useState(true);
   const location = useLocation();
   const mainPanel = React.useRef(null);
-  const getRoutes = (routes) => {
+  const getRoutes = () => {
     switch (location.pathname) {
-      case "/owner/dashboard":
+      case "/admin/dashboard":
         return <Dashboard />;
         break;
-      case "/owner/cars":
-        return <Cars />;
+      case "/admin/users":
+        return <Clients />;
         break;
-      case "/owner/offers":
+      case "/admin/cars":
+        return <Cars/>;
+        break;
+      case "/admin/offers":
         return <Offers />;
         break;
-      case "/owner/reservations":
-        return <Reservations />;
+      case "/admin/profile":
+        return <Profile />;
         break;
-      case "/owner/carDetails":
-        return <CarDetails />;
+      case "/admin/carDetails":
+        return <CarDetails  type="admin" />;
         break;
-      case "/owner/offerDetails":
-        return <OfferDetails type="owner" />;
+      case "/admin/offerDetails":
+        return <OfferDetails/>;
         break;
       default:
-        return <Dashboard />;
+        return <Dashboard/>;
         break;
     }
   };
@@ -59,20 +63,16 @@ function AdminOwner() {
     }
   }, [location]);
   return (
-    <div id="owner">
+    <div id="admin">
       <div className="wrapper">
-        <Sidebar
-          color={color}
-          image={hasImage ? image : ""}
-          routes={dashboardOwnerRoutes}
-        />
+        <Sidebar color={color} image={hasImage ? image : ""} routes={dashboardRoutes} />
         <div className="main-panel" ref={mainPanel}>
           <AdminNavbar />
-          <div className="content">{getRoutes(routes)}</div>
+          <div className="content">{getRoutes()}</div>
         </div>
       </div>
     </div>
   );
 }
 
-export default AdminOwner;
+export default Admin;

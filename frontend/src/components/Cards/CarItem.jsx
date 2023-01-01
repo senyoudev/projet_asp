@@ -1,7 +1,7 @@
 import React from "react";
 import { Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import './car-items.css'
+import '../../assets/css/car-item.css';
 
 const CarItem = (props) => {
   const { imgUrl, model, carName, automatic, speed, price } = props.item;

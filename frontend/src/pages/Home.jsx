@@ -32,7 +32,7 @@ const Home = () => {
       <div>
         <Helmet title="Home">
           {/* ============= hero section =========== */}
-          <section className="p-0 hero__slider-section">
+          <section className="p-0 hero__slider-section" id="#">
             <HeroSlider />
 
             <div className="hero__form">
@@ -67,7 +67,7 @@ const Home = () => {
             </Container>
           </section>
           {/* =========== car offer section ============= */}
-          <section>
+          <section id="cars">
             <Container>
               <Row>
                 <Col lg="12" className="text-center mb-5">
@@ -97,11 +97,9 @@ const Home = () => {
               </Row>
             </Container>
           </section>
-
-         
         </Helmet>
       </div>
-      <Footer />
+      <Footer/>
     </Fragment>
   );
 };
