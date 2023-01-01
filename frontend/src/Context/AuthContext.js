@@ -21,7 +21,7 @@ export const AuthContextProvider = ({ children }) => {
     
     const navigate = useNavigate()
     const [loading,setLoading] = useState(false)
-    const [userInfo,setUserInfo] = useState({})
+    const [userInfo,setUserInfo] = useState(null)
     
     
     const login = async(username,password) => {
@@ -38,6 +38,7 @@ export const AuthContextProvider = ({ children }) => {
                 { username, password },
                 config
             )
+            setUserInfo(data)
             localStorage.setItem('userInfo',JSON.stringify(data))
             return data
         } catch (error) {
