@@ -123,7 +123,12 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ReservationId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ReservationId");
 
                     b.ToTable("Paiements");
                 });
@@ -142,9 +147,6 @@ namespace backend.Migrations
                     b.Property<DateTime>("DateRemise")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PaiementId")
-                        .HasColumnType("int");
-
                     b.Property<double>("Prix")
                         .HasColumnType("float");
 
@@ -155,8 +157,6 @@ namespace backend.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PaiementId");
 
                     b.HasIndex("UserId");
 
@@ -284,7 +284,8 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OffreSpecialeId")
+                    b.Property<int?>("OffreSpecialeId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Photo")
@@ -344,14 +345,19 @@ namespace backend.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("backend.Models.Reservation", b =>
+            modelBuilder.Entity("backend.Models.Paiement", b =>
                 {
-                    b.HasOne("backend.Models.Paiement", "Paiement")
-                        .WithMany("Reservations")
-                        .HasForeignKey("PaiementId")
+                    b.HasOne("backend.Models.Reservation", "Reservation")
+                        .WithMany()
+                        .HasForeignKey("ReservationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Reservation");
+                });
+
+            modelBuilder.Entity("backend.Models.Reservation", b =>
+                {
                     b.HasOne("backend.Models.User", "User")
                         .WithMany("Reservations")
                         .HasForeignKey("UserId")
@@ -363,8 +369,6 @@ namespace backend.Migrations
                         .HasForeignKey("VoitureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Paiement");
 
                     b.Navigation("User");
 
@@ -390,7 +394,7 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Models.Voiture", b =>
                 {
-                    b.HasOne("backend.Models.Marque", null)
+                    b.HasOne("backend.Models.Marque", "Marque")
                         .WithMany("Voitures")
                         .HasForeignKey("MarqueId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -408,6 +412,8 @@ namespace backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Marque");
+
                     b.Navigation("OffreSpeciale");
 
                     b.Navigation("User");
@@ -416,11 +422,6 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Models.Marque", b =>
                 {
                     b.Navigation("Voitures");
-                });
-
-            modelBuilder.Entity("backend.Models.Paiement", b =>
-                {
-                    b.Navigation("Reservations");
                 });
 
             modelBuilder.Entity("backend.Models.Role", b =>

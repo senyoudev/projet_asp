@@ -22,8 +22,6 @@ import {
   faShop,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
-import { Routes } from "react-router-dom";
-import Dashboard from "./pages/admin/Dashboard";
 
 const dashboardRoutes = [
   {

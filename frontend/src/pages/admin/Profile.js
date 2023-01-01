@@ -86,7 +86,7 @@ function Profile() {
                     </Col>
                   </Row>
                   <Button
-                    className="btn-fill pull-right"
+                    className="btn-fill pull-right mt-2"
                     type="submit"
                     variant="info"
                   >

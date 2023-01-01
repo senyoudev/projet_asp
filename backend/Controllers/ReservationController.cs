@@ -10,7 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace backend.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class ReservationController : ControllerBase
     {
@@ -21,9 +21,15 @@ namespace backend.Controllers
             _db = db;
         }
         [HttpGet]
+<<<<<<< HEAD
+        /* [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+              Roles = "Administrator")]*/
+
+=======
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
              Roles = "Administrator")]
+>>>>>>> 647ac8865360bf651a3f1099efab2f7b298f06e9
 
         public JsonResult GetReservations()
         {
@@ -34,23 +40,18 @@ namespace backend.Controllers
             }
             return new JsonResult(Ok(Reservations));
         }
-       [HttpGet("{idVoiture}")]
+        [HttpGet("{idVoiture}")]
         /*    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
                 Roles = "administrator,Proprietaire")]*/
 
         //Api pour get the reservation effectuer sur une voiture
-        public ActionResult GetHisReservationVoiture(int idVoiture)
+        public ActionResult getVoitureReservations(int idVoiture)
         {
-            List<Reservation> result = new List<Reservation> { };
-            var containsIQuery =
-                  from res in _db.Reservations
-                  where res.VoitureId == idVoiture
-                  select res;
 
-            foreach (var res in containsIQuery)
-            {
-                result.Add(res);
-            }
+
+            var result = _db.Reservations.Where(r => r.VoitureId == idVoiture).ToList();
+
+
             if (result.IsNullOrEmpty())
             {
                 return NoContent();
@@ -58,21 +59,15 @@ namespace backend.Controllers
             return Ok(result.ToList());
         }
         [HttpGet("{idUser}")]
-       /* [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-             Roles = "administrator,Proprietaire")]*/
+        /* [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+              Roles = "Administrator,Proprietaire")]*/
         //get the historique reservation effectuer par un user 
-        public IActionResult getUserReservation(int idUser)
+        public IActionResult getUserReservations(int idUser)
         {
-            List<Reservation> result = new List<Reservation> { };
-            var containsIQuery =
-                  from resUser in _db.Reservations
-                  where resUser.UserId == idUser
-                  select resUser;
 
-            foreach (var res in containsIQuery)
-            {
-                result.Add(res);
-            }
+            var result = _db.Reservations.Where(r => r.UserId == idUser).ToList();
+
+
             if (result.IsNullOrEmpty())
             {
                 return NoContent();
@@ -81,8 +76,8 @@ namespace backend.Controllers
         }
         [HttpGet("{id}")]
 
-       /* [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-             Roles = "administrator")]*/
+        /* [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+              Roles = "Administrator")]*/
         public JsonResult GetReservation(int id)
         {
             var reservation = _db.Reservations.FindAsync(id);
@@ -101,7 +96,7 @@ namespace backend.Controllers
         [HttpPost]
 
         /*[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-             Roles = "administrator,Proprietaire,Locataire")]*/
+             Roles = "Administrator,Proprietaire,Locataire")]*/
         public async Task<ActionResult<Reservation>> AddReservation(ReservationInput reservation)
         {
             if (!ModelState.IsValid || !ModelValid.IsModelValid(reservation))
@@ -115,12 +110,10 @@ namespace backend.Controllers
             {
                 UserId = reservation.UserId,
                 VoitureId = reservation.VoitureId,
-                PaiementId = reservation.PaiementId,
+                //PaiementId = reservation.PaiementId,
                 DatePriseEnCharge = DateTime.UtcNow,
                 DateRemise = reservation.DateRemise,
                 Prix = reservation.Prix
-
-
 
             };
 
@@ -130,44 +123,58 @@ namespace backend.Controllers
         }
 
         [HttpPut("{id}")]
-       /* [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-             Roles = "administrator,Proprietaire,Locataire")]
-*/
+        /* [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+              Roles = "Administrator,Proprietaire,Locataire")]
+ */
 
-        public async Task<IActionResult> UpdateReservation(int id, ReservationInput reservation)
+
+        /*[HttpPut("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+             Roles = "Administrator,Proprietaire,Locataire")]*/
+
+
+        public async Task<IActionResult> UpdateReservation(int id, ReservationInput res)
         {
-            if (id != reservation.Id)
+            // Validate the incoming request data
+            if (res == null || res.Id != id)
             {
-                return BadRequest();
+                return BadRequest("Invalid data provided.");
             }
 
-            _db.Entry(reservation).State = EntityState.Modified;
 
-            try
+            // Check if the reservation exists in the database 
+            var res_from_db = await _db.Reservations.FindAsync(id);
+            if (res_from_db == null)
             {
-                await _db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (ReservationExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
-            return Ok();
-        }
+            var user = _db.Users.Find(res_from_db.UserId);
+            if (user == null)
+            {
+                return NotFound("User Not found");
+            }
+            res_from_db.VoitureId = res.VoitureId;
+            res_from_db.Prix = res.Prix;
+            res_from_db.UserId = res.UserId;
+            res_from_db.DatePriseEnCharge = res.DatePriseEnCharge;
+            res_from_db.DateRemise = res.DateRemise;
+
+
+            _db.Reservations.Update(res_from_db);
+            await _db.SaveChangesAsync();
+
+            return new JsonResult("updated successfully");
+
+        } 
+
 
 
 
         // DELETE: api/TodoItems/5
         [HttpDelete("{id}")]
 /*        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-             Roles = "administrator,Proprietaire,Locataire")]*/
+             Roles = "Administrator,Proprietaire,Locataire")]*/
         public async Task<IActionResult> DeleteReservation(int id)
         {
             var reservation = await _db.Reservations.FindAsync(id);

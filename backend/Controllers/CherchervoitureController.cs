@@ -19,10 +19,13 @@ namespace backend.Controllers
         public JsonResult GetVoitures(DateTime? startDate,DateTime? endDate)
         {
             if (startDate == null || endDate == null)
-                return new JsonResult(Ok());
-            var selectedvoitures = _db.Reservations.Where(e => ((e.DatePriseEnCharge >= startDate && e.DateRemise >= endDate ) || (e.DatePriseEnCharge <= startDate && e.DateRemise <= endDate)))
-                .Select(e => e.Voiture).Where(v=>(v.isDisponible && v.isAprouved))
-                .ToList();
+                return new JsonResult(BadRequest("you need to choose the dates"));
+            var selectedvoitures = _db.Reservations.Where(e => (
+            ((e.DateRemise < startDate) || (e.DatePriseEnCharge > startDate && e.DatePriseEnCharge > endDate))
+            )).Select(e => e.Voiture).Where(v => (v.isAprouved && v.isDisponible)) 
+               .ToList();
+
+            
 
             if (selectedvoitures == null)
             {

@@ -13,7 +13,7 @@ import Offers from "./owner/Offers";
 import Reservations from "./owner/Reservations";
 import CarDetails from "./admin/CarDetails";
 import OfferDetails from "./admin/OfferDetails";
-
+import "../assets/css/admin.css";
 function AdminOwner() {
   const [image, setImage] = React.useState(sidebarImage);
   const [color, setColor] = React.useState("black");
@@ -41,7 +41,7 @@ function AdminOwner() {
         return <OfferDetails type="owner" />;
         break;
       default:
-        return null;
+        return <Dashboard />;
         break;
     }
   };

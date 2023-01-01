@@ -13,6 +13,7 @@ import Profile from "./admin/Profile";
 import Offers from "./admin/Offers";
 import CarDetails from "./admin/CarDetails";
 import OfferDetails from "./admin/OfferDetails";
+import "../assets/css/admin.css";
 
 function Admin() {
   const [image, setImage] = React.useState(sidebarImage);
