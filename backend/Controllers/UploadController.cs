@@ -22,6 +22,8 @@ namespace backend.Controllers
             _cloudinary = new Cloudinary(account);
         }
 
+        public Cloudinary Cloudinary => _cloudinary;
+
         [HttpPost]
 public ActionResult UploadSingle(IFormFile imageFile)
 {
@@ -32,7 +34,7 @@ public ActionResult UploadSingle(IFormFile imageFile)
     }
 
     // Upload the image to Cloudinary
-    var uploadResult = _cloudinary.Upload(new ImageUploadParams
+    var uploadResult = Cloudinary.Upload(new ImageUploadParams
     {
         File = new FileDescription(imageFile.FileName, imageFile.OpenReadStream())
     });
