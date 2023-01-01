@@ -21,8 +21,8 @@ import { LinkContainer } from 'react-router-bootstrap'
 
 const Header = () => {
 
-    const {logout} = useAuth('')
-    const [userInfo,setUserInfo] = useState(null)
+  const [userInfo,setUserInfo] = useState(localStorage.getItem('userInfo'))
+  const {logout} = useAuth('')
     const logoutHandler = () => {
      logout()
   }
@@ -82,8 +82,8 @@ const Header = () => {
                             )}
 
                              {userInfo.role == 'Administrator' && (
-                                <LinkContainer to='/owner'>
-                                  <NavDropdown.Item>Profile</NavDropdown.Item>
+                                <LinkContainer to='/admin'>
+                                  <NavDropdown.Item>Dashboard</NavDropdown.Item>
                                 </LinkContainer>
                             )}
                                

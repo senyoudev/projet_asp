@@ -24,7 +24,7 @@ function Admin() {
  
   const mainPanel = React.useRef(null);
    const navigate = useNavigate()
-  const [userInfo,setUserInfo] = useState(localStorage.getItem('userInfo'))
+  const [userInfo,setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')))
   
 
 
@@ -59,7 +59,7 @@ function Admin() {
     }
   };
   React.useEffect(() => {
-    if(userInfo != null) {
+    if(userInfo != null && userInfo.role == 'Administrator') {
       setUserInfo(JSON.parse(localStorage.getItem('userInfo')))
       document.documentElement.scrollTop = 0;
       document.scrollingElement.scrollTop = 0;
@@ -74,11 +74,11 @@ function Admin() {
     }
 
     } else {
-      return navigate('/login')
+      return navigate('/')
     }
     
   }, [location,localStorage.getItem('userInfo'),mainPanel]);
-  if(userInfo != null) {
+  if(userInfo != null && userInfo.role == 'Administrator') {
   return (
     <div id="admin">
       <div className="wrapper">
