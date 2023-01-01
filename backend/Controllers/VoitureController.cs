@@ -1,6 +1,7 @@
 ﻿using backend.Data;
 using backend.Models;
 using backend.Models.inputs;
+using backend.Models.outputs;
 using backend.utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -29,12 +30,41 @@ namespace backend.Controllers
 
         public JsonResult GetVoitures()
         {
-            var Voitures = _db.Voitures.ToList();
+            var Voitures = _db.Voitures
+                .Include(v => v.User)
+                .Include(v => v.Marque)
+                .ToList();
             if (Voitures == null)
             {
                 return new JsonResult(NotFound());
             }
-            return new JsonResult(Ok(Voitures));
+
+            return new JsonResult(Ok(Voitures.Select(v => new VoitureDto
+            {
+                Id = v.Id,
+                Name = v.Name,
+                Couleur = v.Couleur,
+                Photo = v.Photo,
+                Annee = v.Annee,
+                Km = v.Km,
+                DateAdded = v.DateAdded,
+                UserId = v.UserId,
+                MarqueId = v.MarqueId,
+                OffreSpecialeId = v.OffreSpecialeId,
+                Prix = v.Prix,
+                Marque = new Marque
+                {
+                    Id = v.Marque.Id,
+                    Libelle = v.Marque.Libelle,
+                },
+                User = new User
+                {
+                    Id = v.User.Id,
+                    Email = v.User.Email,
+                    // include other properties of the User object as needed
+                },
+                
+            }).ToList()));
         }
 
         [HttpGet]
@@ -64,10 +94,10 @@ namespace backend.Controllers
 
         public async Task<ActionResult<Voiture>> AddVoiture(VoitureInput voiture)
         {
-            /*       if (!ModelState.IsValid || !ModelValid.IsModelValid(voiture))
-                   {
-                       return BadRequest(ModelState);
-                   }*/
+            if (!ModelState.IsValid || !ModelValid.IsModelValid(voiture))
+            {
+                return BadRequest(ModelState);
+            }
 
 
 

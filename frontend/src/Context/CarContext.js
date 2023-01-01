@@ -14,35 +14,56 @@ export const useCar = () => {
 
 const carUrl = getUrl("Cars");
 
-const userInfo = localStorage.getItem("userInfo")
-  ? JSON.parse(localStorage.getItem("userInfo"))
-  : null;
+
 
 export const CarContextProvider = ({ children }) => {
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const getOwnerCars = async () => {
-    try {
-      const { data } = await axios.get(`${carUrl}/GetVoituresByUser/ByUser?userId=1`);
-      setLoading(false);
-      return data
-    } catch (error) {
-      toast.error("Something went wrong");
-      console.log(error);
-      setLoading(false);
+    
+    const navigate = useNavigate()
+    const [loading,setLoading] = useState(false)
+
+      const getCarsCount = async() => {
+        setLoading(true)
+            try {
+                const { data } = await axios.get(`${carUrl}/GetVoituresCount/count`);
+                setLoading(false)
+                return data  
+            } catch (error) {
+                toast.error("Something went wrong")
+                console.log(error)
+                setLoading(false)
+            }
+         }
+    
+      const getOwnerCarsNumber = async(id) => {
+        setLoading(true)
+            try {
+                const { data } = await axios.get(`${carUrl}/countByUser`,{id});
+                setLoading(false)
+                return data  
+            } catch (error) {
+                toast.error("Something went wrong")
+                console.log(error.response)
+                setLoading(false)
+            }
+
     }
-  };
-  const getOwnerCarsNumber = async (id) => {
-    setLoading(true);
-    try {
-      const { data } = await axios.get(`${carUrl}/countByUser`, { id });
-      setLoading(false);
-      return data;
-    } catch (error) {
-      toast.error("Something went wrong");
-      console.log(error.response);
-      setLoading(false);
-    }
+<<<<<<< HEAD
+    
+   
+
+
+    return (
+        <carContext.Provider
+            value={{
+                loading,
+              getCarsCount,
+              getOwnerCarsNumber
+            }}
+        >
+            {children}
+        </carContext.Provider>
+    );
+=======
   };
   const getCar = async (id) => {
     setLoading(true);
@@ -68,4 +89,5 @@ export const CarContextProvider = ({ children }) => {
       {children}
     </carContext.Provider>
   );
+>>>>>>> origin/main
 };
