@@ -18,6 +18,8 @@ function CarsTable(props) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const data = props.data;
   return (
     <>
       <Row>
@@ -42,58 +44,36 @@ function CarsTable(props) {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    {props.type === "admin" ? <td>Dakota Rice</td> : null}
-                    <td>$36,738</td>
-                    <td>Niger</td>
-                    <td>Oud-Turnhout</td>
-                    <td>Reserved</td>
-                    <td>
-                      {props.type === "admin" ? (
-                        <button className="btn btn-fill btn-primary me-2">
-                          Approve
-                        </button>
-                      ) : null}
-                      <button
-                        className="btn btn-fill btn-secondary me-2"
-                        onClick={editCar}
-                      >
-                        Edit
-                      </button>
-                      {props.type === "owner" ? (
-                        <button className="btn btn-fill btn-danger">
-                          Delete
-                        </button>
-                      ) : null}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    {props.type === "admin" ? <td>Dakota Rice</td> : null}
-                    <td>$23,789</td>
-                    <td>Curaçao</td>
-                    <td>Sinaai-Waas</td>
-                    <td style={{color: 'orange'}}>Available</td>
-                    <td>
-                      {props.type === "admin" ? (
-                        <button className="btn btn-fill btn-primary me-2">
-                          Approve
-                        </button>
-                      ) : null}
-                      <button
-                        className="btn btn-fill btn-secondary me-2"
-                        onClick={editCar}
-                      >
-                        Edit
-                      </button>
-                      {props.type === "owner" ? (
-                        <button className="btn btn-fill btn-danger">
-                          Delete
-                        </button>
-                      ) : null}
-                    </td>
-                  </tr>
+                  {data.map((item) => {
+                    return (
+                      <tr>
+                        <td>{item.id}</td>
+                        {props.type === "admin" ? <td>Dakota Rice</td> : null}
+                        <td>{item.marque}</td>
+                        <td>{item.prix+ " DH"}</td>
+                        <td>Oud-Turnhout</td>
+                        <td>Reserved</td>
+                        <td>
+                          {props.type === "admin" ? (
+                            <button className="btn btn-fill btn-primary me-2">
+                              Approve
+                            </button>
+                          ) : null}
+                          <button
+                            className="btn btn-fill btn-secondary me-2"
+                            onClick={editCar}
+                          >
+                            Edit
+                          </button>
+                          {props.type === "owner" ? (
+                            <button className="btn btn-fill btn-danger">
+                              Delete
+                            </button>
+                          ) : null}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </Table>
             </Card.Body>

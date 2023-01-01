@@ -10,7 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace backend.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class VoitureController : ControllerBase
     {
@@ -23,7 +23,7 @@ namespace backend.Controllers
 
         }
         [HttpGet]
-        [Route("api/Voiture/")]
+       // [Route("api/Voiture/")]
 
 
 
@@ -38,11 +38,11 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        [Route("api/Voiture/{id}")]
+       // [Route("api/Voiture/{id}")]
 
        
 
-        public JsonResult GetVoiture(long id)
+        public JsonResult GetVoiture(int id)
         {
             var voiture = _db.Voitures.FindAsync(id);
 
@@ -64,10 +64,10 @@ namespace backend.Controllers
 
         public async Task<ActionResult<Voiture>> AddVoiture(VoitureInput voiture)
         {
-            if (!ModelState.IsValid || !ModelValid.IsModelValid(voiture))
-            {
-                return BadRequest(ModelState);
-            }
+            /*       if (!ModelState.IsValid || !ModelValid.IsModelValid(voiture))
+                   {
+                       return BadRequest(ModelState);
+                   }*/
 
 
 
@@ -84,7 +84,7 @@ namespace backend.Controllers
                 Prix = voiture.Prix,
                 Photo = voiture.Photo,
                 isAprouved = false,
-                isDisponible=true
+                isDisponible = voiture.isDisponible
 
 
             };
@@ -104,8 +104,21 @@ namespace backend.Controllers
             {
                 return BadRequest();
             }
+            Voiture voiture_from_db = _db.Voitures.Find(id);
+            voiture_from_db.Name= voiture.Name;
+            voiture_from_db.Km= voiture.Km;
+            voiture_from_db.Photo= voiture.Photo;
+            voiture_from_db.Couleur= voiture.Couleur;
+            voiture_from_db.MarqueId = voiture.MarqueId;
+            voiture_from_db.Annee= voiture.Annee;
+            voiture_from_db.isDisponible = voiture.isDisponible;
+            voiture_from_db.Prix= voiture.Prix;
+            voiture_from_db.OffreSpecialeId = voiture.OffreSpecialeId;
+            voiture_from_db.UserId= voiture.UserId;
 
-            _db.Entry(voiture).State = EntityState.Modified;
+            _db.Voitures.Update(voiture_from_db);
+            await _db.SaveChangesAsync();
+            /*_db.Entry(voiture).State = EntityState.Modified;
 
             try
             {
@@ -121,9 +134,9 @@ namespace backend.Controllers
                 {
                     throw;
                 }
-            }
+            }*/
 
-            return Ok();
+            return Ok("voiture updated");
         }
 
         [HttpDelete("{id}")]

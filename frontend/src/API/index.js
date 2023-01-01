@@ -1,12 +1,12 @@
-
-
-
 const baseURL = process.env.REACT_APP_API_URL;
 
 const endpoints = {
   Auth:'api/auth',
   Cars:'api/Voiture',
+<<<<<<< HEAD
   User:'api/User'
+=======
+>>>>>>> origin/main
   // Add more endpoints here as needed
 };
 
