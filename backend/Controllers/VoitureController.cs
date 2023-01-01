@@ -251,6 +251,28 @@ namespace backend.Controllers
 
             return voitures;
         }
+
+        // search avialable cars between two dates means not reserved 
+        [HttpGet("GetAvialableVoitures")]
+        public JsonResult GetAvialableVoitures(DateTime? startDate,DateTime? endDate)
+        {
+            if (startDate == null || endDate == null)
+                return new JsonResult(BadRequest("you need to choose the dates"));
+            var selectedvoitures = _db.Reservations.Where(e => (
+            ((e.DateRemise < startDate) || (e.DatePriseEnCharge > startDate && e.DatePriseEnCharge > endDate))
+            )).Select(e => e.Voiture).Where(v => (v.isAprouved && v.isDisponible)) 
+               .ToList();
+
+            
+
+            if (selectedvoitures == null)
+            {
+                return new JsonResult(NotFound());
+            }
+            return new JsonResult(Ok(selectedvoitures));
+        }
+        /*-------------------------------------------*/
+
         [HttpGet("marque")]
         public async Task<ActionResult<IEnumerable<Voiture>>> GetVoituresByMarque(int marqueId)
         {
