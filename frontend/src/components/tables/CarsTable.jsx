@@ -4,12 +4,12 @@ import React, { useState } from "react";
 import { Card, Table, Row, Col, Modal, Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-function CarsTable(props) {
+function CarsTable({ data, type }) {
   const navigate = useNavigate();
-  function editCar() {
-    navigate(`/${props.type}/carDetails`, {
+  function editCar(id) {
+    navigate(`/${type}/carDetails`, {
       state: {
-        carId: 1,
+        carId: id,
       },
     });
   }
@@ -31,7 +31,7 @@ function CarsTable(props) {
                 <thead>
                   <tr>
                     <th className="border-0">ID</th>
-                    {props.type === "admin" ? (
+                    {type === "admin" ? (
                       <th className="border-0">Owner</th>
                     ) : null}
                     <th className="border-0">brand</th>
@@ -42,62 +42,42 @@ function CarsTable(props) {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    {props.type === "admin" ? <td>Dakota Rice</td> : null}
-                    <td>$36,738</td>
-                    <td>Niger</td>
-                    <td>Oud-Turnhout</td>
-                    <td>Reserved</td>
-                    <td>
-                      {props.type === "admin" ? (
-                        <button className="btn btn-fill btn-primary me-2">
-                          Approve
-                        </button>
-                      ) : null}
-                      <button
-                        className="btn btn-fill btn-secondary me-2"
-                        onClick={editCar}
-                      >
-                        Edit
-                      </button>
-                      {props.type === "owner" ? (
-                        <button className="btn btn-fill btn-danger">
-                          Delete
-                        </button>
-                      ) : null}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    {props.type === "admin" ? <td>Dakota Rice</td> : null}
-                    <td>$23,789</td>
-                    <td>Curaçao</td>
-                    <td>Sinaai-Waas</td>
-                    <td style={{color: 'orange'}}>Available</td>
-                    <td>
-                      {props.type === "admin" ? (
-                        <button className="btn btn-fill btn-primary me-2">
-                          Approve
-                        </button>
-                      ) : null}
-                      <button
-                        className="btn btn-fill btn-secondary me-2"
-                        onClick={editCar}
-                      >
-                        Edit
-                      </button>
-                      {props.type === "owner" ? (
-                        <button className="btn btn-fill btn-danger">
-                          Delete
-                        </button>
-                      ) : null}
-                    </td>
-                  </tr>
+                  {data?.map((item, ind) => {
+                    return (
+                      <tr key={ind}>
+                        <td>{item.id}</td>
+                        {type === "admin" ? <td>Dakota Rice</td> : null}
+                        <td>{item.marque}</td>
+                        <td>{item.prix + " DH"}</td>
+                        <td>{item.dateAdded.substr(0, 10)}</td>
+                        <td>
+                          {item.isAprouved ? "Approuved" : "Not Approuved"}
+                        </td>
+                        <td>
+                          {type === "admin" ? (
+                            <button className="btn btn-fill btn-primary me-2">
+                              Approve
+                            </button>
+                          ) : null}
+                          <button
+                            className="btn btn-fill btn-secondary me-2"
+                            onClick={() => editCar(item.id)}
+                          >
+                            Edit
+                          </button>
+                          {type === "owner" ? (
+                            <button className="btn btn-fill btn-danger">
+                              Delete
+                            </button>
+                          ) : null}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </Table>
             </Card.Body>
-            {props.type === "owner" ? (
+            {type === "owner" ? (
               <Card.Footer style={{ textAlign: "center" }}>
                 <button
                   className="btn btn-fill btn-primary"
@@ -110,7 +90,7 @@ function CarsTable(props) {
           </Card>
         </Col>
       </Row>
-      {props.type === "owner" ? (
+      {type === "owner" ? (
         <Modal
           show={show}
           onHide={handleClose}

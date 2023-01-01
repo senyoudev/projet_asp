@@ -1,12 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace backend.Models
+﻿namespace backend.Models.outputs
 {
-    public class Voiture
+    public class VoitureDto
     {
-        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Couleur { get; set; }
@@ -22,16 +17,7 @@ namespace backend.Models
         public bool isAprouved { get; set; }
         public bool isDisponible { get; set; }
 
-        [ForeignKey("UserId")]
-        public virtual User User { get; set; }
-        [ForeignKey("MarqueId")]
-        public virtual Marque Marque { get; set; }
-        [ForeignKey("OffreSpecialeId")]
-        public  virtual OffreSpeciale? OffreSpeciale { get; set; }
-
-
-
-
-
+        public User User { get; set; }
+        public  Marque Marque { get; set; }
     }
 }

@@ -65,22 +65,33 @@ const data = {
 function Dashboard() {
 
    const navigate = useNavigate('')
-  const { getOwnerCarsNumber} = useCar('')
+  const { getCarsCount} = useCar('')
+  const {getUserCount } = useAuth('')
   const [carNumber,setCarNumber] = useState('')
+  const [ownerNumber,setOwnerNumber] = useState('')
+  const [clientNumber,setClientNumber] = useState('')
   const [userInfo,setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')))
 
+  const fetchCount = async () => {
+      const carCount = await getCarsCount()
+      const ownerCount = await getUserCount("proprietaire")
+      const clientCount = await getUserCount("locataire")
+      setCarNumber(carCount)
+      setOwnerNumber(ownerCount)
+      setClientNumber(clientCount)
+    }
+
   useEffect(()=> {
+     
     if(userInfo != null) {
-      setCarNumber(getOwnerCarsNumber())
-      setUserInfo(localStorage.getItem('userInfo'))
-      console.log(carNumber)
+      fetchCount()
+      setUserInfo(JSON.parse(localStorage.getItem('userInfo')))
     } else {
       return navigate('/login')
     }
   },[localStorage.getItem('userInfo')])
 
 
-    
 
   return (
     <>
@@ -101,17 +112,14 @@ function Dashboard() {
                   <Col xs="7">
                     <div className="numbers">
                       <p className="card-category">Tenants</p>
-                      <Card.Title as="h4">5</Card.Title>
+                       {clientNumber && <Card.Title as="h4">{clientNumber}</Card.Title>} 
                     </div>
                   </Col>
                 </Row>
               </Card.Body>
               <Card.Footer>
                 <hr></hr>
-                <div className="stats">
-                  <FontAwesomeIcon icon={faRedo} className="me-1" />
-                  Update Now
-                </div>
+            
               </Card.Footer>
             </Card>
           </Col>
@@ -127,17 +135,14 @@ function Dashboard() {
                   <Col xs="7">
                     <div className="numbers">
                       <p className="card-category">Owners</p>
-                      <Card.Title as="h4">10</Card.Title>
+                     {ownerNumber && <Card.Title as="h4">{ownerNumber}</Card.Title>} 
                     </div>
                   </Col>
                 </Row>
               </Card.Body>
               <Card.Footer>
                 <hr></hr>
-                <div className="stats">
-                  <FontAwesomeIcon icon={faCalendarAlt} className="me-1" />
-                  Last day
-                </div>
+            
               </Card.Footer>
             </Card>
           </Col>
@@ -153,17 +158,14 @@ function Dashboard() {
                   <Col xs="7">
                     <div className="numbers">
                       <p className="card-category">Cars</p>
-                      <Card.Title as="h4">23</Card.Title>
+                      {carNumber && <Card.Title as="h4">{carNumber}</Card.Title>}
                     </div>
                   </Col>
                 </Row>
               </Card.Body>
               <Card.Footer>
                 <hr></hr>
-                <div className="stats">
-                  <FontAwesomeIcon icon={faClock} className="me-1" />
-                  In the last hour
-                </div>
+           
               </Card.Footer>
             </Card>
           </Col>
@@ -181,7 +183,7 @@ function Dashboard() {
                   </Col>
                   <Col xs="7">
                     <div className="numbers">
-                      <p className="card-category">Weekly rentals</p>
+                      <p className="card-category">Rentals</p>
                       <Card.Title as="h4">20</Card.Title>
                     </div>
                   </Col>
@@ -189,10 +191,7 @@ function Dashboard() {
               </Card.Body>
               <Card.Footer>
                 <hr></hr>
-                <div className="stats">
-                  <FontAwesomeIcon icon={faRedo} className="me-1" />
-                  Update now
-                </div>
+         
               </Card.Footer>
             </Card>
           </Col>
