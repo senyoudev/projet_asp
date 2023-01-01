@@ -1,5 +1,5 @@
 import "./App.css";
-import HomePage from "./pages/Home";
+import Home from "./pages/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Admin from "./pages/Admin";
 import AdminOwenr from "./pages/AdminOwner";
@@ -8,17 +8,19 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import CarsListing from "./pages/CarsListing"
+import CarDetails from "./pages/CarDetails";
 function App() {
   return (
     <Router>
       <AuthContextProvider>
       <Routes>
-        <Route exact path="/" element={<HomePage />} />
+        <Route exact path="/" element={<Home />} />
         <Route path="/admin/*" element={<Admin/>}/>
         <Route path="/owner/*" element={<AdminOwenr/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="/cars" element={<CarsListing/>}/>
+        <Route path="/carsDetails" element={<CarDetails/>}/>
         <Route path="*" element={<NotFound />} />
       </Routes>
       </AuthContextProvider>
