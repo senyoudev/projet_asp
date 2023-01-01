@@ -4,10 +4,10 @@ import React, { useState } from "react";
 import { Card, Table, Row, Col, Modal, Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-function CarsTable(props) {
+function CarsTable({data,type}) {
   const navigate = useNavigate();
   function editCar() {
-    navigate(`/${props.type}/carDetails`, {
+    navigate(`/${type}/carDetails`, {
       state: {
         carId: 1,
       },
@@ -18,8 +18,6 @@ function CarsTable(props) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  const data = props.data;
   return (
     <>
       <Row>
@@ -33,7 +31,7 @@ function CarsTable(props) {
                 <thead>
                   <tr>
                     <th className="border-0">ID</th>
-                    {props.type === "admin" ? (
+                    {type === "admin" ? (
                       <th className="border-0">Owner</th>
                     ) : null}
                     <th className="border-0">brand</th>
@@ -48,13 +46,13 @@ function CarsTable(props) {
                     return (
                       <tr>
                         <td>{item.id}</td>
-                        {props.type === "admin" ? <td>Dakota Rice</td> : null}
+                        {type === "admin" ? <td>Dakota Rice</td> : null}
                         <td>{item.marque}</td>
                         <td>{item.prix+ " DH"}</td>
-                        <td>Oud-Turnhout</td>
-                        <td>Reserved</td>
+                        <td>{item.dateAdded.substr(0,10)}</td>
+                        <td>{item.isDisponible?"Available": "Reserved"}</td>
                         <td>
-                          {props.type === "admin" ? (
+                          {type === "admin" ? (
                             <button className="btn btn-fill btn-primary me-2">
                               Approve
                             </button>
@@ -65,7 +63,7 @@ function CarsTable(props) {
                           >
                             Edit
                           </button>
-                          {props.type === "owner" ? (
+                          {type === "owner" ? (
                             <button className="btn btn-fill btn-danger">
                               Delete
                             </button>
@@ -77,7 +75,7 @@ function CarsTable(props) {
                 </tbody>
               </Table>
             </Card.Body>
-            {props.type === "owner" ? (
+            {type === "owner" ? (
               <Card.Footer style={{ textAlign: "center" }}>
                 <button
                   className="btn btn-fill btn-primary"
@@ -90,7 +88,7 @@ function CarsTable(props) {
           </Card>
         </Col>
       </Row>
-      {props.type === "owner" ? (
+      {type === "owner" ? (
         <Modal
           show={show}
           onHide={handleClose}

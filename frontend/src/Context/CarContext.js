@@ -23,12 +23,12 @@ export const CarContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const getOwnerCars = async () => {
     try {
-      const { data } = await axios.get(`${carUrl}/api/Voiture`);
+      const { data } = await axios.get(`${carUrl}/GetVoituresByUser/ByUser?userId=1`);
       setLoading(false);
       return data
     } catch (error) {
       toast.error("Something went wrong");
-      console.log(error.response);
+      console.log(error);
       setLoading(false);
     }
   };
