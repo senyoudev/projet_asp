@@ -1,8 +1,6 @@
 import {
   faCar,
   faCopyright,
-  faMailBulk,
-  faMessage,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
@@ -21,7 +19,7 @@ const quickLinks = [
     display: "About",
   },
   {
-    path: "#cars",
+    path: "/cars",
     display: "Cars",
   },
 ];

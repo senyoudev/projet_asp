@@ -1,7 +1,7 @@
 .header__top {
   padding: 10px 0px;
-  background: #1dcbef;
-  color: #fff;
+  background: #fff;
+  color: #1A120B;
 }
 
 .header__top__left {
@@ -20,22 +20,14 @@
   column-gap: 0.4rem;
 }
 
-.header__top__help i {
-  background: #fff;
-  color: #000d6b;
-  padding: 2px 4px;
-  border-radius: 50px;
-  font-size: 0.7rem;
-}
-
 .header__top__right a {
   text-decoration: none;
-  color: #fff;
+  color: #1A120B;
   font-size: 0.9rem;
 }
 
 .header__top__right a:hover {
-  color: #fff;
+  color: #1A120B;
 }
 
 /* ============ header middle style =========== */
@@ -44,12 +36,14 @@
   padding: 20px 0px;
 }
 
+.header .logo h1 a span {
+  color: #000d6b;
+}
 .logo h1 a span {
   font-size: 1.3rem;
-  color:#000d6b;
 }
 
-.logo h1 a svg {
+.header .logo h1 a svg {
   font-size: 2rem;
   color: #000d6b;
 }
@@ -66,24 +60,23 @@
 
 .header__location span svg {
   font-size: 2rem;
-    color: #000d6b;
+  color: #000d6b;
 }
 
 .header__location-content h4 {
   font-size: 1.2rem;
   font-weight: 700;
-    color: #000d6b;
-  margin-bottom: 6px!important;
+  color: #000d6b;
+  margin-bottom: 6px !important;
 }
 
 .header__location-content h6 {
   font-weight: 600;
-  color:#000d6b;
-
+  color: #000d6b;
 }
 
 .header__btn {
-    background-color: #000d6b!important;
+  background-color: #000d6b !important;
   padding: 10px 20px;
   border: none;
   outline: none;
@@ -108,7 +101,10 @@
 
 .main__navbar {
   padding: 15px 0px;
-  background: #1dcbef;
+  background: #1A120B;
+}
+.main__navbar a:hover {
+  color: #000;
 }
 
 .mobile__menu i {
@@ -138,7 +134,7 @@
   text-decoration: none;
   transition: 0.3s;
 }
-
+s
 .nav__item:hover {
   color: #fff;
 }
@@ -149,7 +145,7 @@
   display: flex;
   align-items: center;
   border-radius: 50px;
-  background: #fff;
+  background: #1a120b0e;
 }
 
 .search__box input {
