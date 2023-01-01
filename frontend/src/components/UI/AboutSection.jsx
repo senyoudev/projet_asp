@@ -12,6 +12,7 @@ const AboutSection = ({ aboutClass }) => {
           ? { marginTop: "0px" }
           : { marginTop: "280px" }
       }
+      id="about"
     >
       <Container>
         <Row>

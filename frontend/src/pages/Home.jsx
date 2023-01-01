@@ -24,7 +24,7 @@ const Home = () => {
       <div>
         <Helmet title="Home">
           {/* ============= hero section =========== */}
-          <section className="p-0 hero__slider-section">
+          <section className="p-0 hero__slider-section" id="#">
             <HeroSlider />
 
             <div className="hero__form">
@@ -59,7 +59,7 @@ const Home = () => {
             </Container>
           </section>
           {/* =========== car offer section ============= */}
-          <section>
+          <section id="cars">
             <Container>
               <Row>
                 <Col lg="12" className="text-center mb-5">
@@ -89,23 +89,9 @@ const Home = () => {
               </Row>
             </Container>
           </section>
-
-          {/* =============== blog section =========== */}
-          <section>
-            <Container>
-              <Row>
-                <Col lg="12" className="mb-5 text-center">
-                  <h6 className="section__subtitle">Explore our blogs</h6>
-                  <h2 className="section__title">Latest Blogs</h2>
-                </Col>
-
-                <BlogList />
-              </Row>
-            </Container>
-          </section>
         </Helmet>
       </div>
-      <Footer />
+      <Footer/>
     </Fragment>
   );
 };

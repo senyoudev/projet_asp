@@ -6,27 +6,16 @@ import "../../assets/css/footer.css";
 
 const quickLinks = [
   {
-    path: "/about",
+    path: "#",
+    display: "Home",
+  },
+  {
+    path: "#about",
     display: "About",
   },
-
   {
-    path: "#",
-    display: "Privacy Policy",
-  },
-
-  {
-    path: "/cars",
-    display: "Car Listing",
-  },
-  {
-    path: "/blogs",
-    display: "Blog",
-  },
-
-  {
-    path: "/contact",
-    display: "Contact",
+    path: "#cars",
+    display: "Cars",
   },
 ];
 
@@ -34,13 +23,13 @@ const Footer = () => {
   const date = new Date();
   const year = date.getFullYear();
   return (
-    <footer className="footer">
+    <footer className="footer" id="contact">
       <Container>
         <Row>
           <Col lg="4" md="4" sm="12">
             <div className="logo footer__logo">
               <h1>
-                <Link to="/home" className=" d-flex align-items-center gap-2">
+                <Link to="/" className=" d-flex align-items-center gap-2">
                   <i class="ri-car-line"></i>
                   <span>
                     Rent Car <br /> Service
@@ -62,7 +51,7 @@ const Footer = () => {
               <ListGroup>
                 {quickLinks.map((item, index) => (
                   <ListGroupItem key={index} className="p-0 mt-3 quick__link">
-                    <Link to={item.path}>{item.display}</Link>
+                    <a href={item.path}>{item.display}</a>
                   </ListGroupItem>
                 ))}
               </ListGroup>

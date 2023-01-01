@@ -6,24 +6,19 @@ import "../../assets/css/header.css";
 
 const navLinks = [
   {
-    path: "/home",
+    path: "#",
     display: "Home",
   },
   {
-    path: "/about",
+    path: "#about",
     display: "About",
   },
   {
-    path: "/cars",
+    path: "#cars",
     display: "Cars",
   },
-
   {
-    path: "/blogs",
-    display: "Blog",
-  },
-  {
-    path: "/contact",
+    path: "#contact",
     display: "Contact",
   },
 ];
@@ -50,11 +45,11 @@ const Header = () => {
 
             <Col lg="6" md="6" sm="6">
               <div className="header__top__right d-flex align-items-center justify-content-end gap-3">
-                <Link to="#" className=" d-flex align-items-center gap-1">
+                <Link to="/login" className=" d-flex align-items-center gap-1">
                   <i class="ri-login-circle-line"></i> Login
                 </Link>
 
-                <Link to="#" className=" d-flex align-items-center gap-1">
+                <Link to="/register" className=" d-flex align-items-center gap-1">
                   <i class="ri-user-line"></i> Register
                 </Link>
               </div>
@@ -70,7 +65,7 @@ const Header = () => {
             <Col lg="4" md="3" sm="4">
               <div className="logo">
                 <h1>
-                  <Link to="/home" className=" d-flex align-items-center gap-2">
+                  <Link to="/" className=" d-flex align-items-center gap-2">
                     <i class="ri-car-line"></i>
                     <span>
                       Rent Car <br /> Service
@@ -132,15 +127,15 @@ const Header = () => {
             <div className="navigation" ref={menuRef} onClick={toggleMenu}>
               <div className="menu">
                 {navLinks.map((item, index) => (
-                  <NavLink
-                    to={item.path}
+                  <a
+                    href={item.path}
                     className={(navClass) =>
                       navClass.isActive ? "nav__active nav__item" : "nav__item"
                     }
                     key={index}
                   >
                     {item.display}
-                  </NavLink>
+                  </a>
                 ))}
               </div>
             </div>

@@ -6,7 +6,7 @@ import Sidebar from "../components/Sidebar/Sidebar";
 import routes from "../routes.js";
 
 import sidebarImage from "../assets/img/sidebar-2.jpg";
-import Dashboard from "../pages/admin/Dashboard";
+import Dashboard from "./admin/Dashboard";
 import Clients from "./admin/Users";
 import Cars from "./admin/Cars";
 import Profile from "./admin/Profile";
