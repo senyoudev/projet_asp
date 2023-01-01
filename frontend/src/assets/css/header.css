@@ -1,6 +1,6 @@
 .header__top {
   padding: 10px 0px;
-  background: #000d6b;
+  background: #1dcbef;
   color: #fff;
 }
 
@@ -46,15 +46,17 @@
 
 .logo h1 a span {
   font-size: 1.3rem;
+  color:#000d6b;
 }
 
 .logo h1 a svg {
   font-size: 2rem;
+  color: #000d6b;
 }
 
 .logo h1 a {
   text-decoration: none;
-  color: #000d6b;
+  color: #1dcbef;
   font-weight: 700;
 }
 
@@ -64,22 +66,24 @@
 
 .header__location span svg {
   font-size: 2rem;
-  color: #000d6b;
+    color: #000d6b;
 }
 
 .header__location-content h4 {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #000d6b;
+    color: #000d6b;
   margin-bottom: 6px!important;
 }
 
 .header__location-content h6 {
   font-weight: 600;
+  color:#000d6b;
+
 }
 
 .header__btn {
-  background: #000d6b !important;
+    background-color: #000d6b!important;
   padding: 10px 20px;
   border: none;
   outline: none;
@@ -104,7 +108,7 @@
 
 .main__navbar {
   padding: 15px 0px;
-  background: #000d6b;
+  background: #1dcbef;
 }
 
 .mobile__menu i {
@@ -122,6 +126,12 @@
   align-items: center;
   column-gap: 2.7rem;
 }
+.menu a {
+  color: #fff;
+}
+.menu a:active {
+  color: #fff;
+}
 
 .nav__item {
   color: #fff;
@@ -130,7 +140,7 @@
 }
 
 .nav__item:hover {
-  color: #f9a826;
+  color: #fff;
 }
 
 .search__box {
@@ -139,7 +149,7 @@
   display: flex;
   align-items: center;
   border-radius: 50px;
-  background: #020a4de9;
+  background: #fff;
 }
 
 .search__box input {
@@ -159,7 +169,7 @@
 }
 
 .nav__active {
-  color: #f9a826;
+  color: #fff;
 }
 
 @media only screen and (max-width: 768px) {
@@ -196,7 +206,7 @@
   }
 
   .menu a {
-    color: #000d6b;
+    color: #1dcbef;
     font-weight: 600;
     font-size: 0.9rem;
   }
