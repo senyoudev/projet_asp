@@ -11,13 +11,15 @@ import CarsListing from "./pages/CarsListing";
 import CarDetails from "./pages/CarDetails";
 import Contact from "./pages/Contact";
 import { CarContextProvider } from "./Context/CarContext";
+import { OffreContextProvider } from "./Context/OffreContext";
 import { ReservationContextProvider } from "./Context/ReservationContext";
 function App() {
   return (
     <Router>
       <AuthContextProvider>
         <CarContextProvider>
-          <ReservationContextProvider>        
+          <OffreContextProvider>
+          <ReservationContextProvider>          
             <Routes>
               <Route exact path="/" element={<Home />} />
               <Route path="/admin/*" element={<Admin />} />
@@ -30,6 +32,7 @@ function App() {
               <Route path="*" element={<NotFound />} />
             </Routes>
           </ReservationContextProvider>
+        </OffreContextProvider>
         </CarContextProvider>
       </AuthContextProvider>
     </Router>

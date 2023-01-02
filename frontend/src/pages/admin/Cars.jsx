@@ -1,7 +1,30 @@
+import { useEffect, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import CarsTable from "../../components/tables/CarsTable";
+import { useCar } from "../../Context/CarContext";
 
 function Cars() {
+  const navigate = useNavigate('')
+  const {getCars } = useCar('')
+  const [cars,setCars] = useState([])
+  const [userInfo,setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')))
+  const fetchData = async () => {
+      const voitures = await getCars()
+      setCars(voitures.value)
+      console.log(voitures.value)
+    }
+
+  useEffect(()=> {
+     
+    if(userInfo != null) {
+      fetchData()
+      setUserInfo(JSON.parse(localStorage.getItem('userInfo')))
+    } else {
+      return navigate('/login')
+    }
+  },[localStorage.getItem('userInfo')])
+
   return (
     <>
       <Row className="mb-4">
@@ -20,7 +43,7 @@ function Cars() {
           />
         </Col>
       </Row>
-      <CarsTable type="admin"/>
+      <CarsTable type="admin" data={cars}/>
     </>
   );
 }

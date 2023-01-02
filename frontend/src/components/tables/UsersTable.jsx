@@ -37,7 +37,7 @@ function UsersTable({users}) {
                 </thead>
                 <tbody>
                  
-                     {users.map(user => (
+                     {users?.map(user => (
                   <tr>
                          <td>{user.id}</td>
                           <td>{user.username}</td>

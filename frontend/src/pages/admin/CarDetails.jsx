@@ -18,7 +18,7 @@ function CarDetails() {
     setCarInfo(data);
   };
   useEffect(() => {
-    if (userInfo != null && userInfo.role == "proprietaire") {
+    if (userInfo != null && userInfo.role == "Administrator") {
       fetchData();
     }
   }, [localStorage.getItem("userInfo")]);
