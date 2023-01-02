@@ -100,7 +100,7 @@ namespace backend.Controllers
             }
             return Ok(result.ToList());
         }
-        [HttpGet("{idOwner}")]
+        [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
               Roles = "Administrator,proprietaire")]
         //get the historique reservation effectuer par un user 
@@ -110,6 +110,7 @@ namespace backend.Controllers
             var result = _db.Reservations.Where(r => r.Voiture.UserId == idUser)
                 .Include(v => v.Voiture.User)
                 .Include(v => v.Voiture)
+                .Include(v => v.User)
                 .ToList();
 
 
@@ -123,7 +124,7 @@ namespace backend.Controllers
                 DatePriseEnCharge = reservation.DatePriseEnCharge,
                 DateRemise = reservation.DateRemise,
                 Prix = reservation.Prix,
-                voiture = new VoitureDto
+                voiture = new VoitureDTOTEST
                 {
                     Id = reservation.Voiture.Id,
                     Name = reservation.Voiture.Name,
@@ -135,10 +136,17 @@ namespace backend.Controllers
                     UserId = reservation.Voiture.UserId,
                     MarqueId = reservation.Voiture.MarqueId,
                     Prix = reservation.Voiture.Prix,
-                    User = new User
+                    proprietaire = new User
                     {
-                        Id = reservation.Voiture.User.Id
+                        Id = reservation.Voiture.User.Id,
+                        Username = reservation.Voiture.User.Username
+                    },
+                    locataire = new User
+                    {
+                        Id = reservation.User.Id,
+                        Username = reservation.User.Username
                     }
+
                 },
                 
 

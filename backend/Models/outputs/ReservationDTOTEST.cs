@@ -9,7 +9,7 @@
         public DateTime DateRemise { get; set; }
         public double Prix { get; set; }
 
-        public VoitureDto voiture { get; set; }
+        public VoitureDTOTEST voiture { get; set; }
 
         public User User { get; set; }
     }

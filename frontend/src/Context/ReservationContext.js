@@ -31,10 +31,10 @@ export const ReservationContextProvider = ({ children }) => {
          },
        };
       const { data } = await axios.get(
-        `${reservationUrl}/getUserReservations/${id}`,
-        config
-      
+        `${reservationUrl}/getOwnerReservations?idUser=${id}`,
+        config,
       );
+      console.log(data)
       setLoading(false);
       return data;
     } catch (error) {
