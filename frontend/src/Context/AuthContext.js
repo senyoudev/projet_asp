@@ -101,7 +101,6 @@ export const AuthContextProvider = ({ children }) => {
     try {
       const { data } = await axios.get(`${userUrl}/GetUsers`);
       setLoading(false);
-      console.log(data);
       return data;
     } catch (error) {
       toast.error('Something went wrong');
@@ -185,7 +184,6 @@ export const AuthContextProvider = ({ children }) => {
         config,
       );
       toast.success('Updated successfully');
-      console.log(data);
       setLoading(false);
       return data;
     } catch (error) {
@@ -194,8 +192,6 @@ export const AuthContextProvider = ({ children }) => {
       setLoading(false);
     }
   };
-
- 
 
   return (
     <authContext.Provider
@@ -210,7 +206,7 @@ export const AuthContextProvider = ({ children }) => {
         getUsers,
         getUserById,
         updateUserByAdmin,
-        deleteUserByAdmin
+        deleteUserByAdmin,
       }}
     >
       {children}

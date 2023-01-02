@@ -27,11 +27,9 @@ function UsersTable({users}) {
     const data = await deleteUserByAdmin(id)
     if(data!=null) {
       toast.success('User Deleted')
-    //setUsers(users.filter(user => user.id != id))
     }
   }
-
-  async function handleBlackLlist(id) {
+  async function handleBlackList(id) {
      const data = await addUserToBlackList(id);
      if (data != null) {
        toast.success('user Added to blackList');
@@ -77,15 +75,23 @@ function UsersTable({users}) {
                       <td>{user.role}</td>
                       <td>{moment(user.dateAdded).format('DD-MM-YYYY')}</td>
                       <td>
-                        <button className='btn btn-fill btn-info me-2' onClick={() => handleFavoriteList(user.id)}>
+                        <button
+                          className='btn btn-fill btn-info me-2'
+                          onClick={() => handleFavoriteList(user.id)}
+                        >
                           {user.favoriteList != null
                             ? 'Remove from Favorites'
                             : 'Add To Favorites'}
                         </button>
-                        <button className='btn btn-fill btn-success me-2' onClick={() => handleBlackLlist(user.id)}>
-                          {user.blackList != null
-                            ? 'Remove from BlackList'
-                            : 'Add To BlackList'}
+                        <button
+                          className='btn btn-fill btn-success me-2'
+                          onClick={() => handleBlackList(user.id)}
+                        >
+                          {user.blacklist != null ? (
+                            'Remove from BlackList'
+                          ) : (
+                            'Add To BlackList'
+                          )}
                         </button>
                         <button
                           className='btn btn-fill btn-secondary me-2'
