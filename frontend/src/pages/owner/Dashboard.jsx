@@ -61,7 +61,20 @@ export const data = {
 
 function Dashboard() {
 
-
+  const { getOwnerCarsNumber } = useCar();
+  const [userInfo, setUserInfo] = useState(
+    JSON.parse(localStorage.getItem("userInfo"))
+  );
+  const [carCount,setCarCount] = useState("");
+  const fetchData = async () => {
+    const data = await getOwnerCarsNumber(userInfo.id);
+    setCarCount(data);
+  }
+  useEffect(() => {
+    if (userInfo != null && userInfo.role == "proprietaire") {
+      fetchData();
+    }
+  }, [localStorage.getItem("userInfo")]);
   return (
     <>
       <Container fluid>
@@ -88,10 +101,6 @@ function Dashboard() {
               </Card.Body>
               <Card.Footer>
                 <hr></hr>
-                <div className="stats">
-                  <FontAwesomeIcon icon={faRedo} className="me-1" />
-                  Update Now
-                </div>
               </Card.Footer>
             </Card>
           </Col>
@@ -114,10 +123,6 @@ function Dashboard() {
               </Card.Body>
               <Card.Footer>
                 <hr></hr>
-                <div className="stats">
-                  <FontAwesomeIcon icon={faCalendarAlt} className="me-1" />
-                  Last day
-                </div>
               </Card.Footer>
             </Card>
           </Col>
@@ -133,17 +138,13 @@ function Dashboard() {
                   <Col xs="7">
                     <div className="numbers">
                       <p className="card-category">Cars</p>
-                      <Card.Title as="h4">23</Card.Title>
+                      <Card.Title as="h4">{carCount}</Card.Title>
                     </div>
                   </Col>
                 </Row>
               </Card.Body>
               <Card.Footer>
                 <hr></hr>
-                <div className="stats">
-                  <FontAwesomeIcon icon={faClock} className="me-1" />
-                  In the last hour
-                </div>
               </Card.Footer>
             </Card>
           </Col>
@@ -169,10 +170,6 @@ function Dashboard() {
               </Card.Body>
               <Card.Footer>
                 <hr></hr>
-                <div className="stats">
-                  <FontAwesomeIcon icon={faRedo} className="me-1" />
-                  Update now
-                </div>
               </Card.Footer>
             </Card>
           </Col>
