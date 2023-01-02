@@ -42,7 +42,7 @@ function CarsTable({ data, type }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((item, ind) => {
+                  {data?.map((item, ind) => {
                     return (
                       <tr key={ind}>
                         <td>{item.id}</td>
