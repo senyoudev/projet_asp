@@ -14,68 +14,59 @@ export const useCar = () => {
 
 const carUrl = getUrl("Cars");
 
-
-
 export const CarContextProvider = ({ children }) => {
-    
-    const navigate = useNavigate()
-    const [loading,setLoading] = useState(false)
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const getOwnerCars = async (id) => {
+    try {
+      const { data } = await axios.get(
+        `${carUrl}/GetVoituresByUser/ByUser?userId=${id}`
+      );
+      setLoading(false);
+      return data;
+    } catch (error) {
+      toast.error("Something went wrong");
+      console.log(error);
+      setLoading(false);
+    }
+  };
+  const getOwnerCarsNumber = async (id) => {
+    setLoading(true);
+    try {
+      const { data } = await axios.get(`${carUrl}/countByUser`, { id });
+      setLoading(false);
+      return data;
+    } catch (error) {
+      toast.error("Something went wrong");
+      console.log(error.response);
+      setLoading(false);
+    }
+  };
+  const getCar = async (id) => {
+    setLoading(true);
+    try {
+      const { data } = await axios.get(`${carUrl}/GetVoiture?id=${id}`);
+      setLoading(false);
+      return data;
+    } catch (error) {
+      toast.error("Something went wrong");
+      console.log(error.response);
+      setLoading(false);
+    }
+  };
 
-      const getCarsCount = async() => {
-        setLoading(true)
-            try {
-                const { data } = await axios.get(`${carUrl}/GetVoituresCount/count`);
-                setLoading(false)
-                return data  
-            } catch (error) {
-                toast.error("Something went wrong")
-                console.log(error)
-                setLoading(false)
-            }
-         }
-    
-      const getOwnerCarsNumber = async(id) => {
-        setLoading(true)
-            try {
-                const { data } = await axios.get(`${carUrl}/countByUser`,{id});
-                setLoading(false)
-                return data  
-            } catch (error) {
-                toast.error("Something went wrong")
-                console.log(error.response)
-                setLoading(false)
-            }
-
-            }
-    
-            const getCars = async() => {
-                    setLoading(true);
-                    try {
-                    const { data } = await axios.get(`${carUrl}/GetVoitures`)
-                    setLoading(false);
-                    return data;
-                    } catch (error) {
-                    toast.error("Something went wrong");
-                    console.log(error.response);
-                    setLoading(false);
-                    }
-            }
-   
-
-
-   
-        const getCar = async (id) => {
-            setLoading(true);
-            try {
-            const { data } = await axios.get(`${carUrl}/GetVoiture?id=${id}`);
-            setLoading(false);
-            return data;
-            } catch (error) {
-            toast.error("Something went wrong");
-            console.log(error.response);
-            setLoading(false);
-            }
-        };
+  const getCarsCount = async () => {
+    setLoading(true);
+    try {
+      const { data } = await axios.get(`${carUrl}/GetVoituresCount/count`);
+      setLoading(false);
+      return data;
+    } catch (error) {
+      toast.error("Something went wrong");
+      console.log(error);
+      setLoading(false);
+    }
+  };
 
   return (
     <carContext.Provider
@@ -83,12 +74,10 @@ export const CarContextProvider = ({ children }) => {
         getOwnerCarsNumber,
         getCar,
         getCarsCount,
-        getCars
+        getOwnerCars,
       }}
     >
       {children}
     </carContext.Provider>
   );
-
 };
-  

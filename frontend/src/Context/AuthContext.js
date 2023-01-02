@@ -4,10 +4,7 @@ import { getUrl } from '../API'
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 
-
 const authContext = createContext();
-
-
 
 export const useAuth = () => {
     const context = useContext(authContext);
