@@ -146,10 +146,10 @@ namespace backend.Controllers
             return new JsonResult("updated successfully");
         }
         //update a user by its id,need authorization by administrator
-        [HttpPut("update user by admin")]
+        [HttpPut("admin")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
 
-        public async Task<ActionResult> UpdateUser(int id, [FromBody] User user)
+        public async Task<ActionResult> UpdateUser(int id, UserUpdateInput user)
         {
             // Get the user from the database
             var existingUser = await _db.Users.FindAsync(id);

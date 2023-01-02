@@ -7,10 +7,10 @@ import { useNavigate } from "react-router-dom";
 
 function UsersTable({users}) {
   const navigate = useNavigate();
-  function editProfile() {
-    navigate("/admin/profile", {
+  function editProfile(id) {
+    return navigate("/admin/profile", {
       state: {
-        userId: 1,
+        userId: id,
       },
     });
   }
@@ -53,7 +53,7 @@ function UsersTable({users}) {
                       </button>
                       <button
                         className="btn btn-fill btn-secondary me-2"
-                        onClick={editProfile}
+                        onClick={() => editProfile(user.id)}
                       >
                         Edit
                       </button>

@@ -103,6 +103,26 @@ export const AuthContextProvider = ({ children }) => {
                 }
          }
 
+          const getUserById = async(id) => {
+                    setLoading(true)
+                    try {
+                        const config = {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Authorization: `Bearer ${userInfo.token}`,
+                            },
+                        }
+                        const { data } = await axios.get(`${userUrl}/GetUserById/id?userId=${id}`,config)
+                        console.log(data)
+                        setLoading(false);
+                        return data;
+                    } catch (error) {
+                        toast.error("Something went wrong");
+                        console.log(error.response);
+                        setLoading(false);
+                    }
+    }
+
 
 
     return (
@@ -115,7 +135,8 @@ export const AuthContextProvider = ({ children }) => {
                logout,
                register,
                getUserCount,
-               getUsers
+               getUsers,
+               getUserById
             }}
         >
             {children}
