@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { useState } from "react";
 
 // react-bootstrap components
@@ -47,11 +48,11 @@ function CarsTable({ data, type }) {
                       <tr key={ind}>
                         <td>{item.id}</td>
                         {type === "admin" ? <td>Dakota Rice</td> : null}
-                        <td>{item.marque}</td>
-                        <td>{item.prix + " DH"}</td>
-                        <td>{item.dateAdded.substr(0, 10)}</td>
+                        <td>{item?.marque.libelle}</td>
+                        <td>{item?.prix + " DH"}</td>
+                        <td>{moment(item.dateAdded).format("DD-MM-YYYY")}</td>
                         <td>
-                          {item.isAprouved ? "Approuved" : "Not Approuved"}
+                          {item?.isAprouved ? "Approuved" : "Not Approuved"}
                         </td>
                         <td>
                           {type === "admin" ? (
