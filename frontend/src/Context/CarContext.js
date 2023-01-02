@@ -56,8 +56,6 @@ export const CarContextProvider = ({ children }) => {
       return data;
     } catch (error) {
       toast.error('Something went wrong');
-<<<<<<< HEAD
-=======
       console.log(error.response);
       setLoading(false);
     }
@@ -76,7 +74,6 @@ export const CarContextProvider = ({ children }) => {
       return data;
     } catch (error) {
       toast.error('Something went wrong');
->>>>>>> origin/main
       console.log(error.response);
       setLoading(false);
     }
@@ -141,9 +138,6 @@ export const CarContextProvider = ({ children }) => {
         getCarsCount,
         getOwnerCars,
         getCars,
-<<<<<<< HEAD
-        approveCar,
-=======
         addCar,
         approveCar,
       }}
