@@ -14,7 +14,6 @@ function Reservations() {
    const fetchData = async () => {
      const bookings = await getReservations();
      setReservations(bookings.value);
-     console.log(bookings.value);
    };
 
    useEffect(() => {
