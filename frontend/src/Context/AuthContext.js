@@ -103,7 +103,6 @@ export const AuthContextProvider = ({ children }) => {
       setLoading(false);
       return data;
     } catch (error) {
-      toast.error('Something went wrong');
       console.log(error);
       setLoading(false);
     }
