@@ -164,6 +164,7 @@ namespace backend.Controllers
             existingUser.Photo = user.Photo;
             existingUser.nom = user.nom;
             existingUser.prenom = user.prenom;
+            existingUser.Role = user.role;
 
             // Save the changes to the database
             await _db.SaveChangesAsync();

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
-
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // react-bootstrap components
 import {
   Badge,
@@ -13,12 +14,13 @@ import {
   Row,
   Col,
 } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { useAuth } from '../../Context/AuthContext';
+import { isValidEmail, isValidUsername } from '../../utils/validation';
 
 function Profile() {
-  const params = useParams()
+  const navigate = useNavigate('')
   const [role, setRole] = useState('');
   const [username, setUsername] = useState('');
   const [firstname, setFirstName] = useState('');
@@ -26,7 +28,7 @@ function Profile() {
   const [email, setEmail] = useState('');
   const [image, setImage] = useState('');
   const location = useLocation();
-  const { getUserById,loading } = useAuth('');
+  const { getUserById, loading, updateUserByAdmin } = useAuth('');
   
 
   useEffect(() => {
@@ -49,10 +51,49 @@ function Profile() {
     setRole(event.target.value);
   }
 
+  const handleSubmit = async(e) => {
+    e.preventDefault()
+       if (!firstname) {
+         toast.error('Please enter your first name');
+         return;
+       }
+       if (!lastname) {
+         toast.error('Please enter your last name');
+         return;
+       }
+       if (!isValidEmail(email)) {
+         toast.error('Please enter a valid email address');
+         return;
+       }
+       if (!isValidUsername(username)) {
+         toast.error(
+           'Username can only contain letters, numbers, and underscores',
+         );
+         return;
+       }
+       if (role !== 'locataire' && role !== 'proprietaire' && role !== 'Administrator') {
+         toast.error('Please select a valid option');
+         return;
+       }
+
+       const data = await updateUserByAdmin(
+         location.state.userId,
+         email,
+         username,
+         lastname,
+         firstname,
+         image,
+         role,
+       );
+       if (data != null) return navigate('/admin/users');
+     
+  }
+
 
     return (
       <>
         <Container fluid>
+          <ToastContainer />
           <Row>
             <Col md='8'>
               <Card>
@@ -144,6 +185,7 @@ function Profile() {
                           className='btn-fill pull-right mt-2'
                           type='submit'
                           variant='info'
+                          onClick={e => handleSubmit(e)}
                         >
                           Update Profile
                         </Button>
@@ -160,10 +202,7 @@ function Profile() {
               <Col md='4'>
                 <Card className='card-user'>
                   <div className='card-image'>
-                    <img
-                      alt='...'
-                      src={image}
-                    ></img>
+                    <img alt='...' src={image}></img>
                   </div>
                   <Card.Body>
                     <div className='author'>
@@ -173,7 +212,9 @@ function Profile() {
                           className='avatar border-gray'
                           src={image}
                         ></img>
-                        <h5 className='title'>{firstname}{' '}{lastname}</h5>
+                        <h5 className='title'>
+                          {firstname} {lastname}
+                        </h5>
                       </a>
                       <p className='description'>{username}</p>
                     </div>
