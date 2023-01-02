@@ -7,6 +7,7 @@
 
 
         public string Couleur { get; set; }
+        public string Desc { get; set; }
 
         public string Photo { get; set; }
 

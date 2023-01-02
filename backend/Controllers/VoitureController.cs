@@ -46,6 +46,7 @@ namespace backend.Controllers
                 Couleur = v.Couleur,
                 Photo = v.Photo,
                 Annee = v.Annee,
+                Desc=v.Desc,
                 Km = v.Km,
                 DateAdded = v.DateAdded,
                 UserId = v.UserId,
@@ -92,6 +93,7 @@ namespace backend.Controllers
                 Name = voiture.Name,
                 Couleur = voiture.Couleur,
                 Photo = voiture.Photo,
+                Desc = voiture.Desc,
                 Annee = voiture.Annee,
                 Km = voiture.Km,
                 DateAdded = voiture.DateAdded,
@@ -146,6 +148,7 @@ namespace backend.Controllers
                 MarqueId = voiture.MarqueId,
                 Prix = voiture.Prix,
                 Photo = voiture.Photo,
+                Desc = voiture.Desc,
                 isAprouved = false,
                 isDisponible = voiture.isDisponible
 
@@ -176,6 +179,7 @@ namespace backend.Controllers
             voiture_from_db.Annee= voiture.Annee;
             voiture_from_db.isDisponible = voiture.isDisponible;
             voiture_from_db.Prix= voiture.Prix;
+            voiture_from_db.Desc = voiture.Desc;
             //voiture_from_db.OffreSpecialeId = voiture.OffreSpecialeId;
             voiture_from_db.UserId= voiture.UserId;
 
@@ -262,6 +266,7 @@ namespace backend.Controllers
                 DateAdded = v.DateAdded,
                 UserId = v.UserId,
                 MarqueId = v.MarqueId,
+              Desc= v.Desc,
                 //OffreSpecialeId = v.OffreSpecialeId,
                 Prix = v.Prix,
                 Marque = new Marque
@@ -306,6 +311,7 @@ namespace backend.Controllers
                 DateAdded = v.DateAdded,
                 UserId = v.UserId,
                 MarqueId = v.MarqueId,
+                Desc = v.Desc,
                 //OffreSpecialeId = v.OffreSpecialeId,
                 Prix = v.Prix,
                 Marque = new Marque
@@ -346,6 +352,7 @@ namespace backend.Controllers
                 Couleur = v.Couleur,
                 Photo = v.Photo,
                 Annee = v.Annee,
+                Desc = v.Desc,
                 Km = v.Km,
                 DateAdded = v.DateAdded,
                 UserId = v.UserId,
@@ -391,6 +398,7 @@ namespace backend.Controllers
                 Photo = v.Photo,
                 Annee = v.Annee,
                 Km = v.Km,
+                Desc = v.Desc,
                 DateAdded = v.DateAdded,
                 UserId = v.UserId,
                 MarqueId = v.MarqueId,
@@ -435,6 +443,7 @@ namespace backend.Controllers
                 Photo = v.Photo,
                 Annee = v.Annee,
                 Km = v.Km,
+                Desc = v.Desc,
                 DateAdded = v.DateAdded,
                 UserId = v.UserId,
                 MarqueId = v.MarqueId,
@@ -499,6 +508,7 @@ namespace backend.Controllers
                 DateAdded = v.DateAdded,
                 UserId = v.UserId,
                 MarqueId = v.MarqueId,
+                Desc = v.Desc,
                 //OffreSpecialeId = v.OffreSpecialeId,
                 Prix = v.Prix,
                 Marque = new Marque

@@ -88,6 +88,8 @@ export const CarContextProvider = ({ children }) => {
       value={{
         getOwnerCarsNumber,
         getCar,
+        loading,
+        setLoading,
         getCarsCount,
         getOwnerCars,
         getCars
