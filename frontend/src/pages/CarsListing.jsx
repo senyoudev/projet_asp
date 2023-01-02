@@ -18,11 +18,10 @@ const navigate = useNavigate('')
   const fetchData = async () => {
     setLoading(true)
      const car = await getCars()
-     console.log(car.value)
      setCars(car.value)
-     if(cars!=null){
-      setLoading(false)
-     }
+    //  if(cars!=null){
+    //   setLoading(false)
+    //  }
 
    }
   

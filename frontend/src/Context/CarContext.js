@@ -76,11 +76,12 @@ export const CarContextProvider = ({ children }) => {
                     setLoading(true);
                     try {
                     const { data } = await axios.get(`${carUrl}/GetVoitures`)
+                    console.log(data)
                     setLoading(false);
                     return data;
                     } catch (error) {
                     toast.error("Something went wrong");
-                    console.log(error.response);
+                    console.log(error);
                     setLoading(false);
                     }
             }
