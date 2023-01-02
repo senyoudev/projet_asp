@@ -18,7 +18,6 @@ const userInfo = localStorage.getItem('userInfo')
   : null;
 
 export const OffreContextProvider = ({ children }) => {
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const getOffres = async () => {
