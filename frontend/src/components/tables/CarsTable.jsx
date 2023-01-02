@@ -47,7 +47,7 @@ function CarsTable({ data, type }) {
                     return (
                       <tr key={ind}>
                         <td>{item.id}</td>
-                         <td>{item.user.username}</td>
+                        {type === "admin" ? <td>{item.user.username}</td> : null}
                         <td>{item?.marque.libelle}</td>
                         <td>{item?.prix + " DH"}</td>
                         <td>{moment(item.dateAdded).format("DD-MM-YYYY")}</td>

@@ -17,6 +17,7 @@
 */
 import {
   faCar,
+  faCarTunnel,
   faDashboard,
   faSackDollar,
   faShop,
@@ -46,6 +47,18 @@ const dashboardRoutes = [
     path: "/offers",
     name: "Offers",
     icon: faShop,
+    layout: "/admin",
+  },
+  {
+    path: "/reservations",
+    name: "Reservations",
+    icon: faSackDollar,
+    layout: "/admin",
+  },
+  {
+    path: "/brands",
+    name: "Brands",
+    icon: faCarTunnel,
     layout: "/admin",
   },
 ];

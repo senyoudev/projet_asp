@@ -21,13 +21,14 @@ const userInfo = localStorage.getItem('userInfo')
 export const ReservationContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
-  const getOwnerReservations = async (id,token) => {
+  const getOwnerReservations = async (id, token) => {
     setLoading(true);
     try {
       const { data } = await axios.get(
-        `${reservationUrl}/getUserReservations/1`,{
-            headers: {'Authorization': 'Bearer token:' + token},
-          }
+        `${reservationUrl}/getUserReservations/${id}`,
+        {
+          headers: { Authorization: "Bearer token:" + token },
+        }
       );
       setLoading(false);
       return data;
@@ -37,7 +38,27 @@ export const ReservationContextProvider = ({ children }) => {
       setLoading(false);
     }
   };
-
+  const getReservations = async (id) => {
+    setLoading(true);
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.get(
+        `${reservationUrl}/GetReservation/${id}`,
+        config
+      );
+      setLoading(false);
+      return data;
+    } catch (error) {
+      toast.error("Something went wrong");
+      console.log(error.response);
+      setLoading(false);
+    }
+  };
   const getReservationsCount = async (id,token) => {
     setLoading(true);
     try {
@@ -64,7 +85,8 @@ export const ReservationContextProvider = ({ children }) => {
     <reservationContext.Provider 
     value={{
       getOwnerReservations,
-      getReservationsCount
+      getReservationsCount,
+      getReservations
       }}>
       {children}
     </reservationContext.Provider>
