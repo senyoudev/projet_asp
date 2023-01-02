@@ -45,11 +45,37 @@ export const BlackContextProvider = ({ children }) => {
      }
    };
 
+
+   const removeUserFromBlackList = async id => {
+     setLoading(true);
+     try {
+       const config = {
+         headers: {
+           'Content-Type': 'application/json',
+           Authorization: `Bearer ${userInfo.token}`,
+         },
+       };
+       const { data } = await axios.delete(
+         `${blackUrl}/Delete/${id}`,
+         config,
+       );
+       console.log(data);
+       setLoading(false);
+     } catch (error) {
+       toast.error('Something went wrong');
+       console.log(error);
+       setLoading(false);
+     }
+   };
+
+
+
   return (
     <blackContext.Provider
       value={{
         loading,
         addUserToBlackList,
+        removeUserFromBlackList
       }}
     >
       {children}
