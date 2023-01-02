@@ -13,9 +13,7 @@ export const useReservation = () => {
 
 const reservationUrl = getUrl("Reservations");
 
-const userInfo = localStorage.getItem("userInfo")
-  ? JSON.parse(localStorage.getItem("userInfo"))
-  : null;
+
 
 export const ReservationContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
@@ -38,7 +36,10 @@ export const ReservationContextProvider = ({ children }) => {
   };
 
   return (
-    <reservationContext.Provider value={{getOwnerReservations}}>
+    <reservationContext.Provider 
+    value={{
+      getOwnerReservations
+      }}>
       {children}
     </reservationContext.Provider>
   );
