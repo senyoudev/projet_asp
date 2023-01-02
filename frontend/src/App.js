@@ -17,8 +17,7 @@ function App() {
     <Router>
       <AuthContextProvider>
         <CarContextProvider>
-          <ReservationContextProvider>
-            
+          <ReservationContextProvider>        
             <Routes>
               <Route exact path="/" element={<Home />} />
               <Route path="/admin/*" element={<Admin />} />

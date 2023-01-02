@@ -3,13 +3,13 @@ import { Col, Form, Row } from "react-bootstrap";
 import ReservationsTable from "../../components/tables/ReservationsTable";
 import { useReservation } from "../../Context/ReservationContext";
 function Reservations() {
-  const { getOwnerReservations } = useReservation();
+  const { getReservations } = useReservation();
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("userInfo"))
   );
   const [reservationList, setReservationList] = useState([]);
   const fetchData = async () => {
-    const data = await getOwnerReservations(userInfo.id);
+    const data = await getReservations(userInfo.id);
     setReservationList(data);
     console.log(reservationList.data);
   };

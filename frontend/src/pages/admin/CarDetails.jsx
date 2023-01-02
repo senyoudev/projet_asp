@@ -15,7 +15,7 @@ function CarDetails() {
   const { getCar } = useCar();
   const fetchData = async () => {
     const data = await getCar(carId);
-    setCarInfo(data.value.result);
+    setCarInfo(data);
   };
   useEffect(() => {
     if (userInfo != null && userInfo.role == "proprietaire") {

@@ -47,7 +47,7 @@ function CarsTable({ data, type }) {
                       <tr key={ind}>
                         <td>{item.id}</td>
                         {type === "admin" ? <td>Dakota Rice</td> : null}
-                        <td>{item.marque}</td>
+                        <td>{item.marque.libelle}</td>
                         <td>{item.prix + " DH"}</td>
                         <td>{item.dateAdded.substr(0, 10)}</td>
                         <td>
