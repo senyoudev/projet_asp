@@ -12,6 +12,10 @@ export const useCar = () => {
   return context;
 };
 
+const userInfo = localStorage.getItem('userInfo')
+  ? JSON.parse(localStorage.getItem('userInfo'))
+  : null;
+
 const carUrl = getUrl("Cars");
 
 export const CarContextProvider = ({ children }) => {
@@ -68,7 +72,7 @@ export const CarContextProvider = ({ children }) => {
     }
   };
 
-    const getCars = async() => {
+          const getCars = async() => {
                     setLoading(true);
                     try {
                     const { data } = await axios.get(`${carUrl}/GetVoitures`)
@@ -80,6 +84,25 @@ export const CarContextProvider = ({ children }) => {
                     setLoading(false);
                     }
             }
+
+            const approveCar = async(id) => {
+                    setLoading(true)
+                    try {
+                        const config = {
+                          headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${userInfo.token}`,
+                          },
+                        };
+                        const { data } = await axios.post(
+                          `${carUrl}/Delete/${id}`,
+                          config,
+                        );
+                    } catch (error) {
+                      
+                    }
+            }
+
 
    
 
