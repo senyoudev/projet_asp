@@ -12,10 +12,10 @@ const PaymentMethod = (car) => {
   const { postReservation, loading, setLoading } = useReservation('')
 const user =JSON.parse(localStorage.getItem('userInfo'));
 const data ={
-  userId:user.id,
-  voitureId:car.car['id'],
-  dateRemise:localStorage.getItem('dateRemise'),
-  prix:car.car['prix'],
+  "userId":user.id,
+  "voitureId":car.car['id'],
+  "dateRemise":localStorage.getItem('dateRemise'),
+  "prix":car.car['prix'],
 }
 
  const [userInfo,setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')))
@@ -28,29 +28,32 @@ const data ={
   const [methode,setMethode]=useState(" ");
   let radios = document.getElementsByName('pay');
   const selectedValue=""
+  const fetchData = async () => {
+    setLoading(true);
+       const clients = await postReservation(data)
+       setLoading(false);
+       console.log("clenit")
+       console.log(clients)
+       
+     }
+  useEffect(()=> {
+        
+    if(userInfo != null) {
+      fetchData()
+      setUserInfo(JSON.parse(localStorage.getItem('userInfo')))
+    } else {
+      return navigate('/login')
+    }
+  },[localStorage.getItem('userInfo')])
+ 
   
   const Reserver=()=>{
     localStorage.setItem('methode', methode);
+    fetchData();
     // const r=localStorage.getItem('methode');
-    const fetchData = async () => {
-      setLoading(true);
-         const clients = await postReservation(data)
-         setLoading(false);
-         console.log("clenit")
-         console.log(clients)
-         
-       }
+   
     
-     useEffect(()=> {
-        
-       if(userInfo != null) {
-         fetchData()
-         setUserInfo(JSON.parse(localStorage.getItem('userInfo')))
-       } else {
-         return navigate('/login')
-       }
-     },[localStorage.getItem('userInfo')])
-    
+     
    
   }
   

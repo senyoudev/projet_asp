@@ -188,11 +188,11 @@ namespace backend.Controllers
 
         [HttpPost]
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-             Roles = "Administrator,Proprietaire,Locataire")]
+        /*[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+               Roles = "Administrator, Proprietaire, Locataire")]*/
         public async Task<ActionResult<Reservation>> AddReservation(ReservationInput reservation)
         {
-            if (!ModelState.IsValid || !ModelValid.IsModelValid(reservation))
+            if ( !ModelValid.IsModelValid(reservation))
             {
                 return BadRequest(ModelState);
             }
