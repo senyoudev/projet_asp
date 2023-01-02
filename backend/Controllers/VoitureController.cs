@@ -126,7 +126,7 @@ namespace backend.Controllers
         [HttpPost]
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-            Roles = "Administrator, Proprietaire")]
+            Roles = "Administrator, proprietaire")]
 
         public async Task<ActionResult<Voiture>> AddVoiture(VoitureInput voiture)
         {

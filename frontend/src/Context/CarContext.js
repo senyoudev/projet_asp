@@ -76,11 +76,12 @@ export const CarContextProvider = ({ children }) => {
                     setLoading(true);
                     try {
                     const { data } = await axios.get(`${carUrl}/GetVoitures`)
+                    console.log(data)
                     setLoading(false);
                     return data;
                     } catch (error) {
                     toast.error("Something went wrong");
-                    console.log(error.response);
+                    console.log(error);
                     setLoading(false);
                     }
             }
@@ -94,12 +95,17 @@ export const CarContextProvider = ({ children }) => {
                             Authorization: `Bearer ${userInfo.token}`,
                           },
                         };
-                        const { data } = await axios.post(
-                          `${carUrl}/Delete/${id}`,
+                        const { data } = await axios.put(
+                          `${carUrl}/AprovedVoiture?id=${id}`,
                           config,
                         );
+                        console.log(data);
+                        setLoading(false);
+                        return data
                     } catch (error) {
-                      
+                         toast.error('Something went wrong');
+                         console.log(error);
+                         setLoading(false);
                     }
             }
 
@@ -115,7 +121,8 @@ export const CarContextProvider = ({ children }) => {
         setLoading,
         getCarsCount,
         getOwnerCars,
-        getCars
+        getCars,
+        approveCar
       }}
     >
       {children}
