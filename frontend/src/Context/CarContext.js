@@ -68,6 +68,19 @@ export const CarContextProvider = ({ children }) => {
     }
   };
 
+    const getCars = async() => {
+                    setLoading(true);
+                    try {
+                    const { data } = await axios.get(`${carUrl}/GetVoitures`)
+                    setLoading(false);
+                    return data;
+                    } catch (error) {
+                    toast.error("Something went wrong");
+                    console.log(error.response);
+                    setLoading(false);
+                    }
+            }
+
   return (
     <carContext.Provider
       value={{
@@ -75,6 +88,7 @@ export const CarContextProvider = ({ children }) => {
         getCar,
         getCarsCount,
         getOwnerCars,
+        getCars
       }}
     >
       {children}
