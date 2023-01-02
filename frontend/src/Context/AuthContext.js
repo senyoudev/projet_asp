@@ -94,6 +94,7 @@ export const AuthContextProvider = ({ children }) => {
              try {
                     const { data } = await axios.get(`${userUrl}/GetUsers`);
                     setLoading(false)
+                    console.log(data)
                     return data  
                 } catch (error) {
                     toast.error("Something went wrong")

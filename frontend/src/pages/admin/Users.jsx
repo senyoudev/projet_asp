@@ -11,7 +11,7 @@ function Users() {
   const [userInfo,setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')))
   const fetchData = async () => {
       const clients = await getUsers()
-      setUsers(clients.value)
+      setUsers(clients?.value)
     }
 
   useEffect(()=> {
