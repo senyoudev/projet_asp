@@ -28,6 +28,7 @@ import { useAuth } from "../../Context/AuthContext";
 import { useCar } from "../../Context/CarContext";
 
 import { useEffect,useState } from "react";
+import { useReservation } from "../../Context/ReservationContext";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -66,16 +67,20 @@ function Dashboard() {
 
    const navigate = useNavigate('')
   const { getCarsCount} = useCar('')
-  const {getUserCount } = useAuth('')
+  const { getUserCount } = useAuth('')
+  const { getReservationsCount } = useReservation('')
   const [carNumber,setCarNumber] = useState('')
   const [ownerNumber,setOwnerNumber] = useState('')
   const [clientNumber,setClientNumber] = useState('')
+  const [reservationNumber,setReservationNumber] = useState('')
   const [userInfo,setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')))
 
   const fetchCount = async () => {
       const carCount = await getCarsCount()
       const ownerCount = await getUserCount("proprietaire")
       const clientCount = await getUserCount("locataire")
+      const reservationCount = await getReservationsCount()
+      setReservationNumber(reservationCount.value)
       setCarNumber(carCount)
       setOwnerNumber(ownerCount)
       setClientNumber(clientCount)
@@ -184,7 +189,7 @@ function Dashboard() {
                   <Col xs="7">
                     <div className="numbers">
                       <p className="card-category">Rentals</p>
-                      <Card.Title as="h4">20</Card.Title>
+                      {reservationNumber && <Card.Title as="h4">{reservationNumber}</Card.Title>}
                     </div>
                   </Col>
                 </Row>
