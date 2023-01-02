@@ -19,8 +19,7 @@ function App() {
       <AuthContextProvider>
         <CarContextProvider>
           <OffreContextProvider>
-          <ReservationContextProvider>
-            
+          <ReservationContextProvider>          
             <Routes>
               <Route exact path="/" element={<Home />} />
               <Route path="/admin/*" element={<Admin />} />
@@ -32,8 +31,8 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
-        </OffreContextProvider>
           </ReservationContextProvider>
+        </OffreContextProvider>
         </CarContextProvider>
       </AuthContextProvider>
     </Router>

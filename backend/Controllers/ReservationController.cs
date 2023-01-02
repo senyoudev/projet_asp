@@ -35,6 +35,22 @@ namespace backend.Controllers
             }
             return new JsonResult(Ok(Reservations));
         }
+
+        [HttpGet]
+
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+            Roles = "Administrator")]
+
+        public JsonResult GetReservationsCount()
+        {
+            var Reservations = _db.Reservations.Count();
+            if (Reservations == null)
+            {
+                return new JsonResult(NotFound());
+            }
+            return new JsonResult(Ok(Reservations));
+        }
         [HttpGet("{idVoiture}")]
            [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
                 Roles = "administrator,Proprietaire")]
