@@ -100,11 +100,56 @@ namespace backend.Controllers
             }
             return Ok(result.ToList());
         }
+        [HttpGet("{idOwner}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+              Roles = "Administrator,proprietaire")]
+        //get the historique reservation effectuer par un user 
+        public IActionResult getOwnerReservations(int idUser)
+        {
+
+            var result = _db.Reservations.Where(r => r.Voiture.UserId == idUser)
+                .Include(v => v.Voiture.User)
+                .Include(v => v.Voiture)
+                .ToList();
+
+
+            if (result.IsNullOrEmpty())
+            {
+                return NoContent();
+            }
+            return new JsonResult(Ok(result.Select(reservation => new ReservationDTOTEST
+            {
+                Id = reservation.Id,
+                DatePriseEnCharge = reservation.DatePriseEnCharge,
+                DateRemise = reservation.DateRemise,
+                Prix = reservation.Prix,
+                voiture = new VoitureDto
+                {
+                    Id = reservation.Voiture.Id,
+                    Name = reservation.Voiture.Name,
+                    Couleur = reservation.Voiture.Couleur,
+                    Photo = reservation.Voiture.Photo,
+                    Annee = reservation.Voiture.Annee,
+                    Km = reservation.Voiture.Km,
+                    DateAdded = reservation.Voiture.DateAdded,
+                    UserId = reservation.Voiture.UserId,
+                    MarqueId = reservation.Voiture.MarqueId,
+                    Prix = reservation.Voiture.Prix,
+                    User = new User
+                    {
+                        Id = reservation.Voiture.User.Id
+                    }
+                },
+                
+
+
+            }).ToList()));
+        }
         [HttpGet("{idUser}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-              Roles = "Administrator,Proprietaire")]
+             Roles = "Administrator,proprietaire")]
         //get the historique reservation effectuer par un user 
-        public IActionResult getUserReservations(int idUser)
+        public IActionResult getUserReservation(int idUser)
         {
 
             var result = _db.Reservations.Where(r => r.UserId == idUser)
@@ -135,12 +180,16 @@ namespace backend.Controllers
                     UserId = reservation.Voiture.UserId,
                     MarqueId = reservation.Voiture.MarqueId,
                     Prix = reservation.Voiture.Prix,
+               
                 },
-                User = reservation.User,
+
 
 
             }).ToList()));
         }
+
+
+
         [HttpGet("{id}")]
 
          [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
@@ -188,8 +237,7 @@ namespace backend.Controllers
 
         [HttpPost]
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-             Roles = "Administrator,Proprietaire,Locataire")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<Reservation>> AddReservation(ReservationInput reservation)
         {
             if (!ModelState.IsValid || !ModelValid.IsModelValid(reservation))
