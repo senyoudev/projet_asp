@@ -1,23 +1,29 @@
 import { useEffect, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import ReservationsTable from "../../components/tables/ReservationsTable";
 import { useReservation } from "../../Context/ReservationContext";
+
 function Reservations() {
-  const { getReservations } = useReservation();
-  const [userInfo, setUserInfo] = useState(
-    JSON.parse(localStorage.getItem("userInfo"))
-  );
-  const [reservationList, setReservationList] = useState([]);
-  const fetchData = async () => {
-    const data = await getReservations(userInfo.id);
-    setReservationList(data);
-    console.log(reservationList.data);
-  };
-  useEffect(() => {
-    if (userInfo != null && userInfo.role == "proprietaire") {
-      fetchData();
-    }
-  }, [localStorage.getItem("userInfo")]);
+   const navigate = useNavigate('');
+   const { getReservations } = useReservation('');
+   const [reservations, setReservations] = useState([]);
+   const [userInfo, setUserInfo] = useState(
+     JSON.parse(localStorage.getItem('userInfo')),
+   );
+   const fetchData = async () => {
+     const bookings = await getReservations();
+     setReservations(bookings.value);
+   };
+
+   useEffect(() => {
+     if (userInfo != null) {
+       fetchData();
+       setUserInfo(JSON.parse(localStorage.getItem('userInfo')));
+     } else {
+       return navigate('/login');
+     }
+   }, [localStorage.getItem('userInfo')]);
   return (
     <>
       <Row className="mb-4">
@@ -34,7 +40,7 @@ function Reservations() {
           />
         </Col>
       </Row>
-      <ReservationsTable data={reservationList} />
+      <ReservationsTable data={reservations} />
     </>
   );
 }

@@ -6,6 +6,7 @@ const endpoints = {
   User:'api/User',
   Reservations: 'api/Reservation',
   Offres:'api/OffreSpeciale',
+  brand:'api/Marque'
   // Add more endpoints here as needed
 };
 

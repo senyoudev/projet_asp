@@ -7,6 +7,7 @@ import Navbar from '../components/Navbars/Navbar';
 import navLinks from '../assets/Data/navLinks';
 import { isValidEmail, isValidPassword, isValidUsername } from '../utils/validation';
 import { useAuth } from '../Context/AuthContext';
+import Spinner from 'react-bootstrap/Spinner';
 
 
 function Register() {
@@ -162,7 +163,9 @@ function Register() {
          <Row className='py-3 text-center' >
           <Col>
            <Button type='submit' className='mt-4 order-btn text-center' style={{ width: '30%',color:'#fff',backgroundColor:'#1A120B' }}>
-            Sign UP
+            Sign UP {
+              loading && <Spinner animation="grow" />
+            }
           </Button>
           </Col>
         </Row>
