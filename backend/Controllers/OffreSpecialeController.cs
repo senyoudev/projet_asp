@@ -41,6 +41,7 @@ namespace backend.Controllers
                 TauxRemise = v.TauxRemise,
                 DateAdded = v.DateAdded,
                 DateExpiration = v.DateExpiration,
+                IsAprouved = v.IsAprouved,
                 Voiture = new Voiture
                 {
                     Id = v.Voiture.Id,
@@ -172,8 +173,6 @@ namespace backend.Controllers
         }
 
         [HttpPut]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-  Roles = "Administrator")]
         public async Task<IActionResult> AprovedOffre(int id)
         {
             var offre = await _db.OffreSpeciales.FindAsync(id);

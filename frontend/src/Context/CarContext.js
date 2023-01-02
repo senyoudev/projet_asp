@@ -139,11 +139,7 @@ export const CarContextProvider = ({ children }) => {
         getOwnerCars,
         getCars,
         addCar,
-<<<<<<< HEAD
-        approveCar
-=======
         approveCar,
->>>>>>> origin/main
       }}
     >
       {children}
