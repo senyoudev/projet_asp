@@ -145,8 +145,7 @@ export const CarContextProvider = ({ children }) => {
         approveCar,
 =======
         addCar,
-        approveCar
->>>>>>> origin/main
+        approveCar,
       }}
     >
       {children}
