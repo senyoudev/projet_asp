@@ -5,7 +5,7 @@ import CarsTable from "../../components/tables/CarsTable";
 import { useCar } from "../../Context/CarContext";
 
 function Cars() {
-        const navigate = useNavigate('')
+  const navigate = useNavigate('')
   const {getCars } = useCar('')
   const [cars,setCars] = useState([])
   const [userInfo,setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')))

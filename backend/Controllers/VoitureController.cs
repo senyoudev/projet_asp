@@ -76,13 +76,15 @@ namespace backend.Controllers
 
         public async Task<ActionResult<VoitureDto>> GetVoiture(int id)
         {
-            var voiture = await _db.Voitures.Include(v => v.User).FirstOrDefaultAsync(v => v.Id == id);
+            var voiture = await _db.Voitures.Include(v => v.User).Include(v => v.Marque).FirstOrDefaultAsync(v => v.Id == id);
 
 
             if (voiture == null)
             {
                 return new JsonResult(NotFound());
             }
+
+           
 
             var car = new VoitureDto
             {
@@ -95,7 +97,6 @@ namespace backend.Controllers
                 DateAdded = voiture.DateAdded,
                 UserId = voiture.UserId,
                 MarqueId = voiture.MarqueId,
-                //OffreSpecialeId = voiture.OffreSpecialeId,
                 Prix = voiture.Prix,
                 User = new User
                 {
@@ -143,7 +144,6 @@ namespace backend.Controllers
                 DateAdded = DateTime.UtcNow,
                 UserId = voiture.UserId,
                 MarqueId = voiture.MarqueId,
-                //OffreSpecialeId = voiture.OffreSpecialeId,
                 Prix = voiture.Prix,
                 Photo = voiture.Photo,
                 isAprouved = false,
@@ -518,46 +518,45 @@ namespace backend.Controllers
             }).ToList()));
         }
 
-        //get voitures en offre
-        [HttpGet("offre")]
-        public async Task<ActionResult<IEnumerable<Voiture>>> GetVoitureByOffre(int marqueId)
-        {
-            var voitures = await _db.Voitures
-              .Where(u => u.OffreSpecialeId != null)
-              .Include(u => u.User)
-              .ToListAsync();
+        ////get voitures en offre
+        //[HttpGet("offre")]
+        //public async Task<ActionResult<IEnumerable<Voiture>>> GetVoitureByOffre(int marqueId)
+        //{
+        //    var voitures = await _db.Voitures
+        //      .Where(u => u.OffreSpecialeId != null)
+        //      .Include(u => u.User)
+        //      .ToListAsync();
 
 
-            // Return the voitures belonging to the marque
-            return new JsonResult(Ok(voitures.Select(v => new VoitureDto
-            {
-                Id = v.Id,
-                Name = v.Name,
-                Couleur = v.Couleur,
-                Photo = v.Photo,
-                Annee = v.Annee,
-                Km = v.Km,
-                DateAdded = v.DateAdded,
-                UserId = v.UserId,
-                MarqueId = v.MarqueId,
-                OffreSpecialeId = v.OffreSpecialeId,
-                Prix = v.Prix,
-                Marque = new Marque
-                {
-                    Id = v.Marque.Id,
-                    Libelle = v.Marque.Libelle,
-                },
-                User = new User
-                {
-                    Id = v.User.Id,
-                    Email = v.User.Email,
-                    Username = v.User.Username,
-                    Photo = v.User.Photo
-                    // include other properties of the User object as needed
-                },
+        //    // Return the voitures belonging to the marque
+        //    return new JsonResult(Ok(voitures.Select(v => new VoitureDto
+        //    {
+        //        Id = v.Id,
+        //        Name = v.Name,
+        //        Couleur = v.Couleur,
+        //        Photo = v.Photo,
+        //        Annee = v.Annee,
+        //        Km = v.Km,
+        //        DateAdded = v.DateAdded,
+        //        UserId = v.UserId,
+        //        MarqueId = v.MarqueId,
+        //        Prix = v.Prix,
+        //        Marque = new Marque
+        //        {
+        //            Id = v.Marque.Id,
+        //            Libelle = v.Marque.Libelle,
+        //        },
+        //        User = new User
+        //        {
+        //            Id = v.User.Id,
+        //            Email = v.User.Email,
+        //            Username = v.User.Username,
+        //            Photo = v.User.Photo
+        //            // include other properties of the User object as needed
+        //        },
 
-            }).ToList()));
-        }
+        //    }).ToList()));
+        //}
 
 
 

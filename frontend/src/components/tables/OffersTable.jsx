@@ -1,13 +1,14 @@
+import moment from "moment";
 import React, { useState } from "react";
 
 // react-bootstrap components
 import { Card, Table, Row, Col, Form, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-function OffersTable(props) {
+function OffersTable({data,type}) {
   const navigate = useNavigate();
   function editOffer() {
-    navigate(`/${props.type}/offerDetails`, {
+    navigate(`/${type}/offerDetails`, {
       state: {
         userId: 1,
       },
@@ -30,7 +31,7 @@ function OffersTable(props) {
                 <thead>
                   <tr>
                     <th className="border-0">ID</th>
-                    {props.type === "admin" ? (
+                    {type === "admin" ? (
                       <th className="border-0">Owner</th>
                     ) : null}
                     <th className="border-0">Discount Rate</th>
@@ -41,16 +42,17 @@ function OffersTable(props) {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    {props.type === "admin" ? <td>Dakota Rice</td> : null}
+                 {data?.map(offre => (
+                   <tr key={offre.id}>
+                    <td>{offre.id}</td>
+                    {type === "admin" ? <td>Dakota Rice</td> : null}
 
-                    <td>$36,738</td>
-                    <td>Niger</td>
-                    <td>Oud-Turnhout</td>
-                    <td>Accepted</td>
+                    <td>{offre.tauxRemise}</td>
+                    <td>{moment(offre.dateAdded).format("DD-MM-YYYY")}</td>
+                    <td>{moment(offre.dateExpiration).format("DD-MM-YYYY")}</td>
+                    <td>{offre.isAprouved ? 'Approuved' : 'Not Approuved'}</td>
                     <td>
-                      {props.type === "admin" ? (
+                      {type === "admin" ? (
                         <button className="btn btn-fill btn-primary me-2">
                           Approve
                         </button>
@@ -66,34 +68,12 @@ function OffersTable(props) {
                       </button>
                     </td>
                   </tr>
-                  <tr>
-                    <td>2</td>
-                    {props.type === "admin" ? <td>Dakota Rice</td> : null}
-                    <td>$23,789</td>
-                    <td>Curaçao</td>
-                    <td>Sinaai-Waas</td>
-                    <td style={{ color: "red" }}>Rejected</td>
-                    <td>
-                      {props.type === "admin" ? (
-                        <button className="btn btn-fill btn-primary me-2">
-                          Approve
-                        </button>
-                      ) : null}
-                      <button
-                        className="btn btn-fill btn-secondary me-2"
-                        onClick={editOffer}
-                      >
-                        Edit
-                      </button>
-                      <button className="btn btn-fill btn-danger">
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
+                 ))}
+                 
                 </tbody>
               </Table>
             </Card.Body>
-            {props.type === "owner" ? (
+            {type === "owner" ? (
               <Card.Footer style={{ textAlign: "center" }}>
                 <button
                   className="btn btn-fill btn-primary"
@@ -106,7 +86,7 @@ function OffersTable(props) {
           </Card>
         </Col>
       </Row>
-      {props.type === "owner" ? (
+      {type === "owner" ? (
         <Modal
           show={show}
           onHide={handleClose}

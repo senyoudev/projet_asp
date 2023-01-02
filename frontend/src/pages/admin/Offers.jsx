@@ -1,7 +1,29 @@
+import { useEffect, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import OffersTable from "../../components/tables/OffersTable";
+import { useOffre } from "../../Context/OffreContext";
 
 function Offers() {
+  const navigate = useNavigate('')
+  const { getOffres } = useOffre('')
+  const [offres,setOffres] = useState([])
+  const [userInfo,setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')))
+  const fetchData = async () => {
+      const offers = await getOffres()
+      setOffres(offers.value)
+      console.log(offers.value)
+    }
+
+  useEffect(()=> {
+     
+    if(userInfo != null) {
+      fetchData()
+      setUserInfo(JSON.parse(localStorage.getItem('userInfo')))
+    } else {
+      return navigate('/login')
+    }
+  },[localStorage.getItem('userInfo')])
   return (
     <>
       <Row className="mb-4">
@@ -20,7 +42,7 @@ function Offers() {
           />
         </Col>
       </Row>
-      <OffersTable type="admin"/>
+      <OffersTable type="admin" data={offres}/>
     </>
   );
 }
