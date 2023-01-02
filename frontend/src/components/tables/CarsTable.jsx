@@ -17,6 +17,10 @@ function CarsTable({ data, type }) {
     });
   }
 
+  const approveVoiture = async(id) => {
+    await approveCar(id)
+  }
+
  
   function deleteCar() {}
   const [show, setShow] = useState(false);
@@ -60,7 +64,7 @@ function CarsTable({ data, type }) {
                         </td>
                         <td>
                           {type === "admin" ? (
-                            <button className="btn btn-fill btn-primary me-2" onClick={() => approveCar(item.id)}>
+                            <button className="btn btn-fill btn-primary me-2" onClick={() => approveVoiture(item.id)}>
                               Approve
                             </button>
                           ) : null}

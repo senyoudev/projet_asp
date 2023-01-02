@@ -51,6 +51,7 @@ namespace backend.Controllers
                 DateAdded = v.DateAdded,
                 UserId = v.UserId,
                 MarqueId = v.MarqueId,
+                isAprouved = v.isAprouved,
                // OffreSpecialeId = v.OffreSpecialeId,
                 Prix = v.Prix,
                 Marque = new Marque
@@ -100,6 +101,7 @@ namespace backend.Controllers
                 UserId = voiture.UserId,
                 MarqueId = voiture.MarqueId,
                 Prix = voiture.Prix,
+                isAprouved = voiture.isAprouved,
                 User = new User
                 {
                      Id = voiture.User.Id,
@@ -151,7 +153,7 @@ namespace backend.Controllers
                 Desc = voiture.Desc,
                 isAprouved = false,
                 isDisponible = voiture.isDisponible
-
+                
 
             };
 
@@ -163,7 +165,7 @@ namespace backend.Controllers
 
         [HttpPut("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-            Roles = "Administrator, Proprietaire")]
+            Roles = "Administrator, proprietaire")]
         public async Task<IActionResult> UpdateVoiture(int id, VoitureInput voiture)
         {
             if (id != voiture.Id)
@@ -192,7 +194,7 @@ namespace backend.Controllers
 
         [HttpDelete("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-            Roles = "Administrator, Proprietaire")]
+            Roles = "Administrator, proprietaire")]
         // DELETE: api/TodoItems/5
         public async Task<IActionResult> DeleteVoiture(int id)
         {
@@ -207,25 +209,37 @@ namespace backend.Controllers
 
             return Ok();
         }
-        [HttpPut]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-          Roles = "Administrator")]
+        [HttpPut("approve")]
         public async Task<IActionResult> AprovedVoiture(int id)
         {
+            // Check if the voiture with the specified ID exists
             var voiture = await _db.Voitures.FindAsync(id);
             if (voiture == null)
             {
                 return NotFound();
             }
+
+            // Set the isAprouved flag to true
             voiture.isAprouved = true;
-            _db.Voitures.Update(voiture);
-            await _db.SaveChangesAsync();
-            return Ok(voiture);
+
+            // Save the changes to the database
+            try
+            {
+                await _db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                // In case of a concurrency conflict, return a 409 status code
+                return Conflict();
+            }
+
+            // Return a 200 OK response
+            return Ok("All good");
         }
 
 
-        
-       
+
+
 
         [HttpGet("count")]
         public async Task<ActionResult<int>> GetVoituresCount()

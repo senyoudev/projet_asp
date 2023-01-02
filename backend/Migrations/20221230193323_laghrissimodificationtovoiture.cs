@@ -12,8 +12,7 @@ namespace backend.Migrations
                 name: "isAprouved",
                 table: "Voitures",
                 type: "bit",
-                nullable: false,
-                defaultValue: false);
+                nullable: false );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
