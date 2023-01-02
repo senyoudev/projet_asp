@@ -43,6 +43,9 @@ function Offers() {
         </Col>
       </Row>
       <OffersTable type="admin" data={offres}/>
+      
+
+
     </>
   );
 }

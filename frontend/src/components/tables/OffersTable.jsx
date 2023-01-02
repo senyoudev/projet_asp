@@ -45,7 +45,7 @@ function OffersTable({data,type}) {
                  {data?.map(offre => (
                    <tr key={offre.id}>
                     <td>{offre.id}</td>
-                    {type === "admin" ? <td>Dakota Rice</td> : null}
+                     <td>{offre.user.username}</td> 
 
                     <td>{offre.tauxRemise}</td>
                     <td>{moment(offre.dateAdded).format("DD-MM-YYYY")}</td>

@@ -26,12 +26,41 @@ namespace backend.Controllers
         [HttpGet]
         public JsonResult GetOffres()
         {
-            var offres = _db.OffreSpeciales.ToList();
+            var offres = _db.OffreSpeciales
+                .Include(v => v.Voiture)
+                .Include(v => v.User)
+                .ToList();
             if (offres == null)
             {
                 return new JsonResult(NotFound());
             }
-            return new JsonResult(Ok(offres));
+            return new JsonResult(Ok(offres.Select(v => new OffreDto
+            {
+                Id = v.Id,
+                Name = v.Name,
+                TauxRemise = v.TauxRemise,
+                DateAdded = v.DateAdded,
+                DateExpiration = v.DateExpiration,
+                Voiture = new Voiture
+                {
+                    Id = v.Voiture.Id,
+                    Name = v.Voiture.Name,
+                    Couleur = v.Voiture.Couleur,
+                    Photo = v.Voiture.Photo,
+                    Annee = v.Voiture.Annee,
+                    Km = v.Voiture.Km,
+                    DateAdded = v.Voiture.DateAdded,
+                    UserId = v.Voiture.UserId,
+                    MarqueId = v.Voiture.MarqueId,
+                },
+                User = new User
+                {
+                    Id = v.User.Id,
+                    Username = v.User.Username,
+                    Photo = v.User.Photo
+                }
+
+            }).ToList()));
         }
 
         [HttpGet("{id}")]
@@ -161,7 +190,7 @@ namespace backend.Controllers
 
         //get offre by user
         [HttpGet("offreByUser")]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator,proprietaire")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public JsonResult getOffresByUser(int userId)
         {
             var offres = _db.OffreSpeciales
@@ -184,6 +213,45 @@ namespace backend.Controllers
                 }
 
             }).ToList()));
+        }
+
+        [HttpGet("offreByCar")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public JsonResult getOffresByCar(int voitureId)
+        {
+            var offres = _db.OffreSpeciales
+               .Where(v => v.VoitureId == voitureId)
+               .Include(v => v.User)
+               .ToList();
+
+            return new JsonResult(Ok(offres.Select(v => new OffreDto
+            {
+                Id = v.Id,
+                Name = v.Name,
+                TauxRemise = v.TauxRemise,
+                DateAdded = v.DateAdded,
+                DateExpiration = v.DateExpiration,
+                Voiture = new Voiture
+                {
+                    Id = v.Voiture.Id,
+                    Name = v.Voiture.Name,
+                    Couleur = v.Voiture.Couleur,
+                    Photo = v.Voiture.Photo,
+                    Annee = v.Voiture.Annee,
+                    Km = v.Voiture.Km,
+                    DateAdded = v.Voiture.DateAdded,
+                    UserId = v.Voiture.UserId,
+                    MarqueId = v.Voiture.MarqueId,
+                },
+                User = new User
+                {
+                    Id = v.User.Id,
+                    Username = v.User.Username,
+                    Photo = v.User.Photo
+                }
+
+            }).ToList()));
+            return null;
         }
     }
 }
