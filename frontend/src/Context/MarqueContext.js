@@ -37,11 +37,75 @@ export const BrandContextProvider = ({ children }) => {
       setLoading(false);
     }
   };
+  const addBrand = async brand => {
+    setLoading(true);
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.post(`${brandUrl}/Create`, brand, config);
+      setLoading(false);
+      return data;
+    } catch (error) {
+      toast.error('An error Occured');
+      console.log(error);
+    }
+  };
+  const editBrand = async (id, brand) => {
+    setLoading(true);
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.put(
+        `${brandUrl}/Update/${id}`,
+        brand,
+        config,
+      );
+      setLoading(false);
+      return data;
+    } catch (error) {
+      toast.error('An error Occured');
+      console.log(error);
+    }
+  };
+  const deleteBrand = async (id) => {
+    setLoading(true);
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.delete(
+        `${brandUrl}/Delete/${id}`,
+        config,
+      );
+      setLoading(false);
+      return data;
+    } catch (error) {
+      toast.error('An error Occured');
+      console.log(error);
+    }
+  };
 
   return (
     <brandContext.Provider
       value={{
         getBrands,
+        addBrand,
+        editBrand,
+        deleteBrand
       }}
     >
       {children}
