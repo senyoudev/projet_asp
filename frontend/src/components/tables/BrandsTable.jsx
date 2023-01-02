@@ -13,7 +13,6 @@ function BrandsTable({ data }) {
   const [form, setForm] = useState({
     id: '',
     libelle: '',
-    dateAdded: '',
   });
   const [formType, setFormType] = useState();
   const [brands, setBrands] = useState(data);
@@ -25,10 +24,9 @@ function BrandsTable({ data }) {
       setForm({
         id: brand.id,
         libelle: brand.libelle,
-        dateAdded: moment(brand.dateAdded).format('YYYY-DD-MM'),
       });
     } else {
-      setForm({ id: '', libelle: '', dateAdded: '' });
+      setForm({ id: '', libelle: '' });
     }
     setShow(true);
   };
@@ -42,7 +40,6 @@ function BrandsTable({ data }) {
       if (userInfo != null) {
         const res = await addBrand({
           libelle: form.libelle,
-          dateAdded: form.dateAdded,
         });
         const marques = await getBrands();
         setBrands(marques.value);
@@ -53,7 +50,11 @@ function BrandsTable({ data }) {
     }
     if (action === 'editBrand') {
       if (userInfo != null) {
-        const res = await editBrand(form.id, form);
+        const res = await editBrand(form.id, {
+          id: form.id,
+          libelle: form.libelle,
+        });
+        console.log(res);
         const marques = await getBrands();
         setBrands(marques.value);
         handleClose();
@@ -164,22 +165,6 @@ function BrandsTable({ data }) {
                       setForm({
                         ...form,
                         libelle: e.target.value,
-                      })
-                    }
-                  ></Form.Control>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row className='pb-2'>
-              <Col md='12'>
-                <Form.Group>
-                  <Form.Control
-                    type='date'
-                    value={form.dateAdded}
-                    onChange={e =>
-                      setForm({
-                        ...form,
-                        dateAdded: e.target.value,
                       })
                     }
                   ></Form.Control>
