@@ -11,11 +11,13 @@ import CarsListing from "./pages/CarsListing";
 import CarDetails from "./pages/CarDetails";
 import Contact from "./pages/Contact";
 import { CarContextProvider } from "./Context/CarContext";
+import { OffreContextProvider } from "./Context/OffreContext";
 function App() {
   return (
     <Router>
       <AuthContextProvider>
         <CarContextProvider>
+          <OffreContextProvider>
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/admin/*" element={<Admin />} />
@@ -27,6 +29,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </OffreContextProvider>
         </CarContextProvider>
       </AuthContextProvider>
     </Router>

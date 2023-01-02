@@ -142,7 +142,6 @@ namespace backend.Controllers
             return new JsonResult("Deleted successfully");
         }
 
-<<<<<<< HEAD
         [HttpPut]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
   Roles = "Administrator")]
@@ -159,7 +158,7 @@ namespace backend.Controllers
             return Ok(offre);
         }
 
-=======
+
         //get offre by user
         [HttpGet("offreByUser")]
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator,proprietaire")]
@@ -186,6 +185,5 @@ namespace backend.Controllers
 
             }).ToList()));
         }
->>>>>>> 13a44744ede5af80fb3981eda84fb64124427cd4
     }
 }
