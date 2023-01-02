@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -11,9 +12,10 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    partial class ApiContextModelSnapshot : ModelSnapshot
+    [Migration("20230102001932_add_column_VoitureId_OffreSpeciale")]
+    partial class add_column_VoitureId_OffreSpeciale
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,9 +95,6 @@ namespace backend.Migrations
 
                     b.Property<DateTime>("DateExpiration")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsAprouved")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()

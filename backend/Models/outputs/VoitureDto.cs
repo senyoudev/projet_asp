@@ -12,7 +12,6 @@
 
         public Nullable<int> UserId { get; set; }
         public int MarqueId { get; set; }
-        public Nullable<int> OffreSpecialeId { get; set; }
         public double Prix { get; set; }
         public bool isAprouved { get; set; }
         public bool isDisponible { get; set; }

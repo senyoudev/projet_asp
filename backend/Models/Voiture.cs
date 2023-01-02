@@ -17,7 +17,7 @@ namespace backend.Models
 
         public Nullable<int> UserId { get; set; }
         public int MarqueId { get; set; }
-        public Nullable<int> OffreSpecialeId { get; set; }
+        
         public double Prix { get; set; }
         public bool isAprouved { get; set; }
         public bool isDisponible { get; set; }
@@ -26,8 +26,8 @@ namespace backend.Models
         public virtual User User { get; set; }
         [ForeignKey("MarqueId")]
         public virtual Marque Marque { get; set; }
-        [ForeignKey("OffreSpecialeId")]
-        public  virtual OffreSpeciale? OffreSpeciale { get; set; }
+        //[ForeignKey("OffreSpecialeId")]
+       // public  virtual OffreSpeciale? OffreSpeciale { get; set; }
 
 
 
