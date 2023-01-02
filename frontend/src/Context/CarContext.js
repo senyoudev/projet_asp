@@ -37,7 +37,9 @@ export const CarContextProvider = ({ children }) => {
   const getOwnerCarsNumber = async id => {
     setLoading(true);
     try {
-      const { data } = await axios.get(`${carUrl}/countByUser`, { id });
+      const { data } = await axios.get(
+        `${carUrl}/GetVoituresByUserCount/countByUser?userId=${id}`,
+      );
       setLoading(false);
       return data;
     } catch (error) {
@@ -54,11 +56,31 @@ export const CarContextProvider = ({ children }) => {
       return data;
     } catch (error) {
       toast.error('Something went wrong');
+<<<<<<< HEAD
+=======
       console.log(error.response);
       setLoading(false);
     }
   };
-
+  const addCar = async car => {
+    setLoading(true);
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.post(`${carUrl}/AddVoiture`, car, config);
+      setLoading(false);
+      return data;
+    } catch (error) {
+      toast.error('Something went wrong');
+>>>>>>> origin/main
+      console.log(error.response);
+      setLoading(false);
+    }
+  };
   const getCarsCount = async () => {
     setLoading(true);
     try {
@@ -119,7 +141,12 @@ export const CarContextProvider = ({ children }) => {
         getCarsCount,
         getOwnerCars,
         getCars,
+<<<<<<< HEAD
         approveCar,
+=======
+        addCar,
+        approveCar
+>>>>>>> origin/main
       }}
     >
       {children}
