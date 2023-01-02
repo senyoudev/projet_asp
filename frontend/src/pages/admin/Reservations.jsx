@@ -23,7 +23,7 @@ function Reservations() {
      } else {
        return navigate('/login');
      }
-   }, [localStorage.getItem('userInfo')]);
+   }, [localStorage.getItem('userInfo'),reservations]);
   return (
     <>
       <Row className="mb-4">

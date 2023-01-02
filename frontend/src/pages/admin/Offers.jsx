@@ -15,15 +15,14 @@ function Offers() {
       console.log(offers.value)
     }
 
-  useEffect(()=> {
-     
-    if(userInfo != null) {
-      fetchData()
-      setUserInfo(JSON.parse(localStorage.getItem('userInfo')))
+  useEffect(() => {
+    if (userInfo != null) {
+      fetchData();
+      setUserInfo(JSON.parse(localStorage.getItem('userInfo')));
     } else {
-      return navigate('/login')
+      return navigate('/login');
     }
-  },[localStorage.getItem('userInfo')])
+  }, [localStorage.getItem('userInfo'), offres]);
   return (
     <>
       <Row className="mb-4">

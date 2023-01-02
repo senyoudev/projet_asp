@@ -1,13 +1,24 @@
-import moment from "moment";
-import React, { useState } from "react";
-
+import React, { useState } from 'react';
+import moment from 'moment';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // react-bootstrap components
-import { Card, Table, Row, Col } from "react-bootstrap";
+import { Card, Table, Row, Col } from 'react-bootstrap';
+import { useReservation } from '../../Context/ReservationContext';
 
-function ReservationsTable({data}) {
+function ReservationsTable({ data }) {
+  const { deleteReservation } = useReservation('');
+  
+  async function deleteBooking(id) {
+    const data = await deleteReservation(id);
+    if (data != null) {
+      toast.success('reservation Deleted');
+    }
+  }
   return (
     <>
       <Row>
+        <ToastContainer />
         <Col md='12'>
           <Card className='strpied-tabled-with-hover'>
             <Card.Header>
@@ -33,7 +44,10 @@ function ReservationsTable({data}) {
                         <td>{item.id}</td>
                         <td>{item.voiture.name}</td>
                         <td>{item.prix}</td>
-                        <td>{item?.voiture?.locataire?.username || item?.user?.username}</td>
+                        <td>
+                          {item?.voiture?.locataire?.username ||
+                            item?.user?.username}
+                        </td>
                         <td>
                           {moment(item.datePriseEnCharge).format('DD-MM-YYYY')}
                         </td>
@@ -41,14 +55,16 @@ function ReservationsTable({data}) {
                           {moment(item.dateExpiration).format('DD-MM-YYYY')}
                         </td>
                         <td>
-                          <button className='btn btn-fill btn-danger'>
+                          <button
+                            className='btn btn-fill btn-danger'
+                            onClick={() => deleteBooking(item.id)}
+                          >
                             Delete
                           </button>
                         </td>
                       </tr>
                     );
                   })}
-                  
                 </tbody>
               </Table>
             </Card.Body>
