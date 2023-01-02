@@ -10,8 +10,8 @@ function Cars() {
   );
   const [carsList,setCarsList] = useState([]);
   const fetchData = async () => {
-    const data = await getOwnerCars();
-    setCarsList(data);
+    const data = await getOwnerCars(userInfo.id);
+    setCarsList(data.value);
   }
   useEffect(() => {
     if (userInfo != null && userInfo.role == "proprietaire") {

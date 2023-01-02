@@ -10,7 +10,7 @@ function ReservationsTable() {
         <Col md="12">
           <Card className="strpied-tabled-with-hover">
             <Card.Header>
-              <Card.Title as="h4">Offers</Card.Title>
+              <Card.Title as="h4">Reservations</Card.Title>
             </Card.Header>
             <Card.Body className="table-full-width table-responsive px-0">
               <Table className="table-hover table-striped">
