@@ -50,7 +50,7 @@ namespace backend.Controllers
                 DateAdded = v.DateAdded,
                 UserId = v.UserId,
                 MarqueId = v.MarqueId,
-                OffreSpecialeId = v.OffreSpecialeId,
+               // OffreSpecialeId = v.OffreSpecialeId,
                 Prix = v.Prix,
                 Marque = new Marque
                 {
@@ -95,7 +95,7 @@ namespace backend.Controllers
                 DateAdded = voiture.DateAdded,
                 UserId = voiture.UserId,
                 MarqueId = voiture.MarqueId,
-                OffreSpecialeId = voiture.OffreSpecialeId,
+                //OffreSpecialeId = voiture.OffreSpecialeId,
                 Prix = voiture.Prix,
                 User = new User
                 {
@@ -143,7 +143,7 @@ namespace backend.Controllers
                 DateAdded = DateTime.UtcNow,
                 UserId = voiture.UserId,
                 MarqueId = voiture.MarqueId,
-                OffreSpecialeId = voiture.OffreSpecialeId,
+                //OffreSpecialeId = voiture.OffreSpecialeId,
                 Prix = voiture.Prix,
                 Photo = voiture.Photo,
                 isAprouved = false,
@@ -176,7 +176,7 @@ namespace backend.Controllers
             voiture_from_db.Annee= voiture.Annee;
             voiture_from_db.isDisponible = voiture.isDisponible;
             voiture_from_db.Prix= voiture.Prix;
-            voiture_from_db.OffreSpecialeId = voiture.OffreSpecialeId;
+            //voiture_from_db.OffreSpecialeId = voiture.OffreSpecialeId;
             voiture_from_db.UserId= voiture.UserId;
 
             _db.Voitures.Update(voiture_from_db);
@@ -262,7 +262,7 @@ namespace backend.Controllers
                 DateAdded = v.DateAdded,
                 UserId = v.UserId,
                 MarqueId = v.MarqueId,
-                OffreSpecialeId = v.OffreSpecialeId,
+                //OffreSpecialeId = v.OffreSpecialeId,
                 Prix = v.Prix,
                 Marque = new Marque
                 {
@@ -306,7 +306,7 @@ namespace backend.Controllers
                 DateAdded = v.DateAdded,
                 UserId = v.UserId,
                 MarqueId = v.MarqueId,
-                OffreSpecialeId = v.OffreSpecialeId,
+                //OffreSpecialeId = v.OffreSpecialeId,
                 Prix = v.Prix,
                 Marque = new Marque
                 {
@@ -350,7 +350,7 @@ namespace backend.Controllers
                 DateAdded = v.DateAdded,
                 UserId = v.UserId,
                 MarqueId = v.MarqueId,
-                OffreSpecialeId = v.OffreSpecialeId,
+               // OffreSpecialeId = v.OffreSpecialeId,
                 Prix = v.Prix,
                 Marque = new Marque
                 {
@@ -394,7 +394,7 @@ namespace backend.Controllers
                 DateAdded = v.DateAdded,
                 UserId = v.UserId,
                 MarqueId = v.MarqueId,
-                OffreSpecialeId = v.OffreSpecialeId,
+               // OffreSpecialeId = v.OffreSpecialeId,
                 Prix = v.Prix,
                 Marque = new Marque
                 {
@@ -438,7 +438,7 @@ namespace backend.Controllers
                 DateAdded = v.DateAdded,
                 UserId = v.UserId,
                 MarqueId = v.MarqueId,
-                OffreSpecialeId = v.OffreSpecialeId,
+              //  OffreSpecialeId = v.OffreSpecialeId,
                 Prix = v.Prix,
                 Marque = new Marque
                 {
@@ -499,7 +499,7 @@ namespace backend.Controllers
                 DateAdded = v.DateAdded,
                 UserId = v.UserId,
                 MarqueId = v.MarqueId,
-                OffreSpecialeId = v.OffreSpecialeId,
+                //OffreSpecialeId = v.OffreSpecialeId,
                 Prix = v.Prix,
                 Marque = new Marque
                 {

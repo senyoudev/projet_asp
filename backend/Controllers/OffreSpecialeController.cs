@@ -72,6 +72,8 @@ namespace backend.Controllers
                 TauxRemise=offre.TauxRemise,    
                 DateExpiration=offre.DateExpiration,
                 DateAdded=DateTime.Now,
+                VoitureId=offre.VoitureId,
+                IsAprouved=false
                
             };
 
@@ -112,6 +114,8 @@ namespace backend.Controllers
             offre_from_db.UserId = offre.UserId;
             offre_from_db.TauxRemise = offre.TauxRemise;
                offre_from_db.DateExpiration = offre.DateExpiration;
+            offre_from_db.VoitureId=offre.VoitureId;
+            
        
             _db.OffreSpeciales.Update(offre_from_db);
             await _db.SaveChangesAsync();
@@ -138,6 +142,24 @@ namespace backend.Controllers
             return new JsonResult("Deleted successfully");
         }
 
+<<<<<<< HEAD
+        [HttpPut]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
+  Roles = "Administrator")]
+        public async Task<IActionResult> AprovedOffre(int id)
+        {
+            var offre = await _db.OffreSpeciales.FindAsync(id);
+            if (offre == null)
+            {
+                return NotFound();
+            }
+            offre.IsAprouved = true;
+            _db.OffreSpeciales.Update(offre);
+            await _db.SaveChangesAsync();
+            return Ok(offre);
+        }
+
+=======
         //get offre by user
         [HttpGet("offreByUser")]
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator,proprietaire")]
@@ -164,5 +186,6 @@ namespace backend.Controllers
 
             }).ToList()));
         }
+>>>>>>> 13a44744ede5af80fb3981eda84fb64124427cd4
     }
 }
