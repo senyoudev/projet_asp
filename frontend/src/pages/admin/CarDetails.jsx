@@ -14,11 +14,12 @@ function CarDetails() {
   );
   const { getCar } = useCar();
   const fetchData = async () => {
+    console.log(carId)
     const data = await getCar(carId);
     setCarInfo(data);
   };
   useEffect(() => {
-    if (userInfo != null && userInfo.role == "Administrator" && userInfo.role == "proprietaire") {
+    if (userInfo != null && (userInfo.role == "Administrator" || userInfo.role == "proprietaire")) {
       fetchData();
     }
   }, [localStorage.getItem("userInfo")]);
