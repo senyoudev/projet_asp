@@ -8,6 +8,7 @@
         public string nom { get; set; }
         public string prenom { get; set; }
         public string Photo { get; set; }
+        public string role { get; set; }
 
     }
 }
