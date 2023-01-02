@@ -518,11 +518,50 @@ namespace backend.Controllers
             }).ToList()));
         }
 
-        [NonAction]
-        private bool VoitureExists(int id)
+        //get voitures en offre
+        [HttpGet("offre")]
+        public async Task<ActionResult<IEnumerable<Voiture>>> GetVoitureByOffre(int marqueId)
         {
-            return _db.Voitures.Any(e => e.Id == id);
+            var voitures = await _db.Voitures
+              .Where(u => u.OffreSpecialeId != null)
+              .Include(u => u.User)
+              .ToListAsync();
+
+
+            // Return the voitures belonging to the marque
+            return new JsonResult(Ok(voitures.Select(v => new VoitureDto
+            {
+                Id = v.Id,
+                Name = v.Name,
+                Couleur = v.Couleur,
+                Photo = v.Photo,
+                Annee = v.Annee,
+                Km = v.Km,
+                DateAdded = v.DateAdded,
+                UserId = v.UserId,
+                MarqueId = v.MarqueId,
+                OffreSpecialeId = v.OffreSpecialeId,
+                Prix = v.Prix,
+                Marque = new Marque
+                {
+                    Id = v.Marque.Id,
+                    Libelle = v.Marque.Libelle,
+                },
+                User = new User
+                {
+                    Id = v.User.Id,
+                    Email = v.User.Email,
+                    Username = v.User.Username,
+                    Photo = v.User.Photo
+                    // include other properties of the User object as needed
+                },
+
+            }).ToList()));
         }
+
+
+
+        //get offres crees by a user
 
 
 
