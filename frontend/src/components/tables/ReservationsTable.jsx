@@ -33,7 +33,7 @@ function ReservationsTable({data}) {
                         <td>{item.id}</td>
                         <td>{item.voiture.name}</td>
                         <td>{item.prix}</td>
-                        <td>{item.user.username}</td>
+                        <td>{item?.voiture?.locataire?.username || item?.user?.username}</td>
                         <td>
                           {moment(item.datePriseEnCharge).format('DD-MM-YYYY')}
                         </td>

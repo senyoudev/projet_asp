@@ -22,28 +22,28 @@ function Users() {
     } else {
       return navigate('/login')
     }
-  },[localStorage.getItem('userInfo')])
+  },[localStorage.getItem('userInfo'),users])
   return (
     <>
-      <Row className="mb-4">
-        <Col md="6">
-          <Form.Select aria-label="User Type">
-            <option value="1" defaultChecked>All</option>
-            <option value="2">Favorite Users</option>
-            <option value="3">Baned Users</option>
+      <Row className='mb-4'>
+        <Col md='6'>
+          <Form.Select aria-label='User Type'>
+            <option value='1' defaultChecked>
+              All
+            </option>
+            <option value='2'>Favorite Users</option>
+            <option value='3'>Baned Users</option>
           </Form.Select>
         </Col>
-        <Col md="6">
+        <Col md='6'>
           <Form.Control
-            placeholder="Search User"
-            aria-label="Search User"
-            aria-describedby="basic-addon2"
+            placeholder='Search User'
+            aria-label='Search User'
+            aria-describedby='basic-addon2'
           />
         </Col>
       </Row>
-      <UsersTable users={users}/>
-
-      
+      <UsersTable users={users} />
     </>
   );
 }

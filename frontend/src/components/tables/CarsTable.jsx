@@ -17,6 +17,7 @@ function CarsTable({ data, type }) {
     JSON.parse(localStorage.getItem('userInfo')),
   );
   const [show, setShow] = useState(false);
+  const { approveCar } = useCar('');
   function editCar(id) {
     navigate(`/${type}/carDetails`, {
       state: {

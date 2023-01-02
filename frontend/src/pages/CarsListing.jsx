@@ -2,8 +2,41 @@ import React from "react";
 import CarItem from "../components/Cards/CarItem";
 import { Col,Row,Container, Form} from "react-bootstrap"
 import carData from "../assets/Data/carData";
+import {useCar } from "../Context/CarContext"
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import Spinner from 'react-bootstrap/Spinner';
+
+
 
 function CarsListing() {
+const navigate = useNavigate('')
+  const {getCars, loading, setLoading} = useCar('')
+  const [cars,setCars] = useState([])
+  
+  const [userInfo,setUserInfo] = useState(JSON.parse(localStorage.getItem('userInfo')))
+  const fetchData = async () => {
+    setLoading(true)
+     const car = await getCars()
+     setCars(car.value)
+    //  if(cars!=null){
+    //   setLoading(false)
+    //  }
+
+   }
+  
+  useEffect(()=> {
+    
+   if(userInfo != null) {
+     fetchData()
+     setUserInfo(JSON.parse(localStorage.getItem('userInfo')))
+   } else {
+     return navigate('/login')
+   }
+  },[localStorage.getItem('userInfo')])
+  console.log("nnnn")
+   console.log(cars)
+  
   return (
      <section>
         <Container>
@@ -24,13 +57,21 @@ function CarsListing() {
               </div>
             </Col>
 
-            {carData.map((item) => (
+           {
+            !loading  ?
+            cars.map((item) => (
+             
               <CarItem item={item} key={item.id} />
-            ))}
+            ))
+            :
+            <Spinner animation="grow"  />
+          }
+           
           </Row>
         </Container>
       </section>
   )
 }
+
 
 export default CarsListing;

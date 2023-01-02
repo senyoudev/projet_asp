@@ -21,19 +21,23 @@ const userInfo = localStorage.getItem('userInfo')
 export const ReservationContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
-  const getOwnerReservations = async (id, token) => {
+  const getOwnerReservations = async (id) => {
     setLoading(true);
     try {
+       const config = {
+         headers: {
+           'Content-Type': 'application/json',
+           Authorization: `Bearer ${userInfo.token}`,
+         },
+       };
       const { data } = await axios.get(
-        `${reservationUrl}/getUserReservations/${id}`,
-        {
-          headers: { Authorization: "Bearer token:" + token },
-        }
+        `${reservationUrl}/getOwnerReservations?idUser=${id}`,
+        config,
       );
+      console.log(data)
       setLoading(false);
       return data;
     } catch (error) {
-      toast.error("Something went wrong");
       console.log(error.response);
       setLoading(false);
     }
@@ -80,13 +84,40 @@ export const ReservationContextProvider = ({ children }) => {
       setLoading(false);
     }
   };
-  
+
+   const postReservation = async(data) => {
+            setLoading(true)
+            try {
+                 const config = {
+                   headers: {
+                     'Content-Type': 'application/json',
+                     Authorization: `Bearer ${userInfo.token}`,
+                   },
+                 };
+                 const { res } = await axios.post(
+                    `${reservationUrl}/AddReservation`, data,
+                   config,
+                 );
+                 toast.success('Updated successfully');
+                 console.log(res);
+                 setLoading(false);
+            } catch (error) {
+                  toast.error('Something went wrong');
+                  console.log(error);
+                  setLoading(false);
+            }
+          }
+
   return (
     <reservationContext.Provider 
     value={{
+      loading,
       getOwnerReservations,
       getReservationsCount,
-      getReservations
+      getReservations,
+      postReservation,
+      loading,
+      setLoading,
       }}>
       {children}
     </reservationContext.Provider>

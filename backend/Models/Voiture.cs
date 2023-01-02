@@ -13,6 +13,8 @@ namespace backend.Models
         public string Photo { get; set; }
         public int Annee { get; set; }
         public int Km { get; set; }
+        public  string Desc { get; set; }
+        
         public DateTime DateAdded { get; set; }
 
         public Nullable<int> UserId { get; set; }

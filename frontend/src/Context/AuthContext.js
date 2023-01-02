@@ -101,10 +101,8 @@ export const AuthContextProvider = ({ children }) => {
     try {
       const { data } = await axios.get(`${userUrl}/GetUsers`);
       setLoading(false);
-      console.log(data);
       return data;
     } catch (error) {
-      toast.error('Something went wrong');
       console.log(error);
       setLoading(false);
     }
@@ -133,6 +131,27 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
+  const deleteUserByAdmin = async id => {
+    setLoading(true);
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.delete(
+        `${userUrl}/DeleteUser/${id}`,
+        config,
+      );
+      setLoading(false);
+      return data;
+    } catch (error) {
+      toast.error('Something went wrong');
+      console.log(error.response);
+      setLoading(false);
+    }
+  };
   const updateUserByAdmin = async (
     id,
     email,
@@ -164,7 +183,6 @@ export const AuthContextProvider = ({ children }) => {
         config,
       );
       toast.success('Updated successfully');
-      console.log(data);
       setLoading(false);
       return data;
     } catch (error) {
@@ -187,6 +205,7 @@ export const AuthContextProvider = ({ children }) => {
         getUsers,
         getUserById,
         updateUserByAdmin,
+        deleteUserByAdmin,
       }}
     >
       {children}
