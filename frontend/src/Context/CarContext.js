@@ -56,7 +56,6 @@ export const CarContextProvider = ({ children }) => {
       setLoading(false);
     }
   };
-
   return (
     <carContext.Provider
       value={{

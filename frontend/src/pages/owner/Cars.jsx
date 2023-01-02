@@ -18,7 +18,6 @@ function Cars() {
       fetchData();
     }
   }, [localStorage.getItem("userInfo")]);
-  console.log(carsList)
   return (
     <>
       <Row className="mb-4">
