@@ -1,10 +1,12 @@
 ﻿using backend.Data;
 using backend.Models;
 using backend.Models.inputs;
+using backend.Models.outputs;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
 using System.Xml.Linq;
 
@@ -136,5 +138,31 @@ namespace backend.Controllers
             return new JsonResult("Deleted successfully");
         }
 
+        //get offre by user
+        [HttpGet("offreByUser")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator,proprietaire")]
+        public JsonResult getOffresByUser(int userId)
+        {
+            var offres = _db.OffreSpeciales
+                .Where(v => v.UserId == userId)
+                .Include(v => v.User)
+                .ToList();
+
+            return new JsonResult(Ok(offres.Select(v => new OffreDto
+            {
+                Id = v.Id,
+                Name = v.Name,
+                TauxRemise = v.TauxRemise,
+                DateAdded = v.DateAdded,
+                DateExpiration = v.DateExpiration,
+                User = new User
+                {
+                    Id = v.User.Id,
+                    Username = v.User.Username,
+                    Email = v.User.Email
+                }
+
+            }).ToList()));
+        }
     }
 }
