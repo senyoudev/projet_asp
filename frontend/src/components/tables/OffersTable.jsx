@@ -6,14 +6,7 @@ import { Card, Table, Row, Col, Form, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 function OffersTable({data,type}) {
-  const navigate = useNavigate();
-  function editOffer() {
-    navigate(`/${type}/offerDetails`, {
-      state: {
-        userId: 1,
-      },
-    });
-  }
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -57,12 +50,7 @@ function OffersTable({data,type}) {
                           Approve
                         </button>
                       ) : null}
-                      <button
-                        className="btn btn-fill btn-secondary me-2"
-                        onClick={editOffer}
-                      >
-                        Edit
-                      </button>
+                     
                       <button className="btn btn-fill btn-danger">
                         Delete
                       </button>
