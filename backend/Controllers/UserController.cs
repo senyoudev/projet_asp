@@ -44,7 +44,7 @@ namespace backend.Controllers
         [AllowAnonymous]
         public JsonResult GetUsers()
         {
-            var users = _db.Users.ToList();
+            var users = _db.Users.Include(u => u.FavoriteList).Include(u => u.Blacklist).ToList();
             if (users == null)
             {
                 return new JsonResult(NotFound());
