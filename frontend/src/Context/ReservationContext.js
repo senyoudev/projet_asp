@@ -85,13 +85,39 @@ export const ReservationContextProvider = ({ children }) => {
     }
   };
 
+   const postReservation = async(data) => {
+            setLoading(true)
+            try {
+                 const config = {
+                   headers: {
+                     'Content-Type': 'application/json',
+                     Authorization: `Bearer ${userInfo.token}`,
+                   },
+                 };
+                 const { res } = await axios.post(
+                    `${reservationUrl}/AddReservation`, data,
+                   config,
+                 );
+                 toast.success('Updated successfully');
+                 console.log(res);
+                 setLoading(false);
+            } catch (error) {
+                  toast.error('Something went wrong');
+                  console.log(error);
+                  setLoading(false);
+            }
+          }
+
   return (
     <reservationContext.Provider 
     value={{
       loading,
       getOwnerReservations,
       getReservationsCount,
-      getReservations
+      getReservations,
+      postReservation,
+      loading,
+      setLoading,
       }}>
       {children}
     </reservationContext.Provider>
