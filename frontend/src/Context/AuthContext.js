@@ -13,6 +13,7 @@ export const useAuth = () => {
 };
 
 const authUrl = getUrl('Auth')
+const userUrl = getUrl('User')
 
 const userInfo = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
@@ -77,6 +78,29 @@ export const AuthContextProvider = ({ children }) => {
             return navigate('/login')
 }
   
+        const getUserCount = async(owner) => {
+            setLoading(true)
+                try {
+                    const { data } = await axios.get(`${userUrl}/GetUserCountByRole/count?role=${owner}`);
+                    setLoading(false)
+                    return data  
+                } catch (error) {
+                    toast.error("Something went wrong")
+                    console.log(error)
+                    setLoading(false)
+                }
+         }
+         const getUsers = async() => {
+             try {
+                    const { data } = await axios.get(`${userUrl}/GetUsers`);
+                    setLoading(false)
+                    return data  
+                } catch (error) {
+                    toast.error("Something went wrong")
+                    console.log(error)
+                    setLoading(false)
+                }
+         }
 
 
 
@@ -89,6 +113,8 @@ export const AuthContextProvider = ({ children }) => {
                login,
                logout,
                register,
+               getUserCount,
+               getUsers
             }}
         >
             {children}

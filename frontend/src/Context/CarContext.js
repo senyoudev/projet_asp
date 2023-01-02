@@ -14,18 +14,16 @@ export const useCar = () => {
 
 const carUrl = getUrl("Cars");
 
-const userInfo = localStorage.getItem("userInfo")
-  ? JSON.parse(localStorage.getItem("userInfo"))
-  : null;
-
 export const CarContextProvider = ({ children }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const getOwnerCars = async (id) => {
     try {
-      const { data } = await axios.get(`${carUrl}/GetVoituresByUser/ByUser?userId=${id}`);
+      const { data } = await axios.get(
+        `${carUrl}/GetVoituresByUser/ByUser?userId=${id}`
+      );
       setLoading(false);
-      return data
+      return data;
     } catch (error) {
       toast.error("Something went wrong");
       console.log(error);
@@ -56,12 +54,27 @@ export const CarContextProvider = ({ children }) => {
       setLoading(false);
     }
   };
+
+  const getCarsCount = async () => {
+    setLoading(true);
+    try {
+      const { data } = await axios.get(`${carUrl}/GetVoituresCount/count`);
+      setLoading(false);
+      return data;
+    } catch (error) {
+      toast.error("Something went wrong");
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
   return (
     <carContext.Provider
       value={{
         getOwnerCarsNumber,
-        getOwnerCars,
-        getCar
+        getCar,
+        getCarsCount,
+        getOwnerCars
       }}
     >
       {children}

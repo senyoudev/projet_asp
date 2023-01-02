@@ -1,10 +1,11 @@
+import moment from "moment/moment";
 import React from "react";
 
 // react-bootstrap components
 import { Card, Table, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-function UsersTable() {
+function UsersTable({users}) {
   const navigate = useNavigate();
   function editProfile() {
     navigate("/admin/profile", {
@@ -27,7 +28,7 @@ function UsersTable() {
                 <thead>
                   <tr>
                     <th className="border-0">ID</th>
-                    <th className="border-0">Name</th>
+                    <th className="border-0">Username</th>
                     <th className="border-0">Email</th>
                     <th className="border-0">Type</th>
                     <th className="border-0">Create Date</th>
@@ -35,40 +36,14 @@ function UsersTable() {
                   </tr>
                 </thead>
                 <tbody>
+                 
+                     {users.map(user => (
                   <tr>
-                    <td>1</td>
-                    <td>Dakota Rice</td>
-                    <td>$36,738</td>
-                    <td>Niger</td>
-                    <td>Oud-Turnhout</td>
-                    <td>
-                      <button className="btn btn-fill btn-info me-2">
-                        Favorite
-                      </button>
-                      <button className="btn btn-fill btn-success me-2">
-                        Ban
-                      </button>
-
-                      <button
-                        className="btn btn-fill btn-secondary me-2"
-                        onClick={editProfile}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="btn btn-fill btn-danger"
-                        onClick={deleteUser}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Minerva Hooper</td>
-                    <td>$23,789</td>
-                    <td>Curaçao</td>
-                    <td>Sinaai-Waas</td>
+                         <td>{user.id}</td>
+                          <td>{user.username}</td>
+                          <td>{user.email}</td>
+                          <td>{user.role}</td>
+                          <td>{moment(user.dateAdded).format("DD-MM-YYYY")}</td>
                     <td>
                       <button className="btn btn-fill btn-info me-2">
                         Favorite
@@ -90,6 +65,8 @@ function UsersTable() {
                       </button>
                     </td>
                   </tr>
+                      ))}
+                    
                 </tbody>
               </Table>
             </Card.Body>

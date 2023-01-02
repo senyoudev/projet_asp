@@ -25,7 +25,7 @@ export const ReservationContextProvider = ({ children }) => {
     try {
       const { data } = await axios.get(
         `${reservationUrl}/getUserReservations/1`,{
-            headers: {'Authorization': 'Bearer ' + token},
+            headers: {'Authorization': 'Bearer token:' + token},
           }
       );
       setLoading(false);
