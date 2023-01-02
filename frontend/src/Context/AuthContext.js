@@ -133,6 +133,27 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
+  const deleteUserByAdmin = async id => {
+    setLoading(true);
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.delete(
+        `${userUrl}/DeleteUser/${id}`,
+        config,
+      );
+      setLoading(false);
+      return data;
+    } catch (error) {
+      toast.error('Something went wrong');
+      console.log(error.response);
+      setLoading(false);
+    }
+  };
   const updateUserByAdmin = async (
     id,
     email,
@@ -174,6 +195,8 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
+ 
+
   return (
     <authContext.Provider
       value={{
@@ -187,6 +210,7 @@ export const AuthContextProvider = ({ children }) => {
         getUsers,
         getUserById,
         updateUserByAdmin,
+        deleteUserByAdmin
       }}
     >
       {children}

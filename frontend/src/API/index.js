@@ -1,12 +1,14 @@
 const baseURL = process.env.REACT_APP_API_URL;
 
 const endpoints = {
-  Auth:'api/auth',
-  Cars:'api/Voiture',
-  User:'api/User',
+  Auth: 'api/auth',
+  Cars: 'api/Voiture',
+  User: 'api/User',
   Reservations: 'api/Reservation',
-  Offres:'api/OffreSpeciale',
-  brand:'api/Marque'
+  Offres: 'api/OffreSpeciale',
+  brand: 'api/Marque',
+  fav: 'api/FavoriteList',
+  black: 'api/BlackList',
   // Add more endpoints here as needed
 };
 

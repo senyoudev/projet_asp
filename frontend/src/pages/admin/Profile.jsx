@@ -80,8 +80,8 @@ function Profile() {
          location.state.userId,
          email,
          username,
-         lastname,
          firstname,
+         lastname,
          image,
          role,
        );
