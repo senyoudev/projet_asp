@@ -78,7 +78,7 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = " proprietaire")]
 
         public async Task<ActionResult<OffreSpeciale>> Create(OffreInput offre)
         {
@@ -114,7 +114,7 @@ namespace backend.Controllers
         }
 
         [HttpPut]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = " proprietaire")]
 
         public async Task<IActionResult> Update(int id, OffreInput offre)
         {
@@ -153,7 +153,7 @@ namespace backend.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator, proprietaire")]
 
         public async Task<IActionResult> Delete(int id)
         {
