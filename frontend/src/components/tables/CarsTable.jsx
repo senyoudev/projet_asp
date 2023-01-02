@@ -4,9 +4,11 @@ import React, { useState } from "react";
 // react-bootstrap components
 import { Card, Table, Row, Col, Modal, Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useCar } from "../../Context/CarContext";
 
 function CarsTable({ data, type }) {
   const navigate = useNavigate();
+  const { approveCar } = useCar('');
   function editCar(id) {
     navigate(`/${type}/carDetails`, {
       state: {
@@ -14,6 +16,8 @@ function CarsTable({ data, type }) {
       },
     });
   }
+
+ 
   function deleteCar() {}
   const [show, setShow] = useState(false);
 
@@ -56,7 +60,7 @@ function CarsTable({ data, type }) {
                         </td>
                         <td>
                           {type === "admin" ? (
-                            <button className="btn btn-fill btn-primary me-2">
+                            <button className="btn btn-fill btn-primary me-2" onClick={() => approveCar(item.id)}>
                               Approve
                             </button>
                           ) : null}
