@@ -63,7 +63,7 @@ export const ReservationContextProvider = ({ children }) => {
       setLoading(false);
     }
   };
-  const getReservationsCount = async (id,token) => {
+  const getReservationsCount = async () => {
     setLoading(true);
     try {
        const config = {
