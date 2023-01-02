@@ -26,7 +26,9 @@ function CarsTable({ data, type }) {
     });
   }
   const [form, setForm] = useState({
+    id: 0,
     name: '',
+    desc: '',
     couleur: '',
     photo: '',
     anne: '',
@@ -72,7 +74,7 @@ function CarsTable({ data, type }) {
         console.log(res);
         const cars = await getOwnerCars(userInfo.id);
         setCars(cars.value);
-        //handleClose();
+        handleClose();
       } else {
         return navigate('/login');
       }
@@ -281,6 +283,18 @@ function CarsTable({ data, type }) {
                       accept='image/*'
                       onChange={uploadImage}
                     ></Form.Control>
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row className='pb-2'>
+                <Col md='12'>
+                  <Form.Group>
+                    <textarea
+                      className='form-control'
+                      placeholder='Description'
+                      value={form.desc}
+                      onChange={e => setForm({ ...form, desc: e.target.value })}
+                    ></textarea>
                   </Form.Group>
                 </Col>
               </Row>
