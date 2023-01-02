@@ -1,6 +1,7 @@
 ﻿using backend.Data;
 using backend.Models;
 using backend.Models.inputs;
+using backend.Models.outputs;
 using backend.utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -28,12 +29,42 @@ namespace backend.Controllers
 
         public JsonResult GetReservations()
         {
-            var Reservations = _db.Reservations.ToList();
+            var Reservations = _db.Reservations
+                .Include(v => v.Voiture)
+                .Include(v => v.User)
+                .ToList();
             if (Reservations == null)
             {
                 return new JsonResult(NotFound());
             }
-            return new JsonResult(Ok(Reservations));
+            return new JsonResult(Ok(Reservations.Select(reservation => new ReservationDTO
+            {
+                Id = reservation.Id,
+                DatePriseEnCharge = reservation.DatePriseEnCharge,
+                DateRemise = reservation.DateRemise,
+                Prix = reservation.Prix,
+                voiture = new Voiture
+                {
+                    Id = reservation.Voiture.Id,
+                    Name = reservation.Voiture.Name,
+                    Couleur = reservation.Voiture.Couleur,
+                    Photo = reservation.Voiture.Photo,
+                    Annee = reservation.Voiture.Annee,
+                    Km = reservation.Voiture.Km,
+                    DateAdded = reservation.Voiture.DateAdded,
+                    UserId = reservation.Voiture.UserId,
+                    MarqueId = reservation.Voiture.MarqueId,
+                    Prix = reservation.Voiture.Prix,
+                },
+                User = new User
+                {
+                    Id = reservation.User.Id,
+                    Username = reservation.User.Username,
+                    Photo = reservation.User?.Photo,
+                }
+
+
+            }).ToList()));
         }
 
         [HttpGet]
@@ -76,29 +107,80 @@ namespace backend.Controllers
         public IActionResult getUserReservations(int idUser)
         {
 
-            var result = _db.Reservations.Where(r => r.UserId == idUser).ToList();
+            var result = _db.Reservations.Where(r => r.UserId == idUser)
+                .Include(v => v.User)
+                .Include(v => v.Voiture)
+                .ToList();
 
 
             if (result.IsNullOrEmpty())
             {
                 return NoContent();
             }
-            return Ok(result.ToList());
+            return new JsonResult(Ok(result.Select(reservation => new ReservationDTO
+            {
+                Id = reservation.Id,
+                DatePriseEnCharge = reservation.DatePriseEnCharge,
+                DateRemise = reservation.DateRemise,
+                Prix = reservation.Prix,
+                voiture = new Voiture
+                {
+                    Id = reservation.Voiture.Id,
+                    Name = reservation.Voiture.Name,
+                    Couleur = reservation.Voiture.Couleur,
+                    Photo = reservation.Voiture.Photo,
+                    Annee = reservation.Voiture.Annee,
+                    Km = reservation.Voiture.Km,
+                    DateAdded = reservation.Voiture.DateAdded,
+                    UserId = reservation.Voiture.UserId,
+                    MarqueId = reservation.Voiture.MarqueId,
+                    Prix = reservation.Voiture.Prix,
+                },
+                User = reservation.User,
+
+
+            }).ToList()));
         }
         [HttpGet("{id}")]
 
          [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
               Roles = "Administrator")]
-        public JsonResult GetReservation(int id)
+        public async Task<ActionResult> GetReservation(int id)
         {
-            var reservation = _db.Reservations.FindAsync(id);
+            var reservation = await _db.Reservations
+                .Include(v => v.User)
+                .Include(r => r.Voiture)
+                .FirstOrDefaultAsync(v => v.Id == id);
 
             if (reservation == null)
             {
                 return new JsonResult(NotFound());
             }
 
-            return new JsonResult(Ok(reservation));
+            var reservations = new ReservationDTO
+            {
+                Id = reservation.Id,
+                DatePriseEnCharge = reservation.DatePriseEnCharge,
+                DateRemise = reservation.DateRemise,
+                Prix = reservation.Prix,
+                voiture = new Voiture
+                {
+                    Id = reservation.Voiture.Id,
+                    Name = reservation.Voiture.Name,
+                    Couleur = reservation.Voiture.Couleur,
+                    Photo = reservation.Voiture.Photo,
+                    Annee = reservation.Voiture.Annee,
+                    Km = reservation.Voiture.Km,
+                    DateAdded = reservation.Voiture.DateAdded,
+                    UserId = reservation.Voiture.UserId,
+                    MarqueId = reservation.Voiture.MarqueId,
+                    Prix = reservation.Voiture.Prix,
+                },
+                User = reservation.User,
+            };
+
+            return Ok(reservations);
+           
         }
 
 
@@ -124,7 +206,7 @@ namespace backend.Controllers
                 //PaiementId = reservation.PaiementId,
                 DatePriseEnCharge = DateTime.UtcNow,
                 DateRemise = reservation.DateRemise,
-                Prix = reservation.Prix
+                Prix = reservation.Prix,
 
             };
 
@@ -147,7 +229,7 @@ namespace backend.Controllers
         public async Task<IActionResult> UpdateReservation(int id, ReservationInput res)
         {
             // Validate the incoming request data
-            if (res == null || res.Id != id)
+            if (res == null )
             {
                 return BadRequest("Invalid data provided.");
             }

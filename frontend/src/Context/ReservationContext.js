@@ -43,13 +43,13 @@ export const ReservationContextProvider = ({ children }) => {
     try {
       const config = {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
       const { data } = await axios.get(
-        `${reservationUrl}/GetReservation/${id}`,
-        config
+        `${reservationUrl}/GetReservations`,
+        config,
       );
       setLoading(false);
       return data;
