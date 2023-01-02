@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import BrandsTable from "../../components/tables/BrandsTable";
-import OffersTable from "../../components/tables/OffersTable";
 import { useBrand } from "../../Context/MarqueContext";
 
 function Brands() {
@@ -15,7 +14,6 @@ function Brands() {
     const fetchData = async () => {
       const marques = await getBrands();
       setBrands(marques.value);
-      console.log(marques.value);
     };
 
     useEffect(() => {
