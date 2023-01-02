@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import ReservationsTable from "../../components/tables/ReservationsTable";
 import { useReservation } from "../../Context/ReservationContext";
-
 function Reservations() {
   const { getOwnerReservations } = useReservation();
   const [userInfo, setUserInfo] = useState(
@@ -10,15 +9,15 @@ function Reservations() {
   );
   const [reservationList, setReservationList] = useState([]);
   const fetchData = async () => {
-    const data = await getOwnerReservations();
+    const data = await getOwnerReservations(userInfo.id,userInfo.token);
     setReservationList(data);
+    console.log(reservationList.data);
   };
   useEffect(() => {
     if (userInfo != null && userInfo.role == "proprietaire") {
       fetchData();
     }
   }, [localStorage.getItem("userInfo")]);
-  console.log(reservationList);
   return (
     <>
       <Row className="mb-4">

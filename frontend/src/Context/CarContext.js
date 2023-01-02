@@ -21,9 +21,9 @@ const userInfo = localStorage.getItem("userInfo")
 export const CarContextProvider = ({ children }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const getOwnerCars = async () => {
+  const getOwnerCars = async (id) => {
     try {
-      const { data } = await axios.get(`${carUrl}/GetVoituresByUser/ByUser?userId=1`);
+      const { data } = await axios.get(`${carUrl}/GetVoituresByUser/ByUser?userId=${id}`);
       setLoading(false);
       return data
     } catch (error) {

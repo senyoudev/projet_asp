@@ -20,11 +20,13 @@ const userInfo = localStorage.getItem("userInfo")
 export const ReservationContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
-  const getOwnerReservations = async (id) => {
+  const getOwnerReservations = async (id,token) => {
     setLoading(true);
     try {
       const { data } = await axios.get(
-        `${reservationUrl}/getUserReservations/${id}`
+        `${reservationUrl}/getUserReservations/1`,{
+            headers: {'Authorization': 'Bearer ' + token},
+          }
       );
       setLoading(false);
       return data;
@@ -36,7 +38,7 @@ export const ReservationContextProvider = ({ children }) => {
   };
 
   return (
-    <reservationContext.Provider value={getOwnerReservations}>
+    <reservationContext.Provider value={{getOwnerReservations}}>
       {children}
     </reservationContext.Provider>
   );
