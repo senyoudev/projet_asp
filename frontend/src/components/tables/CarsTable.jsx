@@ -40,17 +40,11 @@ function CarsTable({ data, type }) {
   const { getBrands } = useBrand('');
   const [brands, setBrands] = useState();
 
-<<<<<<< HEAD
   const approveVoiture = async(id) => {
     await approveCar(id)
   }
 
- 
-  function deleteCar() {}
-  const [show, setShow] = useState(false);
-=======
   const [cars, setCars] = useState(data);
->>>>>>> origin/main
 
   const handleClose = () => setShow(false);
   const handleShow = async () => {
@@ -156,13 +150,8 @@ function CarsTable({ data, type }) {
                           {item?.isAprouved ? 'Approuved' : 'Not Approuved'}
                         </td>
                         <td>
-<<<<<<< HEAD
                           {type === "admin" ? (
                             <button className="btn btn-fill btn-primary me-2" onClick={() => approveVoiture(item.id)}>
-=======
-                          {type === 'admin' ? (
-                            <button className='btn btn-fill btn-primary me-2'>
->>>>>>> origin/main
                               Approve
                             </button>
                           ) : null}
