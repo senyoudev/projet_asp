@@ -40,7 +40,7 @@ function Reservations() {
           />
         </Col>
       </Row>
-      <ReservationsTable type="owner" data={reservations} />
+      <ReservationsTable data={reservations} setReservations={setReservations} />
     </>
   );
 }

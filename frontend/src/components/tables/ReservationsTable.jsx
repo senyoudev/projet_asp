@@ -11,11 +11,13 @@ function ReservationsTable({ data }) {
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
   const [reservations,setReservations] = useState(data);
   const { deleteReservation,getOwnerReservations } = useReservation('');
-  
+ 
   async function deleteBooking(id) {
     const data = await deleteReservation(id);
     if (data != null) {
       toast.success('reservation Deleted');
+        const res = await getReservations();
+        setReservations(res?.value);
     }
   }
   useEffect(() => {
