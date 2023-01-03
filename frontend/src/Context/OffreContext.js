@@ -110,10 +110,9 @@ export const OffreContextProvider = ({ children }) => {
   return (
     <offreContext.Provider
       value={{
-        yassinechraa
         addOffer,
         editOffer,
-        deleteOffer
+        deleteOffer,
         loading,
         getOffres,
         approveOffre
