@@ -95,7 +95,6 @@ export const CarContextProvider = ({ children }) => {
     setLoading(true);
     try {
       const { data } = await axios.get(`${carUrl}/GetVoitures`);
-      console.log(data);
       setLoading(false);
       return data;
     } catch (error) {

@@ -9,6 +9,7 @@ import { useBrand } from '../../Context/MarqueContext';
 import { confirmAlert } from 'react-confirm-alert';
 
 function BrandsTable({ data }) {
+  const navigate = useNavigate('');
   const [show, setShow] = useState(false);
   const [form, setForm] = useState({
     id: '',
@@ -30,7 +31,7 @@ function BrandsTable({ data }) {
     }
     setShow(true);
   };
-  const navigate = useNavigate('');
+  
   const { addBrand, editBrand, getBrands, deleteBrand } = useBrand('');
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem('userInfo')),
