@@ -247,7 +247,7 @@ namespace backend.Controllers
 
 
         /*[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-               Roles = "Administrator, Proprietaire, Locataire")]*/
+               Roles = "Administrator, proprietaire, Locataire")]*/
 
        
 
@@ -284,7 +284,7 @@ namespace backend.Controllers
 
         /*[HttpPut("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-             Roles = "Administrator,Proprietaire,Locataire")]*/
+             Roles = "Administrator,proprietaire,Locataire")]*/
 
 
         public async Task<IActionResult> UpdateReservation(int id, ReservationInput res)
@@ -328,7 +328,7 @@ namespace backend.Controllers
         // DELETE: api/TodoItems/5
         [HttpDelete("{id}")]
        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme,
-             Roles = "Administrator,Proprietaire,Locataire")]
+             Roles = "Administrator,proprietaire,Locataire")]
         public async Task<IActionResult> DeleteReservation(int id)
         {
             var reservation = await _db.Reservations.FindAsync(id);
