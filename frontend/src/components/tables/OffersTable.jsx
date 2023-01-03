@@ -30,11 +30,13 @@ function OffersTable({ data, type }) {
   const [offers, setOffers] = useState(data);
   const [cars, setCars] = useState();
 
-  const { approveOffre } = useOffre('')
+  const { approveOffre } = useOffre('');
 
-  const handleImprovements = async(id) => {
-    await approveOffre(id)
-  }
+  const handleImprovements = async id => {
+    await approveOffre(id);
+    const offers = await getOffres();
+    setOffers(offers.value);
+  };
 
   const handleClose = () => setShow(false);
   const handleShow = async (formType, offer = null) => {
@@ -169,15 +171,17 @@ function OffersTable({ data, type }) {
                           </button>
                         ) : null}
 
-                        <button
-                          className='btn btn-fill btn-success me-2'
-                          onClick={() => handleShow('editOffer', offre)}
-                        >
-                          Edit
-                        </button>
+                        {type === 'owner' ? (
+                          <button
+                            className='btn btn-fill btn-success me-2'
+                            onClick={() => handleShow('editOffer', offre)}
+                          >
+                            Edit
+                          </button>
+                        ) : null}
                         <button
                           className='btn btn-fill btn-danger'
-                          onClick={() => exec('deleteOffer',offre.id)}
+                          onClick={() => exec('deleteOffer', offre.id)}
                         >
                           Delete
                         </button>
