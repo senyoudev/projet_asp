@@ -60,14 +60,27 @@ namespace backend.Controllers
         {
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             // Retrieve the requested marque object from the database
-            var user = await _db.Users.FindAsync(userId);
-
-            if (user == null)
+            int id;
+            if (int.TryParse(userId, out id))
             {
-                return NotFound();
-            }
+                // The string was successfully parsed to an int, so we can use the id value here
+                var user = await _db.Users.FindAsync(id);
+                // ...
+                if (user == null)
+                {
+                    return NotFound();
+                }
 
-            return Ok(user);
+                return Ok(user);
+            }
+            else
+            {
+                // The string could not be parsed to an int, so we need to handle the error here
+                return BadRequest("could not be parsed");
+            }
+            //var user = await _db.Users.FindAsync(userId);
+
+           
         }
         [HttpGet("id")]
         public async Task<IActionResult> GetUserById(int userId)
