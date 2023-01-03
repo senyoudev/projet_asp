@@ -1,23 +1,126 @@
-import moment from "moment";
-import React, { useState } from "react";
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
 
 // react-bootstrap components
-import { Card, Table, Row, Col, Form, Modal } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { useOffre } from "../../Context/OffreContext";
+import { Card, Table, Row, Col, Form, Modal } from 'react-bootstrap';
+import { useOffre } from '../../Context/OffreContext';
+import { useCar } from '../../Context/CarContext';
+import { useNavigate } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert';
+import { toast } from 'react-toastify';
 
-function OffersTable({data,type}) {
+function OffersTable({ data, type }) {
+  const [userInfo, setUserInfo] = useState(
+    JSON.parse(localStorage.getItem('userInfo')),
+  );
+  const navigate = useNavigate('');
+  const { addOffer, editOffer, getOffres, deleteOffer } = useOffre('');
+  const { getCars } = useCar();
+  const [show, setShow] = useState(false);
+  const [form, setForm] = useState({
+    id: 0,
+    name: '',
+    userId: userInfo.id,
+    voitureId: '',
+    tauxRemise: '',
+    dateExpiration: '',
+    isAprouved: false,
+  });
+  const [formType, setFormType] = useState();
+  const [offers, setOffers] = useState(data);
+  const [cars, setCars] = useState();
 
   const { approveOffre } = useOffre('')
-
-  const [show, setShow] = useState(false);
 
   const handleImprovements = async(id) => {
     await approveOffre(id)
   }
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = async (formType, offer = null) => {
+    setFormType(formType);
+
+    const data = await getCars();
+    setCars(data.value);
+
+    if (formType === 'editOffer') {
+      setForm({
+        id: offer.id,
+        name: offer.name,
+        userId: userInfo.id,
+        voitureId: offer.voiture.id,
+        tauxRemise: offer.tauxRemise,
+        dateExpiration: offer.dateExpiration,
+        isAprouved: offer.isAprouved,
+      });
+    } else {
+      setForm({
+        id: 0,
+        name: '',
+        userId: userInfo.id,
+        voitureId: '',
+        tauxRemise: '',
+        dateExpiration: '',
+        isAprouved: form.isAprouved,
+      });
+    }
+    setShow(true);
+  };
+  const exec = async (action, deleteId = null) => {
+    if (action === 'addOffer') {
+      if (userInfo != null) {
+        try {
+          await addOffer(form);
+          const offers = await getOffres();
+          setOffers(offers.value);
+          handleClose();
+        } catch (e) {
+          toast.error('An error Occured');
+        }
+      } else {
+        return navigate('/login');
+      }
+    }
+    if (action === 'editOffer') {
+      if (userInfo != null) {
+        try {
+          await editOffer(form.id, form);
+          const offers = await getOffres();
+          setOffers(offers.value);
+          handleClose();
+        } catch (e) {
+          toast.error('An error Occured');
+        }
+      } else {
+        return navigate('/login');
+      }
+    }
+    if (action === 'deleteOffer') {
+      if (userInfo != null) {
+        confirmAlert({
+          message: 'Are you sure to do this.',
+          buttons: [
+            {
+              label: 'Yes',
+              onClick: async () => {
+                await deleteOffer(deleteId);
+                const offers = await getOffres();
+                setOffers(offers.value);
+              },
+            },
+            {
+              label: 'No',
+            },
+          ],
+        });
+      } else {
+        return navigate('/login');
+      }
+    }
+  };
+  useEffect(() => {
+    setOffers(data);
+  }, [data]);
   return (
     <>
       <Row>
@@ -42,10 +145,10 @@ function OffersTable({data,type}) {
                   </tr>
                 </thead>
                 <tbody>
-                  {data?.map(offre => (
+                  {offers?.map(offre => (
                     <tr key={offre.id}>
                       <td>{offre.id}</td>
-                      <td>{offre.user.username}</td>
+                      {type === 'admin' ? <td>{offre.user.username}</td> : null}
 
                       <td>{offre.tauxRemise}</td>
                       <td>{moment(offre.dateAdded).format('DD-MM-YYYY')}</td>
@@ -66,7 +169,16 @@ function OffersTable({data,type}) {
                           </button>
                         ) : null}
 
-                        <button className='btn btn-fill btn-danger'>
+                        <button
+                          className='btn btn-fill btn-success me-2'
+                          onClick={() => handleShow('editOffer', offre)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className='btn btn-fill btn-danger'
+                          onClick={() => exec('deleteOffer',offre.id)}
+                        >
                           Delete
                         </button>
                       </td>
@@ -79,7 +191,7 @@ function OffersTable({data,type}) {
               <Card.Footer style={{ textAlign: 'center' }}>
                 <button
                   className='btn btn-fill btn-primary'
-                  onClick={handleShow}
+                  onClick={() => handleShow('addOffer')}
                 >
                   Add Offer
                 </button>
@@ -97,32 +209,66 @@ function OffersTable({data,type}) {
         >
           <Form>
             <Modal.Header>
-              <Modal.Title style={{ margin: 'unset' }}>Add Car</Modal.Title>
+              <Modal.Title style={{ margin: 'unset' }}>
+                {formType === 'addOffer' ? 'Add Offer' : 'editOffer'}
+              </Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <Row className='mb-3'>
                 <Col className='pr-1' md='6'>
                   <Form.Group>
-                    <label>Discount Rate</label>
-                    <Form.Control placeholder='Discount Rate' />
+                    <label>Name</label>
+                    <Form.Control
+                      placeholder='Name'
+                      value={form.name}
+                      onChange={e => setForm({ ...form, name: e.target.value })}
+                    />
                   </Form.Group>
                 </Col>
                 <Col className='pl-1' md='6'>
                   <Form.Group>
                     <label>Car</label>
-                    <Form.Select>
+                    <Form.Select
+                      value={form.voitureId}
+                      onChange={e =>
+                        setForm({ ...form, voitureId: e.target.value })
+                      }
+                    >
                       <option>Select Car</option>
-                      <option>Dacia Logan xxx</option>
-                      <option>Toyota eee</option>
+                      {cars?.map((item, ind) => {
+                        return (
+                          <option value={item.id} key={ind}>
+                            {item.name}
+                          </option>
+                        );
+                      })}
                     </Form.Select>
                   </Form.Group>
                 </Col>
               </Row>
               <Row className='mb-3'>
-                <Col md='12'>
+                <Col className='pr-1' md='6'>
+                  <Form.Group>
+                    <label>Discount Rate</label>
+                    <Form.Control
+                      placeholder='Discount Rate'
+                      value={form.tauxRemise}
+                      onChange={e =>
+                        setForm({ ...form, tauxRemise: e.target.value })
+                      }
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md='6'>
                   <Form.Group>
                     <label>Expiration date</label>
-                    <Form.Control type='date'></Form.Control>
+                    <Form.Control
+                      type='date'
+                      value={moment(form.dateExpiration).format('YYYY-MM-DD')}
+                      onChange={e =>
+                        setForm({ ...form, dateExpiration: e.target.value })
+                      }
+                    ></Form.Control>
                   </Form.Group>
                 </Col>
               </Row>
@@ -135,9 +281,23 @@ function OffersTable({data,type}) {
               >
                 Close
               </button>
-              <button className='btn btn-fill btn-primary' type='button'>
-                Add Offer
-              </button>
+              {formType == 'addOffer' ? (
+                <button
+                  className='btn btn-fill btn-primary'
+                  type='button'
+                  onClick={() => exec('addOffer')}
+                >
+                  Add Offer
+                </button>
+              ) : (
+                <button
+                  className='btn btn-fill btn-primary'
+                  type='button'
+                  onClick={() => exec('editOffer')}
+                >
+                  Edit Offer
+                </button>
+              )}
             </Modal.Footer>
           </Form>
         </Modal>
