@@ -29,6 +29,7 @@ namespace backend.Controllers
             var offres = _db.OffreSpeciales
                 .Include(v => v.Voiture)
                 .Include(v => v.User)
+                .Include(v => v.Voiture.Marque)
                 .ToList();
             if (offres == null)
             {
@@ -53,6 +54,12 @@ namespace backend.Controllers
                     DateAdded = v.Voiture.DateAdded,
                     UserId = v.Voiture.UserId,
                     MarqueId = v.Voiture.MarqueId,
+                    Prix = v.Voiture.Prix,
+                    Marque = new Marque
+                    {
+                        Id = v.Voiture.Marque.Id,
+                        Libelle = v.Voiture.Marque.Libelle
+                    }
                 },
                 User = new User
                 {

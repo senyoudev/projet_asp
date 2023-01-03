@@ -8,6 +8,7 @@ import navLinks from '../assets/Data/navLinks';
 import { isValidEmail, isValidPassword, isValidUsername } from '../utils/validation';
 import { useAuth } from '../Context/AuthContext';
 import Spinner from 'react-bootstrap/Spinner';
+import Helmet from '../components/Helmet/Helmet';
 
 
 function Register() {

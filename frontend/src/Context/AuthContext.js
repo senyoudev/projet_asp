@@ -39,7 +39,7 @@ export const AuthContextProvider = ({ children }) => {
       );
       localStorage.setItem('userInfo', JSON.stringify(data));
       setLoading(false);
-      if (data != null) return navigate('/');
+      return data
     } catch (error) {
       toast.error('An error Occured');
       console.log(error);
