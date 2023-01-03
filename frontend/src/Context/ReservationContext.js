@@ -12,6 +12,7 @@ export const useReservation = () => {
 };
 
 const reservationUrl = getUrl('Reservations');
+const paymentUrl = getUrl('payment');
 
 const userInfo = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
@@ -40,28 +41,27 @@ export const ReservationContextProvider = ({ children }) => {
       setLoading(false);
     }
   };
-   const getUserReservations = async id => {
-     setLoading(true);
-     try {
-       const config = {
-         headers: {
-           'Content-Type': 'application/json',
-           Authorization: `Bearer ${userInfo.token}`,
-         },
-       };
-       const { data } = await axios.get(
-         `${reservationUrl}/getUserReservation/${id}`,
-         config,
-       );
-       console.log(data);
-       setLoading(false);
-       return data;
-     } catch (error) {
-       console.log(error.response);
-       setLoading(false);
-     }
-   };
-
+  const getUserReservations = async id => {
+    setLoading(true);
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.get(
+        `${reservationUrl}/getUserReservation/${id}`,
+        config,
+      );
+      console.log(data);
+      setLoading(false);
+      return data;
+    } catch (error) {
+      console.log(error.response);
+      setLoading(false);
+    }
+  };
 
   const getReservations = async () => {
     setLoading(true);
@@ -107,7 +107,13 @@ export const ReservationContextProvider = ({ children }) => {
     }
   };
 
-  const postReservation = async data => {
+  const postReservation = async (
+    userId,
+    voitureId,
+    dateDebut,
+    dateFin,
+    prix,
+  ) => {
     setLoading(true);
     try {
       const config = {
@@ -116,14 +122,21 @@ export const ReservationContextProvider = ({ children }) => {
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
-      const { res } = await axios.post(
+      const res = await axios.post(
         `${reservationUrl}/AddReservation`,
-        data,
+        {
+          userId: userId,
+          voitureId: voitureId,
+          datePriseEnCharge: dateDebut,
+          dateRemise: dateFin,
+          prix: prix,
+        },
         config,
       );
-      toast.success('Updated successfully');
-      console.log(res);
+
       setLoading(false);
+
+      return res.data;
     } catch (error) {
       toast.error('Something went wrong');
       console.log(error);
@@ -153,6 +166,33 @@ export const ReservationContextProvider = ({ children }) => {
     }
   };
 
+  const addPayment = async (reservationId, libelle) => {
+    setLoading(true);
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.post(
+        `${paymentUrl}/Create/`,
+        {
+          "id": 0,
+          "libelle": libelle,
+          "reservationId": reservationId,
+        },
+        config,
+      );
+      setLoading(false);
+      return data;
+    } catch (error) {
+      toast.error('An error Occured');
+      console.log(error);
+    }
+  };
+
   return (
     <reservationContext.Provider
       value={{
@@ -165,6 +205,7 @@ export const ReservationContextProvider = ({ children }) => {
         setLoading,
         deleteReservation,
         getUserReservations,
+        addPayment
       }}
     >
       {children}

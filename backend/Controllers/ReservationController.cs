@@ -264,7 +264,6 @@ namespace backend.Controllers
             {
                 UserId = reservation.UserId,
                 VoitureId = reservation.VoitureId,
-                //PaiementId = reservation.PaiementId,
                 DatePriseEnCharge = DateTime.UtcNow,
                 DateRemise = reservation.DateRemise,
                 Prix = reservation.Prix,
@@ -273,7 +272,7 @@ namespace backend.Controllers
 
             _db.Reservations.Add(newReservation);
             await _db.SaveChangesAsync();
-            return Ok(newReservation);
+            return Ok(newReservation.Id);
         }
 
         [HttpPut("{id}")]

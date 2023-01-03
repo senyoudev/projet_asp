@@ -18,6 +18,7 @@ import { FavContextProvider } from './Context/FavListContext';
 import { BlackContextProvider } from './Context/BlackListContext';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
+import PaymentMethod from './components/UI/PaymentMethod';
 function App() {
   return (
     <Router>
@@ -39,6 +40,7 @@ function App() {
                       <Route path='/contact' element={<Contact />} />
                       <Route path='/profile' element={<Profile />} />
                       <Route path='/settings' element={<Settings />} />
+                      <Route path='/payment/:id' element={<PaymentMethod />} />
                       <Route path='*' element={<NotFound />} />
                     </Routes>
                   </BlackContextProvider>

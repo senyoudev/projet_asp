@@ -30,6 +30,18 @@ export const OffreContextProvider = ({ children }) => {
       setLoading(false);
     }
   };
+   const getOffreById = async (id) => {
+     setLoading(true);
+     try {
+       const { data } = await axios.get(`${offreUrl}/GetOffreById/${id}`);
+       setLoading(false);
+       return data;
+     } catch (error) {
+       toast.error('Something went wrong');
+       console.log(error.response);
+       setLoading(false);
+     }
+   };
   const addOffer = async offer => {
     setLoading(true);
     try {
@@ -115,7 +127,8 @@ export const OffreContextProvider = ({ children }) => {
         deleteOffer,
         loading,
         getOffres,
-        approveOffre
+        approveOffre,
+        getOffreById,
       }}
     >
       {children}
