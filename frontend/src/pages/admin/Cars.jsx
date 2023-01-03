@@ -12,7 +12,6 @@ function Cars() {
   const fetchData = async () => {
       const voitures = await getCars()
       setCars(voitures.value)
-      console.log(voitures)
     }
 
   useEffect(()=> {
@@ -23,7 +22,7 @@ function Cars() {
     } else {
       return navigate('/login')
     }
-  },[localStorage.getItem('userInfo'),cars])
+  },[localStorage.getItem('userInfo')])
 
   return (
     <>
