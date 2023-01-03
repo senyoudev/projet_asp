@@ -56,5 +56,5 @@ Contributions are welcome! If you find a bug or want to suggest a new feature, p
 
 ## Website Demo
 
-<video src="./screens/demo.mp4" width="320" height="240" controls></video>
+[![Demo Video](./screens/carsdetails.png)](./screens/demo.mp4)
 
