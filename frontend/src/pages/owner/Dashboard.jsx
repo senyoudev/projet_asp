@@ -8,67 +8,30 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 // react-bootstrap components
 import { Card, Container, Row, Col, Table } from "react-bootstrap";
 
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
 import { useCar } from "../../Context/CarContext";
-import { Navigate, useNavigate } from "react-router-dom";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-export const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "top",
-    },
-  },
-};
-
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: "Revenu",
-      data: [100, 14, 77, 13, 21, 55, 11],
-      borderColor: "rgb(255, 99, 132)",
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
-    },
-  ],
-};
+import { useOffre } from "../../Context/OffreContext";
 
 function Dashboard() {
 
   const { getOwnerCarsNumber } = useCar();
+  const {getOffres} = useOffre();
+  
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem("userInfo"))
   );
   const [carCount,setCarCount] = useState("");
+  const [lastOffers,setLastOffers] = useState([]);
   const fetchData = async () => {
     const data = await getOwnerCarsNumber(userInfo.id);
     setCarCount(data);
+    const offers = await getOffres();
+    console.log(offers.value)
+    setLastOffers(offers.value.splice(0,3))
   }
   useEffect(() => {
     if (userInfo != null && userInfo.role == "proprietaire") {
@@ -211,64 +174,30 @@ function Dashboard() {
                 <Card.Title as="h4">Last offers</Card.Title>
               </Card.Header>
               <Card.Body className="table-full-width table-responsive px-0">
-                <Table className="table-hover table-striped">
-                  <thead>
-                    <tr>
-                      <th className="border-0">ID</th>
-                      <th className="border-0">Discount Rate</th>
-                      <th className="border-0">Expiration date</th>
+              <Table className='table-hover table-striped'>
+                <thead>
+                  <tr>
+                    <th className='border-0'>ID</th>
+                    <th className='border-0'>Discount Rate</th>
+                    <th className='border-0'>Added Date</th>
+                    <th className='border-0'>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {lastOffers?.map(offre => (
+                    <tr key={offre.id}>
+                      <td>{offre.id}</td>
+
+                      <td>{offre.tauxRemise}</td>
+                      <td>{moment(offre.dateAdded).format('DD-MM-YYYY')}</td>
+                      <td>
+                        {offre.isAprouved ? 'Approuved' : 'Not Approuved'}
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Dakota Rice</td>
-                      <td>$36,738</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Minerva Hooper</td>
-                      <td>$23,789</td>
-                    </tr>
-                  </tbody>
-                </Table>
+                  ))}
+                </tbody>
+              </Table>
               </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-        <Row>
-          <Col md="6">
-            <Card>
-              <Card.Header>
-                <Card.Title as="h4"></Card.Title>
-                <p className="card-category">Number of Reantals</p>
-              </Card.Header>
-              <Card.Body>
-                <Line options={options} data={data} />
-              </Card.Body>
-              <Card.Footer>
-                <div className="stats">
-                  <FontAwesomeIcon icon={faClock} className="me-1" />
-                  Updated 3 minutes ago
-                </div>
-              </Card.Footer>
-            </Card>
-          </Col>
-          <Col md="6">
-            <Card>
-              <Card.Header>
-                <Card.Title as="h4"></Card.Title>
-                <p className="card-category">Revenu per Month</p>
-              </Card.Header>
-              <Card.Body>
-                <Line options={options} data={data} />
-              </Card.Body>
-              <Card.Footer>
-                <div className="stats">
-                  <FontAwesomeIcon icon={faClock} className="me-1" />
-                  Updated 3 minutes ago
-                </div>
-              </Card.Footer>
             </Card>
           </Col>
         </Row>
