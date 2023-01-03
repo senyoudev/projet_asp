@@ -701,7 +701,7 @@ body > .navbar-collapse {
 
 .btn-primary {
   border-color: #3472F7;
-  color: #3472F7; }
+  color: #fff; }
   .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active,
   .open > .btn-primary.dropdown-toggle {
     background-color: transparent;
