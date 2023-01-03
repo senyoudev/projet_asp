@@ -39,7 +39,6 @@ function ReservationProfileTable({ data }) {
                         <td>
                           {moment(item.dateExpiration).format('DD-MM-YYYY')}
                         </td>
-                     
                       </tr>
                     );
                   })}
