@@ -9,15 +9,16 @@ import { confirmAlert } from 'react-confirm-alert';
 
 function ReservationsTable({ data }) {
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-  const [reservations,setReservations] = useState(data);
-  const { deleteReservation,getOwnerReservations } = useReservation('');
- 
+  const [reservations, setReservations] = useState(data);
+  const { deleteReservation, getOwnerReservations, getReservations } =
+    useReservation('');
+
   async function deleteBooking(id) {
     const data = await deleteReservation(id);
     if (data != null) {
       toast.success('reservation Deleted');
-        const res = await getReservations();
-        setReservations(res?.value);
+      const res = await getReservations();
+      setReservations(res?.value);
     }
   }
   useEffect(() => {
@@ -59,9 +60,7 @@ function ReservationsTable({ data }) {
                         <td>
                           {moment(item.datePriseEnCharge).format('DD-MM-YYYY')}
                         </td>
-                        <td>
-                          {moment(item.dateRemise).format('DD-MM-YYYY')}
-                        </td>
+                        <td>{moment(item.dateRemise).format('DD-MM-YYYY')}</td>
                         <td>
                           <button
                             className='btn btn-fill btn-danger'
@@ -73,7 +72,8 @@ function ReservationsTable({ data }) {
                                     label: 'Yes',
                                     onClick: async () => {
                                       await deleteBooking(item.id);
-                                      const reservs = await getOwnerReservations(userInfo.id);
+                                      const reservs =
+                                        await getOwnerReservations(userInfo.id);
                                       setReservations(reservs.value);
                                     },
                                   },
