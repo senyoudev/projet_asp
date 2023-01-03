@@ -6,6 +6,7 @@ import { Button, Card, Form, Container, Row, Col } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getUrl } from '../../API';
 import { useCar } from '../../Context/CarContext';
+import { useBrand } from '../../Context/MarqueContext';
 
 const couleurs = ['red', 'gray', 'dark', 'white'];
 function CarDetails() {
@@ -34,10 +35,42 @@ function CarDetails() {
     isDisponible: true,
   });
   const { getCar, editCar } = useCar('');
+
+  const { getBrands } = useBrand('');
+  const [brands, setBrands] = useState();
+
   const fetchData = async () => {
     const data = await getCar(carId);
-    const {id,name,desc,couleur,photo,annee,km,userId,marqueId,prix,isAprouved,isDisponible} = data;
-    setForm({id,name,desc,couleur,photo,annee,km,userId,marqueId,prix,isAprouved,isDisponible});
+    const {
+      id,
+      name,
+      desc,
+      couleur,
+      photo,
+      annee,
+      km,
+      userId,
+      marqueId,
+      prix,
+      isAprouved,
+      isDisponible,
+    } = data;
+    setForm({
+      id,
+      name,
+      desc,
+      couleur,
+      photo,
+      annee,
+      km,
+      userId,
+      marqueId,
+      prix,
+      isAprouved,
+      isDisponible,
+    });
+    const brandsList = await getBrands();
+    setBrands(brandsList.value);
   };
 
   const EditCar = async () => {
@@ -65,7 +98,7 @@ function CarDetails() {
     console.log(data);
     setForm({ ...form, photo: data.imageUrl });
   };
-  
+
   useEffect(() => {
     if (
       userInfo != null &&
@@ -90,9 +123,17 @@ function CarDetails() {
                     <Col className='pr-1' md='6'>
                       <Form.Group>
                         <label>Brand Name</label>
-                        <Form.Select>
-                          <option>Dacia</option>
-                          <option>Toyota</option>
+                        <Form.Select
+                          value={form.marqueId}
+                          onChange={e =>
+                            setForm({ ...form, marqueId: e.target.value })
+                          }
+                        >
+                          {brands?.map((item, ind) => {
+                            return (
+                              <option value={item.id}>{item.libelle}</option>
+                            );
+                          })}
                         </Form.Select>
                       </Form.Group>
                     </Col>
@@ -163,7 +204,11 @@ function CarDetails() {
                     <Col md='12'>
                       <Form.Group>
                         <label>Update Image</label>
-                        <Form.Control type='file' accept='image/*' onChange={uploadImage}></Form.Control>
+                        <Form.Control
+                          type='file'
+                          accept='image/*'
+                          onChange={uploadImage}
+                        ></Form.Control>
                       </Form.Group>
                     </Col>
                   </Row>
