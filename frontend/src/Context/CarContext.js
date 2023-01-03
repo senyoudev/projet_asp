@@ -78,6 +78,44 @@ export const CarContextProvider = ({ children }) => {
       setLoading(false);
     }
   };
+  const editCar = async (id,car) => {
+    setLoading(true);
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      await axios.put(`${carUrl}/UpdateVoiture/${id}`, car, config);
+      setLoading(false);
+    } catch (error) {
+      toast.error('Something went wrong');
+      console.log(error.response);
+      setLoading(false);
+    }
+  };
+  const deleteCar = async (id) => {
+    setLoading(true);
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.delete(
+        `${carUrl}/DeleteVoiture/${id}`,
+        config,
+      );
+      setLoading(false);
+      return data;
+    } catch (error) {
+      toast.error('An error Occured');
+      console.log(error);
+    }
+  };
   const getCarsCount = async () => {
     setLoading(true);
     try {
@@ -138,7 +176,9 @@ export const CarContextProvider = ({ children }) => {
         getOwnerCars,
         getCars,
         addCar,
+        editCar,
         approveCar,
+        deleteCar
       }}
     >
       {children}

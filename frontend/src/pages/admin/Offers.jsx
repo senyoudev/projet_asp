@@ -22,7 +22,7 @@ function Offers() {
     } else {
       return navigate('/login');
     }
-  }, [localStorage.getItem('userInfo'), offres]);
+  }, [localStorage.getItem('userInfo')]);
   return (
     <>
       <Row className="mb-4">

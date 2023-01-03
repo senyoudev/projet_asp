@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, Table, Row, Col, Modal, Button, Form } from 'react-bootstrap';
 import { confirmAlert } from 'react-confirm-alert';
 import { useNavigate } from 'react-router-dom';
-import { toast,ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { getUrl } from '../../API';
@@ -19,11 +19,13 @@ function CarsTable({ data, type }) {
     JSON.parse(localStorage.getItem('userInfo')),
   );
   const [show, setShow] = useState(false);
+  const [allowSubmit, setAllowSubmit] = useState(true);
   const { approveCar } = useCar('');
   function editCar(id) {
     navigate(`/${type}/carDetails`, {
       state: {
         carId: id,
+        type,
       },
     });
   }
@@ -54,15 +56,27 @@ function CarsTable({ data, type }) {
   const handleShow = async () => {
     const marques = await getBrands();
     setBrands(marques.value);
+    setForm({
+      id: 0,
+      name: '',
+      desc: '',
+      couleur: '',
+      photo: '',
+      anne: '',
+      km: '',
+      userId: userInfo.id,
+      marqueId: '',
+      prix: '',
+      isAprouved: false,
+      isDisponible: true,
+    });
     setShow(true);
   };
   const { addCar, deleteCar, getOwnerCars } = useCar('');
   const exec = async (action, deleteId = null) => {
     if (action === 'addCar') {
       if (userInfo != null) {
-        //setUploading(true);
-        console.log(form.photo);
-        //setUploading(false);
+        console.log(form);
         const res = await addCar(form);
         console.log(res);
         const cars = await getOwnerCars(userInfo.id);
@@ -107,11 +121,14 @@ function CarsTable({ data, type }) {
       },
     };
     const uploadPath = getUrl('upload');
+    setAllowSubmit(false);
     const { data } = await axios.post(
       `${uploadPath}/UploadSingle`,
       formData,
       config,
     );
+    setAllowSubmit(true);
+
     console.log(data);
     setForm({ ...form, photo: data.imageUrl });
   };
@@ -122,7 +139,7 @@ function CarsTable({ data, type }) {
   return (
     <>
       <Row>
-        <ToastContainer/>
+        <ToastContainer />
         <Col md='12'>
           <Card className='strpied-tabled-with-hover'>
             <Card.Header>
@@ -136,6 +153,7 @@ function CarsTable({ data, type }) {
                     {type === 'admin' ? (
                       <th className='border-0'>Owner</th>
                     ) : null}
+                    <th className='border-0'>name</th>
                     <th className='border-0'>brand</th>
                     <th className='border-0'>prix</th>
                     <th className='border-0'>Added Date</th>
@@ -151,6 +169,7 @@ function CarsTable({ data, type }) {
                         {type === 'admin' ? (
                           <td>{item.user.username}</td>
                         ) : null}
+                        <td>{item?.name}</td>
                         <td>{item?.marque.libelle}</td>
                         <td>{item?.prix + ' DH'}</td>
                         <td>{moment(item.dateAdded).format('DD-MM-YYYY')}</td>
@@ -174,7 +193,10 @@ function CarsTable({ data, type }) {
                             Edit
                           </button>
                           {type === 'owner' ? (
-                            <button className='btn btn-fill btn-danger'>
+                            <button
+                              className='btn btn-fill btn-danger'
+                              onClick={() => exec('deleteCar', item.id)}
+                            >
                               Delete
                             </button>
                           ) : null}
@@ -207,7 +229,7 @@ function CarsTable({ data, type }) {
         >
           <Form>
             <Modal.Header>
-              <Modal.Title style={{ margin: 'unset' }}>Add Car</Modal.Title>
+              <Modal.Title style={{ margin: 'unset' }}></Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <Row className='pb-3'>
@@ -292,23 +314,23 @@ function CarsTable({ data, type }) {
               <Row className='pb-2'>
                 <Col md='12'>
                   <Form.Group>
-                    <Form.Control
-                      type='file'
-                      accept='image/*'
-                      onChange={uploadImage}
-                    ></Form.Control>
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row className='pb-2'>
-                <Col md='12'>
-                  <Form.Group>
                     <textarea
                       className='form-control'
                       placeholder='Description'
                       value={form.desc}
                       onChange={e => setForm({ ...form, desc: e.target.value })}
                     ></textarea>
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row className='pb-2'>
+                <Col md='12'>
+                  <Form.Group>
+                    <Form.Control
+                      type='file'
+                      accept='image/*'
+                      onChange={uploadImage}
+                    ></Form.Control>
                   </Form.Group>
                 </Col>
               </Row>
@@ -321,13 +343,24 @@ function CarsTable({ data, type }) {
               >
                 Close
               </button>
-              <button
-                className='btn btn-fill btn-primary'
-                type='button'
-                onClick={() => exec('addCar')}
-              >
-                Add Car
-              </button>
+              {allowSubmit ? (
+                <button
+                  className='btn btn-fill btn-primary'
+                  type='button'
+                  onClick={() => exec('addCar')}
+                >
+                  Add Car
+                </button>
+              ) : (
+                <button
+                  className='btn btn-fill btn-primary'
+                  type='button'
+                  onClick={() => exec('addCar')}
+                  disabled
+                >
+                  Add Car
+                </button>
+              )}
             </Modal.Footer>
           </Form>
         </Modal>
