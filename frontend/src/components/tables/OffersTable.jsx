@@ -139,6 +139,7 @@ function OffersTable({ data, type }) {
                     {type === 'admin' ? (
                       <th className='border-0'>Owner</th>
                     ) : null}
+                    <th className='border-0'>Name</th>
                     <th className='border-0'>Discount Rate</th>
                     <th className='border-0'>Added Date</th>
                     <th className='border-0'>Expiration date</th>
@@ -151,7 +152,7 @@ function OffersTable({ data, type }) {
                     <tr key={offre.id}>
                       <td>{offre.id}</td>
                       {type === 'admin' ? <td>{offre.user.username}</td> : null}
-
+                      <td>{offre.name}</td>
                       <td>{offre.tauxRemise}</td>
                       <td>{moment(offre.dateAdded).format('DD-MM-YYYY')}</td>
                       <td>

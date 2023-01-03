@@ -34,7 +34,6 @@ export const ReservationContextProvider = ({ children }) => {
         `${reservationUrl}/getOwnerReservations?idUser=${id}`,
         config,
       );
-      console.log(data);
       setLoading(false);
       return data;
     } catch (error) {

@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // react-bootstrap components
 import { Card, Table, Row, Col } from 'react-bootstrap';
 import { useReservation } from '../../Context/ReservationContext';
+import { confirmAlert } from 'react-confirm-alert';
 
-function ReservationsTable({ data, setReservations }) {
-  const { deleteReservation, getReservations } = useReservation('');
-
+function ReservationsTable({ data }) {
+  const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+  const [reservations,setReservations] = useState(data);
+  const { deleteReservation,getOwnerReservations } = useReservation('');
+ 
   async function deleteBooking(id) {
     const data = await deleteReservation(id);
     if (data != null) {
@@ -17,6 +20,9 @@ function ReservationsTable({ data, setReservations }) {
         setReservations(res?.value);
     }
   }
+  useEffect(() => {
+    setReservations(data);
+  }, [data]);
   return (
     <>
       <Row>
@@ -40,7 +46,7 @@ function ReservationsTable({ data, setReservations }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {data?.map((item, ind) => {
+                  {reservations?.map((item, ind) => {
                     return (
                       <tr>
                         <td>{item.id}</td>
@@ -54,12 +60,29 @@ function ReservationsTable({ data, setReservations }) {
                           {moment(item.datePriseEnCharge).format('DD-MM-YYYY')}
                         </td>
                         <td>
-                          {moment(item.dateExpiration).format('DD-MM-YYYY')}
+                          {moment(item.dateRemise).format('DD-MM-YYYY')}
                         </td>
                         <td>
                           <button
                             className='btn btn-fill btn-danger'
-                            onClick={() => deleteBooking(item.id)}
+                            onClick={() => {
+                              confirmAlert({
+                                message: 'Are you sure to do this.',
+                                buttons: [
+                                  {
+                                    label: 'Yes',
+                                    onClick: async () => {
+                                      await deleteBooking(item.id);
+                                      const reservs = await getOwnerReservations(userInfo.id);
+                                      setReservations(reservs.value);
+                                    },
+                                  },
+                                  {
+                                    label: 'No',
+                                  },
+                                ],
+                              });
+                            }}
                           >
                             Delete
                           </button>
