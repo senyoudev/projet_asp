@@ -42,7 +42,7 @@ function Cars() {
           />
         </Col>
       </Row>
-      <CarsTable type="admin" data={cars}/>
+      <CarsTable type="admin" data={cars} setVoitures={setCars}/>
     </>
   );
 }
