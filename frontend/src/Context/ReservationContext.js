@@ -1,40 +1,39 @@
-import axios from "axios";
-import { createContext, useContext, useEffect, useState } from "react";
-import { getUrl } from "../API";
-import { toast } from "react-toastify";
+import axios from 'axios';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { getUrl } from '../API';
+import { toast } from 'react-toastify';
 
 const reservationContext = createContext();
 
 export const useReservation = () => {
   const context = useContext(reservationContext);
-  if (!context) throw new Error("Reservation Provider is missing");
+  if (!context) throw new Error('Reservation Provider is missing');
   return context;
 };
 
-const reservationUrl = getUrl("Reservations");
+const reservationUrl = getUrl('Reservations');
 
 const userInfo = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
-  : null
-
+  : null;
 
 export const ReservationContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
-  const getOwnerReservations = async (id) => {
+  const getOwnerReservations = async id => {
     setLoading(true);
     try {
-       const config = {
-         headers: {
-           'Content-Type': 'application/json',
-           Authorization: `Bearer ${userInfo.token}`,
-         },
-       };
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
       const { data } = await axios.get(
         `${reservationUrl}/getOwnerReservations?idUser=${id}`,
         config,
       );
-      console.log(data)
+      console.log(data);
       setLoading(false);
       return data;
     } catch (error) {
@@ -42,6 +41,29 @@ export const ReservationContextProvider = ({ children }) => {
       setLoading(false);
     }
   };
+   const getUserReservations = async id => {
+     setLoading(true);
+     try {
+       const config = {
+         headers: {
+           'Content-Type': 'application/json',
+           Authorization: `Bearer ${userInfo.token}`,
+         },
+       };
+       const { data } = await axios.get(
+         `${reservationUrl}/getUserReservation/${id}`,
+         config,
+       );
+       console.log(data);
+       setLoading(false);
+       return data;
+     } catch (error) {
+       console.log(error.response);
+       setLoading(false);
+     }
+   };
+
+
   const getReservations = async () => {
     setLoading(true);
     try {
@@ -58,7 +80,7 @@ export const ReservationContextProvider = ({ children }) => {
       setLoading(false);
       return data;
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error('Something went wrong');
       console.log(error.response);
       setLoading(false);
     }
@@ -66,82 +88,86 @@ export const ReservationContextProvider = ({ children }) => {
   const getReservationsCount = async () => {
     setLoading(true);
     try {
-       const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${userInfo.token}`,
-            },
-        }
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
       const { data } = await axios.get(
-        `${reservationUrl}/getReservationsCount`,config
+        `${reservationUrl}/getReservationsCount`,
+        config,
       );
       setLoading(false);
-      console.log(data)
+      console.log(data);
       return data;
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error('Something went wrong');
       console.log(error.response);
       setLoading(false);
     }
   };
 
-   const postReservation = async(data) => {
-            setLoading(true)
-            try {
-                 const config = {
-                   headers: {
-                     'Content-Type': 'application/json',
-                     Authorization: `Bearer ${userInfo.token}`,
-                   },
-                 };
-                 const { res } = await axios.post(
-                    `${reservationUrl}/AddReservation`, data,
-                   config,
-                 );
-                 toast.success('Updated successfully');
-                 console.log(res);
-                 setLoading(false);
-            } catch (error) {
-                  toast.error('Something went wrong');
-                  console.log(error);
-                  setLoading(false);
-            }
-          }
+  const postReservation = async data => {
+    setLoading(true);
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { res } = await axios.post(
+        `${reservationUrl}/AddReservation`,
+        data,
+        config,
+      );
+      toast.success('Updated successfully');
+      console.log(res);
+      setLoading(false);
+    } catch (error) {
+      toast.error('Something went wrong');
+      console.log(error);
+      setLoading(false);
+    }
+  };
 
-            const deleteReservation = async id => {
-              setLoading(true);
-              try {
-                const config = {
-                  headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${userInfo.token}`,
-                  },
-                };
+  const deleteReservation = async id => {
+    setLoading(true);
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
 
-                const { data } = await axios.delete(
-                  `${reservationUrl}/DeleteReservation/${id}`,
-                  config,
-                );
-                setLoading(false);
-                return data;
-              } catch (error) {
-                toast.error('An error Occured');
-                console.log(error);
-              }
-            };
+      const { data } = await axios.delete(
+        `${reservationUrl}/DeleteReservation/${id}`,
+        config,
+      );
+      setLoading(false);
+      return data;
+    } catch (error) {
+      toast.error('An error Occured');
+      console.log(error);
+    }
+  };
 
   return (
-    <reservationContext.Provider 
-    value={{
-      loading,
-      getOwnerReservations,
-      getReservationsCount,
-      getReservations,
-      postReservation,
-      loading,
-      setLoading,
-      deleteReservation
-      }}>
+    <reservationContext.Provider
+      value={{
+        loading,
+        getOwnerReservations,
+        getReservationsCount,
+        getReservations,
+        postReservation,
+        loading,
+        setLoading,
+        deleteReservation,
+        getUserReservations,
+      }}
+    >
       {children}
     </reservationContext.Provider>
   );

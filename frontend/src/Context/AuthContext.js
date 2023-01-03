@@ -192,6 +192,29 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
+  const getLoggedInUser = async() => {
+     setLoading(true);
+     try {
+       const config = {
+         headers: {
+           'Content-Type': 'application/json',
+           Authorization: `Bearer ${userInfo.token}`,
+         },
+       };
+       const { data } = await axios.get(
+         `${userUrl}/GetLoggedInProfile`,
+         config,
+       );
+       console.log(data);
+       setLoading(false);
+       return data;
+     } catch (error) {
+       toast.error('Something went wrong');
+       console.log(error.response);
+       setLoading(false);
+     }
+  }
+
   return (
     <authContext.Provider
       value={{
@@ -206,6 +229,7 @@ export const AuthContextProvider = ({ children }) => {
         getUserById,
         updateUserByAdmin,
         deleteUserByAdmin,
+        getLoggedInUser
       }}
     >
       {children}
