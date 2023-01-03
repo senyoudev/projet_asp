@@ -7,7 +7,7 @@ import { Card, Table, Row, Col } from 'react-bootstrap';
 import { useReservation } from '../../Context/ReservationContext';
 import { confirmAlert } from 'react-confirm-alert';
 
-function ReservationsTable({ data }) {
+function ReservationsTable({ data, type }) {
   const userInfo = JSON.parse(localStorage.getItem('userInfo'));
   const [reservations, setReservations] = useState(data);
   const { deleteReservation, getOwnerReservations, getReservations } =
@@ -17,7 +17,13 @@ function ReservationsTable({ data }) {
     const data = await deleteReservation(id);
     if (data != null) {
       toast.success('reservation Deleted');
-      const res = await getReservations();
+      var res;
+      if ((type = 'owner')) {
+        res = await getOwnerReservations();
+      }
+      if (type == 'admin') {
+        res = await getReservations();
+      }
       setReservations(res?.value);
     }
   }
