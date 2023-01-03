@@ -55,4 +55,5 @@ You can access the API documentation using Swagger at https://localhost:44378/sw
 Contributions are welcome! If you find a bug or want to suggest a new feature, please open an issue. If you want to contribute code, please fork the repository and submit a pull request
 
 ## Website Demo
-[![Demo video]()](./screens/demo.mp4)
+<video src="./screens/demo.mp4" width="320" height="240" controls></video>
+
