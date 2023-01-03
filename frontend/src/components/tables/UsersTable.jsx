@@ -53,7 +53,7 @@ function UsersTable({ users,setUsers }) {
       await removeUserFromFavoriteList(user.favoriteList.id);
     }
     const res = await getUsers();
-    setUsers(res?.value);
+    setUsers(res.value);
 
   }
   return (
