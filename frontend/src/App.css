@@ -8,9 +8,13 @@ html {
   scroll-behavior: smooth;
 }
 
+
+
+
 /**** Dashboard ****/
 #admin table td .btn{
   margin-top: 4px;
+  
 }
 #admin {
   overflow-x: hidden;
