@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Row,
   Card,
@@ -7,42 +7,44 @@ import {
   Col,
   Placeholder,
 } from 'react-bootstrap';
+import { useNavigate } from 'react-router';
+import { useReservation } from '../../Context/ReservationContext';
+import ReservationProfileTable from '../tables/ReservationProfileTable';
 
 
 
-function ProfileAbout({ loading }) {
+function ProfileAbout() {
 
+   const navigate = useNavigate('');
+   const { getUserReservations } = useReservation('');
+   const [reservations, setReservations] = useState([]);
+   const [userInfo, setUserInfo] = useState(
+     JSON.parse(localStorage.getItem('userInfo')),
+   );
+   const fetchData = async () => {
+     const bookings = await getUserReservations(userInfo.id);
+     setReservations(bookings.value);
+   };
 
-
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = lang => {
-    setShow(true);
-  };
+   useEffect(() => {
+     if (userInfo != null) {
+       fetchData();
+       setUserInfo(JSON.parse(localStorage.getItem('userInfo')));
+     } else {
+       return navigate('/login');
+     }
+   }, [localStorage.getItem('userInfo'), reservations]);
 
 
     return (
      <>
                 <Row style={{ margin: '0 auto' }} >
-                    <Card >
-                        <Card.Header className='d-flex justify-content-between' style={{ backgroundColor: 'transparent' }}>
-                            <Card.Title style={{ color: '#000' }}>Description</Card.Title>
-                            <Button className='back-btn' >
-                                Edit description
-                            </Button>
+                    
 
-                        </Card.Header>
-                        <Card.Body>
+                                <ReservationProfileTable data={reservations} />
 
-                            <Card.Text className='d-flex justify-content-between align-items-center' as={'p'} style={{ margin: '5px 0' }}>
-                                {(<span>Please provide some informations about you</span>)}
 
-                            </Card.Text>
-
-                        </Card.Body>
-
-                    </Card>
+                       
                 </Row>
              
             

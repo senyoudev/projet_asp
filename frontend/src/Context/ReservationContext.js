@@ -41,6 +41,29 @@ export const ReservationContextProvider = ({ children }) => {
       setLoading(false);
     }
   };
+   const getUserReservations = async id => {
+     setLoading(true);
+     try {
+       const config = {
+         headers: {
+           'Content-Type': 'application/json',
+           Authorization: `Bearer ${userInfo.token}`,
+         },
+       };
+       const { data } = await axios.get(
+         `${reservationUrl}/getUserReservation/${id}`,
+         config,
+       );
+       console.log(data);
+       setLoading(false);
+       return data;
+     } catch (error) {
+       console.log(error.response);
+       setLoading(false);
+     }
+   };
+
+
   const getReservations = async () => {
     setLoading(true);
     try {
@@ -142,6 +165,7 @@ export const ReservationContextProvider = ({ children }) => {
         loading,
         setLoading,
         deleteReservation,
+        getUserReservations,
       }}
     >
       {children}
