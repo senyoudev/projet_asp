@@ -32,8 +32,6 @@ function OffersTable({ data, type }) {
 
   const { approveOffre } = useOffre('')
 
-  const [show, setShow] = useState(false);
-
   const handleImprovements = async(id) => {
     await approveOffre(id)
   }
