@@ -192,6 +192,46 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
+  const updateProfile = async (
+    id,
+    email,
+    username,
+    firstName,
+    lastName,
+    image,
+    role,
+  ) => {
+    setLoading(true);
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.put(
+        `${userUrl}/UpdateUser/admin?id=${id}`,
+        {
+          id,
+          email,
+          username,
+          nom: lastName,
+          prenom: firstName,
+          photo: image,
+          role,
+        },
+        config,
+      );
+      toast.success('Updated successfully');
+      setLoading(false);
+      return data;
+    } catch (error) {
+      toast.error('Something went wrong');
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
   const getLoggedInUser = async() => {
      setLoading(true);
      try {
@@ -215,6 +255,8 @@ export const AuthContextProvider = ({ children }) => {
      }
   }
 
+  
+
   return (
     <authContext.Provider
       value={{
@@ -229,7 +271,8 @@ export const AuthContextProvider = ({ children }) => {
         getUserById,
         updateUserByAdmin,
         deleteUserByAdmin,
-        getLoggedInUser
+        getLoggedInUser,
+        updateProfile
       }}
     >
       {children}

@@ -15,7 +15,7 @@ function Settings() {
   const [username, setUserName] = useState();
   const [email, setEmail] = useState();
 
-  const { loading } = useAuth('');
+  const { loading, updateProfile } = useAuth('');
 
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem('userInfo')),
@@ -24,6 +24,10 @@ function Settings() {
   useEffect(() => {
     if (userInfo != null) {
       setUserInfo(JSON.parse(localStorage.getItem('userInfo')));
+      setFirstName(userInfo.prenom)
+      setLastName(userInfo.nom)
+      setEmail(userInfo.email)
+      setUserName(userInfo.username)
     } else {
       return navigate('/login');
     }
@@ -49,6 +53,20 @@ function Settings() {
       );
       return;
     }
+
+    const data = await updateProfile(
+      userInfo.id,
+      email,
+      username,
+      firstname,
+      lastname,
+      userInfo.photo,
+      userInfo.role,
+    );
+    if(data != null) {
+      return navigate('/profile')
+    }
+    
   };
 
   return (
@@ -109,11 +127,11 @@ function Settings() {
           </Row>
           <Row>
             <Col md={12}>
-              <Form.Group controlId='email'>
+              <Form.Group controlId='username'>
                 <Form.Label>UserName</Form.Label>
                 <Form.Control
-                  type='email'
-                  placeholder='Enter your email'
+                  type='text'
+                  placeholder='Enter your username'
                   className='my-2'
                   value={username}
                   onChange={e => setUserName(e.target.value)}

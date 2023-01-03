@@ -6,13 +6,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Card, Table, Row, Col } from 'react-bootstrap';
 import { useReservation } from '../../Context/ReservationContext';
 
-function ReservationsTable({ data }) {
-  const { deleteReservation } = useReservation('');
-  
+function ReservationsTable({ data, setReservations }) {
+  const { deleteReservation, getReservations } = useReservation('');
+
   async function deleteBooking(id) {
     const data = await deleteReservation(id);
     if (data != null) {
       toast.success('reservation Deleted');
+        const res = await getReservations();
+        setReservations(res?.value);
     }
   }
   return (
