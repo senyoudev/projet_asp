@@ -6,7 +6,9 @@ import React, { useEffect, useState } from 'react';
 import { Card, Table, Row, Col, Modal, Button, Form } from 'react-bootstrap';
 import { confirmAlert } from 'react-confirm-alert';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { toast,ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { getUrl } from '../../API';
 import { useCar } from '../../Context/CarContext';
 import { useBrand } from '../../Context/MarqueContext';
@@ -42,6 +44,10 @@ function CarsTable({ data, type }) {
   const { getBrands } = useBrand('');
   const [brands, setBrands] = useState();
 
+  const approveVoiture = async id => {
+    await approveCar(id);
+  };
+
   const [cars, setCars] = useState(data);
 
   const handleClose = () => setShow(false);
@@ -55,21 +61,8 @@ function CarsTable({ data, type }) {
     if (action === 'addCar') {
       if (userInfo != null) {
         //setUploading(true);
-
-        const config = {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        };
-        const uploadPath = getUrl('upload');
-        const { data } = await axios.post(
-          `${uploadPath}/UploadSingle`,
-          { imageFile: photo },
-          config,
-        );
-        console.log(data);
+        console.log(form.photo);
         //setUploading(false);
-        setForm({ ...form, photo: data.imageUrl });
         const res = await addCar(form);
         console.log(res);
         const cars = await getOwnerCars(userInfo.id);
@@ -105,6 +98,22 @@ function CarsTable({ data, type }) {
   var photo;
   const uploadImage = async e => {
     photo = e.target.files[0];
+    const formData = new FormData();
+    formData.append('imageFile', photo);
+
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    };
+    const uploadPath = getUrl('upload');
+    const { data } = await axios.post(
+      `${uploadPath}/UploadSingle`,
+      formData,
+      config,
+    );
+    console.log(data);
+    setForm({ ...form, photo: data.imageUrl });
   };
   useEffect(() => {
     setCars(data);
@@ -113,6 +122,7 @@ function CarsTable({ data, type }) {
   return (
     <>
       <Row>
+        <ToastContainer/>
         <Col md='12'>
           <Card className='strpied-tabled-with-hover'>
             <Card.Header>
@@ -149,7 +159,11 @@ function CarsTable({ data, type }) {
                         </td>
                         <td>
                           {type === 'admin' ? (
-                            <button className='btn btn-fill btn-primary me-2'>
+                            <button
+                              className='btn btn-fill btn-primary me-2'
+                              onClick={() => approveVoiture(item.id)}
+                              disabled={item.isAprouved}
+                            >
                               Approve
                             </button>
                           ) : null}

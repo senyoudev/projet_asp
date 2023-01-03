@@ -16,10 +16,8 @@ const offreUrl = getUrl('Offres');
 const userInfo = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
   : null;
-
 export const OffreContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
-
   const getOffres = async () => {
     setLoading(true);
     try {
@@ -75,7 +73,7 @@ export const OffreContextProvider = ({ children }) => {
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
-
+   
       await axios.delete(
         `${offreUrl}/Delete/${id}`,
         config,
@@ -86,13 +84,39 @@ export const OffreContextProvider = ({ children }) => {
       console.log(error);
     }
   };
+  const approveOffre = async id => {
+       setLoading(true);
+       try {
+        console.log(id)
+         const config = {
+           headers: {
+             'Content-Type': 'application/json',
+             Authorization: `Bearer ${userInfo.token}`,
+           },
+         };
+         const { data } = await axios.put(
+           `https://localhost:44378/api/OffreSpeciale/AprovedOffre?id=${id}`,
+           config,
+         );
+         console.log(data);
+         setLoading(false);
+         return data;
+       } catch (error) {
+         toast.error('Something went wrong');
+         console.log(error);
+         setLoading(false);
+       }
+     };
   return (
     <offreContext.Provider
       value={{
-        getOffres,
+        yassinechraa
         addOffer,
         editOffer,
         deleteOffer
+        loading,
+        getOffres,
+        approveOffre
       }}
     >
       {children}

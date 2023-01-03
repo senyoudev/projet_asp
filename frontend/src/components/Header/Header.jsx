@@ -69,11 +69,10 @@ const Header = () => {
                   userInfo ? (
                   
                     <NavDropdown title={UserMenu} id='username'>
-                            {userInfo.role == 'locataire' && (
                                 <LinkContainer to='/profile'>
                                   <NavDropdown.Item>Profile</NavDropdown.Item>
                                 </LinkContainer>
-                            )}
+                            
 
                              {userInfo.role == 'proprietaire' && (
                                 <LinkContainer to='/owner'>

@@ -114,7 +114,7 @@ export const CarContextProvider = ({ children }) => {
         },
       };
       const { data } = await axios.put(
-        `${carUrl}/AprovedVoiture?id=${id}`,
+        `${carUrl}/AprovedVoiture/approve?id=${id}`,
         config,
       );
       console.log(data);

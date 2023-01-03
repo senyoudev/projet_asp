@@ -16,6 +16,7 @@ import { ReservationContextProvider } from './Context/ReservationContext';
 import { BrandContextProvider } from './Context/MarqueContext';
 import { FavContextProvider } from './Context/FavListContext';
 import { BlackContextProvider } from './Context/BlackListContext';
+import Profile from './pages/Profile';
 function App() {
   return (
     <Router>
@@ -33,8 +34,9 @@ function App() {
                       <Route path='/login' element={<Login />} />
                       <Route path='/register' element={<Register />} />
                       <Route path='/cars' element={<CarsListing />} />
-                      <Route path="/carsDetails/:id" element={<CarDetails  />} />
+                      <Route path='/carsDetails/:id' element={<CarDetails />} />
                       <Route path='/contact' element={<Contact />} />
+                      <Route path='/profile' element={<Profile />} />
                       <Route path='*' element={<NotFound />} />
                     </Routes>
                   </BlackContextProvider>

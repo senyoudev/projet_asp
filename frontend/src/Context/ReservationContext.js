@@ -108,6 +108,28 @@ export const ReservationContextProvider = ({ children }) => {
             }
           }
 
+            const deleteReservation = async id => {
+              setLoading(true);
+              try {
+                const config = {
+                  headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${userInfo.token}`,
+                  },
+                };
+
+                const { data } = await axios.delete(
+                  `${reservationUrl}/DeleteReservation/${id}`,
+                  config,
+                );
+                setLoading(false);
+                return data;
+              } catch (error) {
+                toast.error('An error Occured');
+                console.log(error);
+              }
+            };
+
   return (
     <reservationContext.Provider 
     value={{
@@ -118,6 +140,7 @@ export const ReservationContextProvider = ({ children }) => {
       postReservation,
       loading,
       setLoading,
+      deleteReservation
       }}>
       {children}
     </reservationContext.Provider>

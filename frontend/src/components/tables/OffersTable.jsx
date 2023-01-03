@@ -29,6 +29,15 @@ function OffersTable({ data, type }) {
   const [formType, setFormType] = useState();
   const [offers, setOffers] = useState(data);
   const [cars, setCars] = useState();
+
+  const { approveOffre } = useOffre('')
+
+  const [show, setShow] = useState(false);
+
+  const handleImprovements = async(id) => {
+    await approveOffre(id)
+  }
+
   const handleClose = () => setShow(false);
   const handleShow = async (formType, offer = null) => {
     setFormType(formType);
@@ -152,8 +161,12 @@ function OffersTable({ data, type }) {
                         {offre.isAprouved ? 'Approuved' : 'Not Approuved'}
                       </td>
                       <td>
-                        {type === 'admin' ? (
-                          <button className='btn btn-fill btn-primary me-2'>
+                        {type == 'admin' ? (
+                          <button
+                            className='btn btn-fill btn-primary me-2'
+                            disabled={offre.isAprouved}
+                            onClick={() => handleImprovements(offre.id)}
+                          >
                             Approve
                           </button>
                         ) : null}
