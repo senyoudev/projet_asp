@@ -1,57 +1,55 @@
-import React, { useEffect, useState } from "react";
-import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
-import { useNavigate } from "react-router";
-import navLinks from "../assets/Data/navLinks";
-import Navbar from "../components/Navbars/Navbar";
+import React, { useEffect, useState } from 'react';
+import { Button, Col, Container, Form, Row, Spinner } from 'react-bootstrap';
+import { useNavigate } from 'react-router';
+import navLinks from '../assets/Data/navLinks';
+import Navbar from '../components/Navbars/Navbar';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { isValidEmail, isValidUsername } from "../utils/validation";
-import { useAuth } from "../Context/AuthContext";
+import { isValidEmail, isValidUsername } from '../utils/validation';
+import { useAuth } from '../Context/AuthContext';
 
 function Settings() {
- const navigate = useNavigate();
+  const navigate = useNavigate();
   const [lastname, setLastName] = useState();
   const [firstname, setFirstName] = useState();
   const [username, setUserName] = useState();
   const [email, setEmail] = useState();
 
-    const {loading} = useAuth('')
+  const { loading } = useAuth('');
 
- const [userInfo, setUserInfo] = useState(
-   JSON.parse(localStorage.getItem('userInfo')),
- );
+  const [userInfo, setUserInfo] = useState(
+    JSON.parse(localStorage.getItem('userInfo')),
+  );
 
- useEffect(() => {
-   if (userInfo != null) {
-     setUserInfo(JSON.parse(localStorage.getItem('userInfo')));
-   } else {
-     return navigate('/login');
-   }
- }, [localStorage.getItem('userInfo')]);
+  useEffect(() => {
+    if (userInfo != null) {
+      setUserInfo(JSON.parse(localStorage.getItem('userInfo')));
+    } else {
+      return navigate('/login');
+    }
+  }, [localStorage.getItem('userInfo')]);
 
- const submitHandler = async(e) => {
-    e.preventDefault()
-      if (!firstname) {
-        toast.error('Please enter your first name');
-        return;
-      }
-      if (!lastname) {
-        toast.error('Please enter your last name');
-        return;
-      }
-      if (!isValidEmail(email)) {
-        toast.error('Please enter a valid email address');
-        return;
-      }
-      if (!isValidUsername(username)) {
-        toast.error(
-          'Username can only contain letters, numbers, and underscores',
-        );
-        return;
-      }
-
- }
-
+  const submitHandler = async e => {
+    e.preventDefault();
+    if (!firstname) {
+      toast.error('Please enter your first name');
+      return;
+    }
+    if (!lastname) {
+      toast.error('Please enter your last name');
+      return;
+    }
+    if (!isValidEmail(email)) {
+      toast.error('Please enter a valid email address');
+      return;
+    }
+    if (!isValidUsername(username)) {
+      toast.error(
+        'Username can only contain letters, numbers, and underscores',
+      );
+      return;
+    }
+  };
 
   return (
     <>
@@ -68,7 +66,7 @@ function Settings() {
         >
           User Setin<span style={{ color: '#DC0000' }}>gs</span>
         </h1>
-        <Form onSubmit={submitHandler} style={{marginTop:'2rem'}}>
+        <Form onSubmit={submitHandler} style={{ marginTop: '2rem' }}>
           <Row className='d-flex align-items-center'>
             <Col md={6}>
               <Form.Group controlId='title'>
@@ -133,7 +131,7 @@ function Settings() {
               style={{
                 width: '20%',
                 marginRight: '10px',
-                Color:'#fff',
+                Color: '#fff',
                 backgroundColor: '#DC0000',
               }}
             >
