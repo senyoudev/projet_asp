@@ -10,7 +10,18 @@ import navLinks from '../assets/Data/navLinks';
 
 function Profile() {
   const navigate = useNavigate();
-const [loading,setLoading] = useState(false)
+
+  const [userInfo, setUserInfo] = useState(
+    JSON.parse(localStorage.getItem('userInfo')),
+  );
+
+    useEffect(() => {
+      if (userInfo != null) {
+        setUserInfo(JSON.parse(localStorage.getItem('userInfo')));
+      } else {
+        return navigate('/login');
+      }
+    }, [localStorage.getItem('userInfo')]);
   
 
   return (
@@ -19,7 +30,7 @@ const [loading,setLoading] = useState(false)
       <ToastContainer />
       <Row style={{ margin: '40px' }}>
         <Col md={4} xs={12} style={{ marginBottom: '20px' }} className='fixed'>
-          <ProfileUser loading={loading} />
+          <ProfileUser />
         </Col>
         <Col md={8}>
           <Tabs
@@ -28,7 +39,7 @@ const [loading,setLoading] = useState(false)
             className='mb-3'
           >
             <Tab eventKey='About' title='Reservations'>
-              <ProfileAbout loading={loading} />
+              <ProfileAbout  />
             </Tab>
           </Tabs>
         </Col>

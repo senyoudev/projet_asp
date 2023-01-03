@@ -43,7 +43,7 @@ function Users() {
           />
         </Col>
       </Row>
-      <UsersTable users={users} />
+      <UsersTable users={users} setUsers={setUsers}/>
     </>
   );
 }
