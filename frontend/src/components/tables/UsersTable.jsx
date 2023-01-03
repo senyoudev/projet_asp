@@ -11,12 +11,14 @@ import { useAuth, loading } from '../../Context/AuthContext';
 import { useFav } from '../../Context/FavListContext';
 import { useBlack } from '../../Context/BlackListContext';
 
-function UsersTable({ users }) {
+function UsersTable({ users,setUsers }) {
   const navigate = useNavigate();
   const { deleteUserByAdmin, loading } = useAuth('');
   const { addUserToFavoriteList, removeUserFromFavoriteList } = useFav('');
   const { addUserToBlackList, removeUserFromBlackList } = useBlack('');
+  const { getUsers } = useAuth('');
   function editProfile(id) {
+
     return navigate('/admin/profile', {
       state: {
         userId: id,
@@ -28,6 +30,8 @@ function UsersTable({ users }) {
     if (data != null) {
       toast.success('User Deleted');
     }
+    const res = await getUsers()
+    setUsers(res?.value)
   }
   async function handleBlackList(id) {
     let user = users.find(user => user.id === id);
@@ -37,6 +41,8 @@ function UsersTable({ users }) {
     } else {
       await removeUserFromBlackList(user.blacklist.id);
     }
+    const res = await getUsers();
+    setUsers(res?.value);
   }
 
   async function handleFavoriteList(id) {
@@ -46,6 +52,9 @@ function UsersTable({ users }) {
     } else {
       await removeUserFromFavoriteList(user.favoriteList.id);
     }
+    const res = await getUsers();
+    setUsers(res?.value);
+
   }
   return (
     <>

@@ -17,6 +17,7 @@ import { BrandContextProvider } from './Context/MarqueContext';
 import { FavContextProvider } from './Context/FavListContext';
 import { BlackContextProvider } from './Context/BlackListContext';
 import Profile from './pages/Profile';
+import Settings from './pages/Settings';
 function App() {
   return (
     <Router>
@@ -37,6 +38,7 @@ function App() {
                       <Route path='/carsDetails/:id' element={<CarDetails />} />
                       <Route path='/contact' element={<Contact />} />
                       <Route path='/profile' element={<Profile />} />
+                      <Route path='/settings' element={<Settings />} />
                       <Route path='*' element={<NotFound />} />
                     </Routes>
                   </BlackContextProvider>

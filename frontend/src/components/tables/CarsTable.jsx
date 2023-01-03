@@ -13,7 +13,7 @@ import { getUrl } from '../../API';
 import { useCar } from '../../Context/CarContext';
 import { useBrand } from '../../Context/MarqueContext';
 
-function CarsTable({ data, type }) {
+function CarsTable({ data, type, setVoitures }) {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState(
     JSON.parse(localStorage.getItem('userInfo')),
@@ -45,9 +45,12 @@ function CarsTable({ data, type }) {
   });
   const { getBrands } = useBrand('');
   const [brands, setBrands] = useState();
+  const { getCars } = useCar('');
 
   const approveVoiture = async id => {
     await approveCar(id);
+    const voitures = await getCars();
+    setVoitures(voitures?.value);
   };
 
   const [cars, setCars] = useState(data);

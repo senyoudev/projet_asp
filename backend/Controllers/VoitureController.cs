@@ -111,7 +111,8 @@ namespace backend.Controllers
                 },
                 Marque = new Marque {
                     Id = voiture.Marque.Id,
-                    Libelle = voiture.Marque.Libelle
+                    Libelle = voiture.Marque.Libelle,
+                    DateAdded = voiture.Marque.DateAdded
                 }
             };
 

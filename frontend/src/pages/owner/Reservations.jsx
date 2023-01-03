@@ -11,6 +11,7 @@ function Reservations() {
   const fetchData = async () => {
     const data = await getOwnerReservations(userInfo.id);
     setReservationList(data.value);
+    console.log(reservationList)
   };
   useEffect(() => {
     if (userInfo != null && userInfo.role == "proprietaire") {
