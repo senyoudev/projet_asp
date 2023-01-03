@@ -33,6 +33,11 @@ function Login() {
       return;
     }
     const data = await login(username, password);
+    if(data != null) {
+      return navigate('/')
+    } else { 
+      toast.error('Invalid Credentials')
+    }
   };
 
   return (

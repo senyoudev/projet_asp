@@ -9,7 +9,8 @@ const endpoints = {
   brand: 'api/Marque',
   fav: 'api/FavoriteList',
   black: 'api/BlackList',
-  upload: 'api/Upload'
+  upload: 'api/Upload',
+  payment:'api/Payment'
   // Add more endpoints here as needed
 };
 

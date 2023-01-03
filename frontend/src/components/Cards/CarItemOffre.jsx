@@ -15,7 +15,8 @@ function CarItemOffre({ item }) {
         <div className='car__item-content mt-4'>
           <h4 className='section__title text-center'>{item.name}</h4>
           <h6 className='rent__price text-center mt-'>
-            {item.voiture.prix * (item.tauxRemise / 100)}.00 dhs <span>/ Day</span>
+            {item.voiture.prix * (item.tauxRemise / 100)}.00 dhs{' '}
+            <span>/ Day</span>
           </h6>
 
           <div className='car__item-info d-flex align-items-center justify-content-between mt-3 mb-4'>
@@ -31,11 +32,15 @@ function CarItemOffre({ item }) {
           </div>
 
           <button className=' w-50 car__item-btn car__btn-rent'>
-            <Link to={`/cars/${item.name}`}>Rent</Link>
+            <Link to={`/carsDetails/${item.voiture.id}?offre=${item.id}`}>
+              Rent
+            </Link>
           </button>
 
           <button className=' w-50 car__item-btn car__btn-details'>
-            <Link to={`/carsDetails/${item.id}`}>Details</Link>
+            <Link to={`/carsDetails/${item.voiture.id}?offre=${item.id}`}>
+              Details
+            </Link>
           </button>
         </div>
       </div>

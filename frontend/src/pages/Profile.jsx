@@ -7,6 +7,7 @@ import ProfileUser from '../components/Cards/ProfileUser';
 import ProfileAbout from '../components/Tabs/ProfileAbout';
 import Navbar from '../components/Navbars/Navbar';
 import navLinks from '../assets/Data/navLinks';
+import Helmet from '../components/Helmet/Helmet';
 
 function Profile() {
   const navigate = useNavigate();
