@@ -27,7 +27,7 @@ const [loading,setLoading] = useState(false)
             id='uncontrolled-tab-example'
             className='mb-3'
           >
-            <Tab eventKey='About' title='About'>
+            <Tab eventKey='About' title='Reservations'>
               <ProfileAbout loading={loading} />
             </Tab>
           </Tabs>
